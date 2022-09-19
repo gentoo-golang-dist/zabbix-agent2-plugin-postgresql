@@ -46,8 +46,8 @@ func TestMain(m *testing.M) {
 		os.Exit(code)
 	}
 	// initialize plugin
-	impl.Init(pluginName)
-	impl.Configure(&plugin.GlobalOptions{Timeout: 30}, nil)
+	Impl.Init(Name)
+	Impl.Configure(&plugin.GlobalOptions{Timeout: 30}, nil)
 
 	code = m.Run()
 	if code != 0 {
@@ -60,8 +60,8 @@ func TestMain(m *testing.M) {
 
 func TestPlugin_Start(t *testing.T) {
 	t.Run("Connection manager must be initialized", func(t *testing.T) {
-		impl.Start()
-		if impl.connMgr == nil {
+		Impl.Start()
+		if Impl.connMgr == nil {
 			t.Error("Connection manager is not initialized")
 		}
 	})
@@ -76,8 +76,8 @@ func TestPlugin_Export(t *testing.T) {
 		ctx    plugin.ContextProvider
 	}
 
-	//impl.Configure(&plugin.GlobalOptions{Timeout: 30}, nil)
-	impl.connMgr.queryStorage = yarn.NewFromMap(map[string]string{
+	//Impl.Configure(&plugin.GlobalOptions{Timeout: 30}, nil)
+	Impl.connMgr.queryStorage = yarn.NewFromMap(map[string]string{
 		"TestQuery.sql": "SELECT $1::text AS res",
 	})
 
@@ -90,28 +90,28 @@ func TestPlugin_Export(t *testing.T) {
 	}{
 		{
 			"Check PG Ping",
-			&impl,
+			&Impl,
 			args{keyPing, []string{pgAddr, pgUser, pgPwd}, nil},
-			PingOk,
+			pingOk,
 			false,
 		},
 		{
 			"Too many parameters",
-			&impl,
+			&Impl,
 			args{keyPing, []string{"param1", "param2", "param3", "param4", "param5"}, nil},
 			nil,
 			true,
 		},
 		{
 			"Check wal handler",
-			&impl,
+			&Impl,
 			args{keyWal, []string{pgAddr, pgUser, pgPwd}, nil},
 			nil,
 			false,
 		},
 		{
 			"Check custom queries handler. Should return 1 as text",
-			&impl,
+			&Impl,
 			args{keyCustomQuery, []string{pgAddr, pgUser, pgPwd, pgDb, "TestQuery", "echo"}, nil},
 			"[{\"res\":\"echo\"}]",
 			false,
@@ -137,8 +137,8 @@ func TestPlugin_Export(t *testing.T) {
 
 func TestPlugin_Stop(t *testing.T) {
 	t.Run("Connection manager must be deinitialized", func(t *testing.T) {
-		impl.Stop()
-		if impl.connMgr != nil {
+		Impl.Stop()
+		if Impl.connMgr != nil {
 			t.Error("Connection manager is not deinitialized")
 		}
 	})

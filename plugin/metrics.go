@@ -29,7 +29,6 @@ import (
 	"git.zabbix.com/ap/plugin-support/metric"
 	"git.zabbix.com/ap/plugin-support/plugin"
 	"git.zabbix.com/ap/plugin-support/uri"
-	"git.zabbix.com/ap/postgresql/plugin/handlers"
 )
 
 const (
@@ -61,62 +60,56 @@ const (
 )
 
 // handlerFunc defines an interface must be implemented by handlers.
-type handlerFunc func(ctx context.Context, conn handlers.PostgresClient, key string,
+type handlerFunc func(ctx context.Context, conn PostgresClient, key string,
 	params map[string]string, extraParams ...string) (res interface{}, err error)
 
 // getHandlerFunc returns a handlerFunc related to a given key.
 func getHandlerFunc(key string) handlerFunc {
 	switch key {
 	case keyDatabasesDiscovery:
-		return handlers.DatabasesDiscoveryHandler
+		return databasesDiscoveryHandler
 	case keyDatabasesBloating:
-		return handlers.DatabasesBloatingHandler
+		return databasesBloatingHandler
 	case keyDatabaseSize:
-		return handlers.DatabaseSizeHandler
+		return databaseSizeHandler
 	case keyDatabaseAge:
-		return handlers.DatabaseAgeHandler
+		return databaseAgeHandler
 	case keyArchiveSize:
-		return handlers.ArchiveHandler
+		return archiveHandler
 	case keyPing:
-		return handlers.PingHandler
+		return pingHandler
 	case keyConnections:
-		return handlers.ConnectionsHandler
+		return connectionsHandler
 	case keyWal:
-		return handlers.WalHandler
+		return walHandler
 	case keyAutovacuum:
-		return handlers.AutovacuumHandler
-	case keyDBStat:
-		return handlers.DbStatHandler
-	case keyDBStatSum:
-		return handlers.DbStatSumHandler
+		return autovacuumHandler
+	case keyDBStat,
+		keyDBStatSum:
+		return dbStatHandler
 	case keyBgwriter:
-		return handlers.BgwriterHandler
+		return bgwriterHandler
 	case keyCustomQuery:
-		return handlers.CustomQueryHandler
+		return customQueryHandler
 	case keyUptime:
-		return handlers.UptimeHandler
+		return uptimeHandler
 	case keyCache:
-		return handlers.CacheHandler
-	case keyReplicationCount:
-		return handlers.ReplicationCountHandler
-	case keyReplicationStatus:
-		return handlers.ReplicationStatusHandler
-	case keyReplicationLagSec:
-		return handlers.ReplicationLagSecHandler
-	case keyReplicationRecoveryRole:
-		return handlers.ReplicationRecoveryRoleHandler
-	case keyReplicationLagB:
-		return handlers.ReplicationLagBHandler
-	case keyReplicationProcessInfo:
-		return handlers.ReplicationProcessInfoHandler
+		return cacheHandler
+	case keyReplicationCount,
+		keyReplicationStatus,
+		keyReplicationLagSec,
+		keyReplicationRecoveryRole,
+		keyReplicationLagB,
+		keyReplicationProcessInfo:
+		return replicationHandler
 	case keyReplicationProcessNameDiscovery:
-		return handlers.ProcessNameDiscoveryHandler
+		return processNameDiscoveryHandler
 	case keyLocks:
-		return handlers.LocksHandler
+		return locksHandler
 	case keyOldestXid:
-		return handlers.OldestXIDHandler
+		return oldestXIDHandler
 	case keyQueries:
-		return handlers.QueriesHandler
+		return queriesHandler
 	default:
 		return nil
 	}

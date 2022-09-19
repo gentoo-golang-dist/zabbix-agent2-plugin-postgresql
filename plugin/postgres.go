@@ -28,7 +28,6 @@ import (
 	"git.zabbix.com/ap/plugin-support/tlsconfig"
 	"git.zabbix.com/ap/plugin-support/uri"
 	"git.zabbix.com/ap/plugin-support/zbxerr"
-	"git.zabbix.com/ap/postgresql/plugin/handlers"
 
 	"github.com/omeid/go-yarn"
 
@@ -79,9 +78,9 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 	conn, err := p.connMgr.GetConnection(*uri, details)
 	if err != nil {
 		// Special logic of processing connection errors should be used if pgsql.ping is requested
-		// because it must return PingFailed if any error occurred.
+		// because it must return pingFailed if any error occurred.
 		if key == keyPing {
-			return handlers.PingFailed, nil
+			return pingFailed, nil
 		}
 
 		p.Errf(err.Error())
