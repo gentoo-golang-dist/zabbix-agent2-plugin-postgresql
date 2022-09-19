@@ -76,12 +76,6 @@ func TestPlugin_replicationHandler(t *testing.T) {
 			args{context.Background(), sharedPool, keyReplicationRecoveryRole, nil, []string{}},
 			false,
 		},
-		{
-			fmt.Sprintf("replicationHandler should return ptr to Pool for replication.master.discovery.application_name"),
-			&Impl,
-			args{context.Background(), sharedPool, keyReplicationMasterDiscoveryAppName, nil, []string{}},
-			false,
-		},
 	}
 
 	for _, tt := range tests {
@@ -92,7 +86,7 @@ func TestPlugin_replicationHandler(t *testing.T) {
 				return
 			}
 			if tt.wantErr == false {
-				if tt.args.key == keyReplicationStatus || tt.args.key == keyReplicationMasterDiscoveryAppName {
+				if tt.args.key == keyReplicationStatus {
 					if len(got.(string)) == 0 {
 						t.Errorf("Plugin.replicationTransactions() at DeepEqual error = %v, wantErr %v", err, tt.wantErr)
 						return

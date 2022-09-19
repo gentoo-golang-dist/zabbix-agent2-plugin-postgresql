@@ -28,6 +28,8 @@ import (
 )
 
 func TestPlugin_queriesHandler(t *testing.T) {
+	timePeriod := map[string]string{"TimePeriod": "42"}
+
 	// create pool or acquire conn from old pool for test
 	sharedPool, err := getConnPool()
 	if err != nil {
@@ -50,7 +52,7 @@ func TestPlugin_queriesHandler(t *testing.T) {
 		{
 			fmt.Sprintf("Plugin.queriesHandler() should return ptr to Pool for Plugin.queriesHandler()"),
 			&Impl,
-			args{context.Background(), sharedPool, keyQueries, nil, []string{}},
+			args{context.Background(), sharedPool, keyQueries, timePeriod, []string{}},
 			false,
 		},
 	}
