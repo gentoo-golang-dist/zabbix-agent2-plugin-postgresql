@@ -22,5 +22,3 @@ require (
 	golang.org/x/sys v0.0.0-20220310020820-b874c991c1a5 // indirect
 	golang.org/x/text v0.3.7 // indirect
 )
-
-replace git.zabbix.com/ap/plugin-support => /home/mikhail/git/plugin-support
