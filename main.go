@@ -63,7 +63,7 @@ func handleFlags() {
 
 	flag.Parse()
 
-	if helpFlag {
+	if helpFlag || flag.NFlag() == 0 {
 		flag.Usage()
 		os.Exit(0)
 	}
