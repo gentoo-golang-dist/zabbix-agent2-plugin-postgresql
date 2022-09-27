@@ -17,9 +17,9 @@ build:
 	go build -o "$(PACKAGE)"
 
 clean:
-	go clean ./...
 	rm -rf ./vendor
 	rm -rf ./$(PACKAGE)*
+	go clean ./...
 
 check:
 	go test -v -tags postgres_tests ./...
