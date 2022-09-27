@@ -26,7 +26,7 @@ You should add the following option to the **plugin** configuration file:
 Then the config file needs to be included in the main Zabbix agent 2 config file via the *Include* command.
 
 E.g:
-You should add the following option to the **agent** configuration file:
+You should add the following option to the **plugin** configuration file:
 
     Include=/path/to/config/postgresql.conf
 
