@@ -33,7 +33,7 @@ import (
 )
 
 const (
-	Name       = "Postgres"
+	Name       = "PostgreSQL"
 	sqlExt     = ".sql"
 	hkInterval = 10
 )

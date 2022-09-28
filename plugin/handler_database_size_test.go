@@ -1,5 +1,5 @@
-//go:build postgres_tests
-// +build postgres_tests
+//go:build postgresql_tests
+// +build postgresql_tests
 
 /*
 ** Zabbix

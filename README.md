@@ -14,51 +14,51 @@ You can extend it or create your template for your specific needs.
 PostgreSQL, version 10, 11, 12
 
 ## Plugin setup
-*Plugins.Postgres.System.Path* variable needs to be set in Zabbix agent 2 configuration file with the path to the
-Postgres plugin executable. By default the variable is set in **plugin** configuration file *postgresql.conf* and then
+*Plugins.PostgreSQL.System.Path* variable needs to be set in Zabbix agent 2 configuration file with the path to the
+Postgresql plugin executable. By default the variable is set in **plugin** configuration file *postgresql.conf* and then
 included in the **agent** configuration file *zabbix_agent2.conf*.
 
 E.g:
 You should add the following option to the **plugin** configuration file:
 
-    Plugins.Postgres.System.Path=/path/to/executable/postgresql
+    Plugins.PostgreSQL.System.Path=/path/to/executable/postgresql
 
 Then the config file needs to be included in the main Zabbix agent 2 config file via the *Include* command.
 
 E.g:
 You should add the following option to the **plugin** configuration file:
 
-    Include=/path/to/config/postgres.conf
+    Include=/path/to/config/postgresql.conf
 
 ## Configuration
 The Zabbix Agent's configuration file is used to configure plugins.
 
-**Plugins.Postgres.CallTimeout** — The maximum time in seconds for waiting when a request has to be done.  
+**Plugins.PostgreSQL.CallTimeout** — The maximum time in seconds for waiting when a request has to be done.  
 *Default value:* equals the global Timeout configuration parameter.  
 *Limits:* 1-30
 
-**Plugins.Postgres.Timeout** — The maximum time in seconds for waiting when a connection has to be established.  
+**Plugins.PostgreSQL.Timeout** — The maximum time in seconds for waiting when a connection has to be established.  
 *Default value:* equals the global Timeout configuration parameter.  
 *Limits:* 1-30
 
-**Plugins.Postgres.CustomQueriesPath** — Full pathname of a directory containing *.sql* files with custom queries.  
+**Plugins.PostgreSQL.CustomQueriesPath** — Full pathname of a directory containing *.sql* files with custom queries.  
 *Default value:* — (the feature is disabled by default)
 
-**Plugins.Postgres.KeepAlive** — Sets a time for waiting before unused connections will be closed.  
+**Plugins.PostgreSQL.KeepAlive** — Sets a time for waiting before unused connections will be closed.  
 *Default value:* 300 sec.  
 *Limits:* 60-900
 
-**Plugins.Postgres.Sessions.<session_name>.TLSConnect** — Encryption type for postgres connection. "*" should be replaced with a session name.
+**Plugins.PostgreSQL.Sessions.<session_name>.TLSConnect** — Encryption type for PostgreSQL connection. "*" should be replaced with a session name.
 *Default value:* 
 *Accepted values:*  required, verify_ca, verify_full
 
-**Plugins.Postgres.Sessions.<session_name>.TLSCAFile** — Full pathname of a file containing the top-level CA(s) certificates for postgres
+**Plugins.PostgreSQL.Sessions.<session_name>.TLSCAFile** — Full pathname of a file containing the top-level CA(s) certificates for PostgreSQL
 *Default value:* 
 
-**Plugins.Postgres.Sessions.<session_name>.TLSCertFile** — Full pathname of a file containing the postgres certificate or certificate chain.
+**Plugins.PostgreSQL.Sessions.<session_name>.TLSCertFile** — Full pathname of a file containing the PostgreSQL certificate or certificate chain.
 *Default value:* 
 
-**Plugins.Postgres.Sessions.*.TLSKeyFile** — Full pathname of a file containing the postgres private key.
+**Plugins.PostgreSQL.Sessions.*.TLSKeyFile** — Full pathname of a file containing the PostgreSQL private key.
 *Default value:* 
 
 ### Configuring connection
@@ -98,23 +98,23 @@ It's a bit more secure way to store credentials compared to item keys or macros.
 E.g: suppose you have two PostgreSQL instances: "Prod" and "Test". 
 You should add the following options to the agent configuration file:   
        
-    Plugins.Postgres.Sessions.Prod.Uri=tcp://192.168.1.1:5432
-    Plugins.Postgres.Sessions.Prod.User=<UserForProd>
-    Plugins.Postgres.Sessions.Prod.Password=<PasswordForProd>
-    Plugins.Postgres.Sessions.Prod.Database=proddb
-    Plugins.Postgres.Sessions.Prod.TLSConnect=verify_full
-    Plugins.Postgres.Sessions.Prod.TLSCAFile=/path/to/ca_file
-    Plugins.Postgres.Sessions.Prod.TLSCertFile=/path/to/cert_file
-    Plugins.Postgres.Sessions.Prod.TLSKeyFile=/path/to/key_file
+    Plugins.PostgreSQL.Sessions.Prod.Uri=tcp://192.168.1.1:5432
+    Plugins.PostgreSQL.Sessions.Prod.User=<UserForProd>
+    Plugins.PostgreSQL.Sessions.Prod.Password=<PasswordForProd>
+    Plugins.PostgreSQL.Sessions.Prod.Database=proddb
+    Plugins.PostgreSQL.Sessions.Prod.TLSConnect=verify_full
+    Plugins.PostgreSQL.Sessions.Prod.TLSCAFile=/path/to/ca_file
+    Plugins.PostgreSQL.Sessions.Prod.TLSCertFile=/path/to/cert_file
+    Plugins.PostgreSQL.Sessions.Prod.TLSKeyFile=/path/to/key_file
     
-    Plugins.Postgres.Sessions.Test.Uri=tcp://192.168.0.1:5432
-    Plugins.Postgres.Sessions.Test.User=<UserForTest>
-    Plugins.Postgres.Sessions.Test.Password=<PasswordForTest>
-    Plugins.Postgres.Sessions.Test.Service=testdb
-    Plugins.Postgres.Sessions.Test.TLSConnect=verify_ca
-    Plugins.Postgres.Sessions.Test.TLSCAFile=/path/to/test/ca_file
-    Plugins.Postgres.Sessions.Test.TLSCertFile=/path/to/test/cert_file
-    Plugins.Postgres.Sessions.Test.TLSKeyFile=/path/to/test/key_file
+    Plugins.PostgreSQL.Sessions.Test.Uri=tcp://192.168.0.1:5432
+    Plugins.PostgreSQL.Sessions.Test.User=<UserForTest>
+    Plugins.PostgreSQL.Sessions.Test.Password=<PasswordForTest>
+    Plugins.PostgreSQL.Sessions.Test.Service=testdb
+    Plugins.PostgreSQL.Sessions.Test.TLSConnect=verify_ca
+    Plugins.PostgreSQL.Sessions.Test.TLSCAFile=/path/to/test/ca_file
+    Plugins.PostgreSQL.Sessions.Test.TLSCertFile=/path/to/test/cert_file
+    Plugins.PostgreSQL.Sessions.Test.TLSKeyFile=/path/to/test/key_file
         
 Then you will be able to use these names as the 1st parameter (ConnString) in keys instead of URIs, e.g:
 
@@ -606,15 +606,15 @@ Then JSON is proceeded by dependent items of:
 
 ## Custom queries
 It's possible to extend functionality of the plugin using user-defined queries. To do that you should place all your
-queries in a directory specified in Plugins.Postgres.CustomQueriesPath (there is no default path) as *.sql files.
+queries in a directory specified in Plugins.PostgreSQL.CustomQueriesPath (there is no default path) as *.sql files.
 For example, you have a tree:
 
-    /etc/zabbix/postgres/sql/  
+    /etc/zabbix/postgresql/sql/  
     ├── long_tx.sql
     ├── payment.sql    
     └── top_proc.sql
      
-You should set Plugins.Postgres.CustomQueriesPath=/etc/zabbix/postgres/sql     
+You should set Plugins.PostgreSQL.CustomQueriesPath=/etc/zabbix/postgresql/sql     
      
 So, when the queries are in place, you can execute them:
   

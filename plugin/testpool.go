@@ -64,7 +64,7 @@ func createConnection() error {
 
 	newConn, err := sql.Open("pgx", connString)
 	if err != nil {
-		log.Critf("[createConnection] cannot create connection to Postgres: %s", err.Error())
+		log.Critf("[createConnection] cannot create connection to PostgreSQL: %s", err.Error())
 
 		return err
 	}
@@ -73,7 +73,7 @@ func createConnection() error {
 
 	err = newConn.QueryRow(`select current_setting('server_version_num');`).Scan(&version)
 	if err != nil {
-		log.Critf("[createConnection] cannot get Postgres version: %s", err.Error())
+		log.Critf("[createConnection] cannot get PostgreSQL version: %s", err.Error())
 
 		return err
 	}

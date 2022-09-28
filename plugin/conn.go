@@ -48,7 +48,7 @@ type PostgresClient interface {
 	PostgresVersion() int
 }
 
-// PGConn holds pointer to the Pool of Postgres Instance.
+// PGConn holds pointer to the Pool of PostgreSQL Instance.
 type PGConn struct {
 	client         *sql.DB
 	callTimeout    time.Duration
@@ -244,7 +244,7 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 	}
 
 	if serverVersion < MinSupportedPGVersion {
-		return nil, fmt.Errorf("postgres version %d is not supported", serverVersion)
+		return nil, fmt.Errorf("PostgreSQL version %d is not supported", serverVersion)
 	}
 
 	c.connections[uri.NoQueryString()] = &PGConn{

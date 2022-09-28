@@ -6,7 +6,7 @@ DISTFILES = \
 	LICENSE \
 	main.go \
 	Makefile \
-	postgres.conf \
+	postgresql.conf \
 	README.md
 
 DIST_SUBDIRS = \
@@ -22,7 +22,7 @@ clean:
 	go clean ./...
 
 check:
-	go test -v -tags postgres_tests ./...
+	go test -v -tags postgresql_tests ./...
 
 style:
 	golangci-lint run --new-from-rev=$(NEW_FROM_REV) ./...
