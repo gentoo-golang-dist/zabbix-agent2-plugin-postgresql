@@ -28,7 +28,7 @@ Then the config file needs to be included in the main Zabbix agent 2 config file
 E.g:
 You should add the following option to the **plugin** configuration file:
 
-    Include=/path/to/config/postgresql.conf
+    Include=/path/to/config/postgres.conf
 
 ## Configuration
 The Zabbix Agent's configuration file is used to configure plugins.
