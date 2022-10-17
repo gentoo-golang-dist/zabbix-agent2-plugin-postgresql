@@ -30,6 +30,11 @@ You should add the following option to the **plugin** configuration file:
 
     Include=/path/to/config/postgresql.conf
 
+## Options
+PostgreSQL plugin can be executed on its own with these parameters:
+* *-h*, *--help* displays help message
+* *-V*, *--version* displays the plugin version and license information
+
 ## Configuration
 The Zabbix Agent's configuration file is used to configure plugins.
 
