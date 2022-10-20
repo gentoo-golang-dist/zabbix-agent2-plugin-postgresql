@@ -29,7 +29,6 @@ import (
 	"sync"
 	"time"
 
-	"git.zabbix.com/ap/plugin-support/log"
 	"git.zabbix.com/ap/plugin-support/tlsconfig"
 	"git.zabbix.com/ap/plugin-support/uri"
 	"git.zabbix.com/ap/plugin-support/zbxerr"
@@ -162,7 +161,7 @@ func (c *ConnManager) closeUnused() {
 		if time.Since(conn.lastTimeAccess) > c.keepAlive {
 			conn.client.Close()
 			delete(c.connections, uri)
-			log.Debugf("[%s] Closed unused connection: %s", Name, conn.address)
+			Impl.Debugf("[%s] Closed unused connection: %s", Name, conn.address)
 		}
 	}
 }
@@ -257,7 +256,7 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 		address:        uri.Addr(),
 	}
 
-	log.Debugf("[%s] Created new connection: %s", Name, uri.Addr())
+	Impl.Debugf("[%s] Created new connection: %s", Name, uri.Addr())
 
 	return c.connections[uri.NoQueryString()], nil
 }
