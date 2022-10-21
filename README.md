@@ -11,7 +11,7 @@ You can extend it or create your template for your specific needs.
 - Go >= 1.18 (required only to build from source)
 
 ## Supported versions
-PostgreSQL, version 10, 11, 12
+PostgreSQL, version 10, 11, 12, 13, 14, 15
 
 ## Plugin setup
 *Plugins.PostgreSQL.System.Path* variable needs to be set in Zabbix agent 2 configuration file with the path to the
