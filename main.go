@@ -27,7 +27,7 @@ import (
 	"git.zabbix.com/ap/postgresql/plugin"
 )
 
-const pluginVersion = 0
+const pluginVersion = 1
 
 func main() {
 	handleFlags()
