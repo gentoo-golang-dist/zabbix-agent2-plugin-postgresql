@@ -27,7 +27,10 @@ import (
 	"git.zabbix.com/ap/postgresql/plugin"
 )
 
-const pluginVersion = 2
+const PLUGIN_VERSION_MAJOR = 6
+const PLUGIN_VERSION_MINOR = 0
+const PLUGIN_VERSION_PATCH = 13
+const PLUGIN_VERSION_RC    = "rc1"
 
 func main() {
 	handleFlags()
@@ -71,15 +74,15 @@ func handleFlags() {
 	flag.Visit(func(f *flag.Flag) {
 		switch f.Name {
 		case "V", "version":
-			comms.PrintVersion(plugin.Name, copyrightMessage(), pluginVersion)
+			comms.PrintVersion(plugin.Name, copyrightMessage(),
+				PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH, PLUGIN_VERSION_RC)
 			os.Exit(0)
 		}
 	})
 }
 
 func copyrightMessage() string {
-	return "Zabbix\n" +
-		"Copyright 2001-2022 Zabbix SIA\n" +
+	return  "Copyright 2001-2022 Zabbix SIA\n" +
 		"Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
 		"you may not use this file except in compliance with the License.\n" +
 		"You may obtain a copy of the License at\n\n" +
