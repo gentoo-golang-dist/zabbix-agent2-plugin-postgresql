@@ -1,3 +1,8 @@
+Changes for 1.2.2
+
+fixed custom query read on empty parameter
+
+--------------------------------------------------------------------------------
 Changes for 1.2.1
 
 changed connection to be per database
