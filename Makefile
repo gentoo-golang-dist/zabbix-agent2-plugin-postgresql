@@ -32,10 +32,11 @@ format:
 
 dist:
 	go mod vendor; \
-	major_verison=$$(grep 'MajorVersion = ' ./vendor/git.zabbix.com/ap/plugin-support/plugin/comms/version.go | awk '{ print $$3 }'); \
-	minor_verison=$$(grep 'MinorVersion = ' ./vendor/git.zabbix.com/ap/plugin-support/plugin/comms/version.go | awk '{ print $$3 }'); \
-	plugin_verison=$$(grep 'pluginVersion =' ./main.go | awk '{ print $$4 }'); \
-	distdir="$(PACKAGE)-$${major_verison}.$${minor_verison}.$${plugin_verison}"; \
+	major_verison=$$(grep 'const PLUGIN_VERSION_MAJOR' ./main.go | awk '{ print $$4 }'); \
+	minor_verison=$$(grep 'const PLUGIN_VERSION_MINOR' ./main.go | awk '{ print $$4 }'); \
+	patch_verison=$$(grep 'const PLUGIN_VERSION_PATCH' ./main.go | awk '{ print $$4 }'); \
+	alphatag=$$(grep 'const PLUGIN_VERSION_RC' ./main.go | awk '{ print $$4 }' | cut -d '"' -f 2); \
+	distdir="$(PACKAGE)-$${major_verison}.$${minor_verison}.$${patch_verison}$${alphatag}"; \
 	dist_archive="$${distdir}.tar.gz"; \
 	mkdir -p $${distdir}; \
 	for distfile in '$(DISTFILES)'; do \
