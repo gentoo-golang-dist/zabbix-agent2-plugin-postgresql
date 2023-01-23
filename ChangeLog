@@ -1,5 +1,6 @@
-Changes for 1.2.1
+Changes for 6.0.13rc1
 
+switched to Zabbix versioning
 changed connection to be per database
 
 --------------------------------------------------------------------------------
