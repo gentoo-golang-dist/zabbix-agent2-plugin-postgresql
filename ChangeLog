@@ -1,5 +1,6 @@
-Changes for 1.2.2
+Changes for 6.4.0beta6
 
+switch to Zabbix versioning
 fixed custom query read on empty parameter
 
 --------------------------------------------------------------------------------
