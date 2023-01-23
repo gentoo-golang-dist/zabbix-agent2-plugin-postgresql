@@ -28,8 +28,8 @@ import (
 )
 
 const PLUGIN_VERSION_MAJOR = 6
-const PLUGIN_VERSION_MINOR = 0
-const PLUGIN_VERSION_PATCH = 13
+const PLUGIN_VERSION_MINOR = 2
+const PLUGIN_VERSION_PATCH = 7
 const PLUGIN_VERSION_RC    = "rc1"
 
 func main() {
