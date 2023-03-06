@@ -1,6 +1,11 @@
+Changes for 6.4.0
+
+6.4.0beta6 released as 6.4.0 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 6.4.0beta6
 
-switch to Zabbix versioning
+switched to Zabbix versioning
 fixed custom query read on empty parameter
 
 --------------------------------------------------------------------------------
