@@ -29,7 +29,7 @@ import (
 
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 2
-const PLUGIN_VERSION_PATCH = 7
+const PLUGIN_VERSION_PATCH = 8
 const PLUGIN_VERSION_RC    = ""
 
 func main() {
