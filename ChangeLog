@@ -1,12 +1,12 @@
 Changes for 6.4.0beta6
 
-switch to Zabbix versioning
-fixed custom query read on empty parameter
+[ZBXNEXT-826] switched to Zabbix versioning (yurii)
+[ZBX-22061] fixed custom query read on empty parameter (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 1.2.1
 
-changed connection to be per database
+[ZBX-21206] changed connection to be per database (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 1.2.0
