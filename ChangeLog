@@ -10,8 +10,8 @@ Changes for 6.2.7
 --------------------------------------------------------------------------------
 Changes for 6.2.7rc1
 
-switched to Zabbix versioning
-changed connection to be per database
+[ZBXNEXT-826] switched to Zabbix versioning (yurii)
+[ZBX-21206] changed connection to be per database (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 1.2.0
@@ -19,4 +19,3 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
