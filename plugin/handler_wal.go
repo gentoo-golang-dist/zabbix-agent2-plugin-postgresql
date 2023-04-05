@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright 2001-2022 Zabbix SIA
+** Copyright 2001-2023 Zabbix SIA
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ func walHandler(ctx context.Context, conn PostgresClient,
 							WHEN pg_is_in_recovery() THEN 0
 							ELSE pg_wal_lsn_diff(pg_current_wal_lsn(),'0/00000000')
 						END AS WRITE,
-						CASE 
+						CASE
 							WHEN NOT pg_is_in_recovery() THEN 0
 							ELSE pg_wal_lsn_diff(pg_last_wal_receive_lsn(),'0/00000000')
 						END AS RECEIVE,
