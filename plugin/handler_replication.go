@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright 2001-2023 Zabbix SIA
+** Copyright 2001-2022 Zabbix SIA
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -124,7 +124,7 @@ func replicationHandler(ctx context.Context, conn PostgresClient,
 				   FROM (
 						SELECT
 						    application_name,
-							EXTRACT(epoch FROM COALESCE(flush_lag,'0'::interval)) AS flush_lag,
+							EXTRACT(epoch FROM COALESCE(flush_lag,'0'::interval)) AS flush_lag, 
 							EXTRACT(epoch FROM COALESCE(replay_lag,'0'::interval)) AS replay_lag,
 							EXTRACT(epoch FROM COALESCE(write_lag, '0'::interval)) AS write_lag
 						FROM pg_stat_replication

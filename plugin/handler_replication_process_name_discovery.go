@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright 2001-2023 Zabbix SIA
+** Copyright 2001-2022 Zabbix SIA
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ func processNameDiscoveryHandler(ctx context.Context, conn PostgresClient,
 	_ string, _ map[string]string, _ ...string) (interface{}, error) {
 	var appNameJSON string
 
-	query := `SELECT
-	json_build_object('data',COALESCE(json_agg(json_build_object('{#APPLICATION_NAME}',application_name)), '[]'))
+	query := `SELECT 
+	json_build_object('data',COALESCE(json_agg(json_build_object('{#APPLICATION_NAME}',application_name)), '[]'))		
 	FROM pg_stat_replication`
 
 	row, err := conn.QueryRow(ctx, query)
