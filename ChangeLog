@@ -1,3 +1,8 @@
+Changes for 7.0.0alpha1
+
+[ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
+
+-------------------------------------------------------------------------------
 Changes for 6.4.0beta6
 
 [ZBXNEXT-826] switched to Zabbix versioning (yurii)
