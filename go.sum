@@ -1,9 +1,3 @@
-git.zabbix.com/ap/plugin-support v1.2.2-0.20221229105226-e7e46bf69288 h1:o53qGcOkSU7Fz8wfCUAncOLvpUISE74zGs8Pk81Z908=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20221229105226-e7e46bf69288/go.mod h1:hBZQJDWXEBg2DpEIGzQD8R9xrvfdwveqLlJgDRVagHk=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230119152032-dcd85a2c1b4b h1:xILmVUgStXXpKuq9qD7pdx521D7eIIF6FUFIV18Ewu8=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230119152032-dcd85a2c1b4b/go.mod h1:hBZQJDWXEBg2DpEIGzQD8R9xrvfdwveqLlJgDRVagHk=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230123113819-fed2d1600b4d h1:GD10vTEM6N0kVuRycYN8IadXDG2Ogbf7bsv0OH39gRU=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230123113819-fed2d1600b4d/go.mod h1:hBZQJDWXEBg2DpEIGzQD8R9xrvfdwveqLlJgDRVagHk=
 git.zabbix.com/ap/plugin-support v1.2.2-0.20230328072810-77ed282adaf3 h1:KNudAUf1TdCuxlMD0voq1iv0sjtGZesaV710NuSU3qs=
 git.zabbix.com/ap/plugin-support v1.2.2-0.20230328072810-77ed282adaf3/go.mod h1:hBZQJDWXEBg2DpEIGzQD8R9xrvfdwveqLlJgDRVagHk=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
