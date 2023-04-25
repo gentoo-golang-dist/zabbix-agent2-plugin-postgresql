@@ -1,4 +1,4 @@
-Changes for 6.4.2rc1
+Changes for 6.4.2
 
 [ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
 
