@@ -3,7 +3,7 @@ module git.zabbix.com/ap/postgresql
 go 1.18
 
 require (
-	git.zabbix.com/ap/plugin-support v1.2.2-0.20230418085544-33810ba25ccc
+	git.zabbix.com/ap/plugin-support v1.2.2-0.20230425091148-19db534f135a
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/omeid/go-yarn v0.0.1
 )
