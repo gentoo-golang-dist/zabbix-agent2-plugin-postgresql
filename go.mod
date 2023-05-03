@@ -1,6 +1,6 @@
 module git.zabbix.com/ap/postgresql
 
-go 1.18
+go 1.19
 
 require (
 	git.zabbix.com/ap/plugin-support v1.2.2-0.20230503081642-61ed4a9d9246
