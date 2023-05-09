@@ -9,6 +9,7 @@ TOPDIR := $(subst /,\,$(CURDIR))
 PACKAGE:=$(PACKAGE).exe
 WINDRES = windres.exe
 ifneq ("$(shell findstr ZABBIX_RC_NUM $(TOPDIR)\windres\resource.h)","")
+ifeq ("$(WINDRES_FLAGS)","")
 WINDRES_FLAGS := \
 	-D ZABBIX_LICENSE_YEARS='\"$(word 3,$(shell findstr Copyright $(TOPDIR)\main.go | findstr 2001-20))\"' \
 	-D ZABBIX_VERSION_MAJOR=$(lastword $(shell findstr const $(TOPDIR)\main.go | findstr VERSION_MAJOR)) \
@@ -16,6 +17,7 @@ WINDRES_FLAGS := \
 	-D ZABBIX_VERSION_PATCH=$(lastword $(shell findstr const $(TOPDIR)\main.go | findstr VERSION_PATCH)) \
 	-D ZABBIX_VERSION_RC='\"$(lastword $(shell findstr const $(TOPDIR)\main.go | findstr VERSION_RC))\"' \
 	-D ZABBIX_VERSION_RC_NUM=1000
+endif
 endif
 endif
 
@@ -46,8 +48,8 @@ build: .build_rc
 
 clean:
 ifeq ($(OS),Windows_NT)
-	if exist "$(TOPDIR)\vendor" del /F "$(TOPDIR)\vendor"
-	if exist "$(TOPDIR)\$(PACKAGE)" del /F "$(TOPDIR)\$(PACKAGE)*"
+	if exist "$(TOPDIR)\vendor" rmdir /S /Q "$(TOPDIR)\vendor"
+	del /F "$(TOPDIR)\$(PACKAGE)*"
 else
 	rm -rf "$(TOPDIR)/vendor"
 	rm -rf "$(TOPDIR)/$(PACKAGE)*"
