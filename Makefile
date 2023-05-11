@@ -19,6 +19,21 @@ WINDRES_FLAGS := \
 	-D ZABBIX_VERSION_RC_NUM=1000
 endif
 endif
+
+RFLAGS := $(RFLAGS) --input-format=rc -O coff
+
+ifeq ("$(ARCH)", "")
+	ARCH := $(PROCESSOR_ARCHITECTURE)
+endif
+endif
+
+ifeq ("$(ARCH)", "x86")
+	GOARCH := 386
+	RFLAGS := $(RFLAGS) --target=pe-i386
+
+else
+	GOARCH := amd64
+	RFLAGS := $(RFLAGS) --target=pe-x86-64
 endif
 
 DISTFILES = \
@@ -38,12 +53,13 @@ DIST_SUBDIRS = \
 
 .build_rc:
 ifneq ("$(WINDRES)","")
-	$(WINDRES) $(TOPDIR)\windres\resource.rc $(WINDRES_FLAGS) \
+	$(WINDRES) $(TOPDIR)\windres\resource.rc $(WINDRES_FLAGS) $(RFLAGS) \
 		-D VER_FILEDESCRIPTION_STR='\"$(PACKAGE)\"' \
-		-D _WINDOWS -O coff -o "$(TOPDIR)\$(PACKAGE).syso"
+		-D _WINDOWS -o "$(TOPDIR)\$(PACKAGE).syso"
 endif
 
 build: .build_rc
+	set GOARCH=$(GOARCH)
 	go build -o "$(TOPDIR)/$(PACKAGE)"
 
 clean:
@@ -52,7 +68,7 @@ ifeq ($(OS),Windows_NT)
 	del /F "$(TOPDIR)\$(PACKAGE)*"
 else
 	rm -rf "$(TOPDIR)/vendor"
-	rm -rf "$(TOPDIR)/$(PACKAGE)*"
+	rm -rf "$(TOPDIR)/$(PACKAGE)"*
 endif
 	go clean -cache "$(TOPDIR)/..."
 
