@@ -1,3 +1,9 @@
+Changes for 6.0.18rc1
+
+[ZBX-22797] fixed client connection memory leak (esneiders)
+
+
+-------------------------------------------------------------------------------
 Changes for 6.0.17
 
 [ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
