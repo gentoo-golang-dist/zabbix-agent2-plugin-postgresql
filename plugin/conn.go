@@ -239,10 +239,12 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 
 	serverVersion, err := getPostgresVersion(ctx, client)
 	if err != nil {
+		client.Close()
 		return nil, err
 	}
 
 	if serverVersion < MinSupportedPGVersion {
+		client.Close()
 		return nil, fmt.Errorf("PostgreSQL version %d is not supported", serverVersion)
 	}
 
