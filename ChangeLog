@@ -1,7 +1,7 @@
 Changes for 6.0.18rc1
 
 [ZBX-22797] fixed client connection memory leak (esneiders)
-
+[ZBX-21886] added support for compiling under windows with official file properties
 
 -------------------------------------------------------------------------------
 Changes for 6.0.17
