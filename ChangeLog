@@ -2,6 +2,7 @@ Changes for 7.0.0alpha1
 
 [ZBX-22797] fixed client connection memory leak (esneiders)
 [ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
+[ZBX-21886] added support for compiling under windows with official file properties
 
 -------------------------------------------------------------------------------
 Changes for 6.4.0beta6
