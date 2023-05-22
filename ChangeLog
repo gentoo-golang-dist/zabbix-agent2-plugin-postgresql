@@ -1,7 +1,7 @@
 Changes for 6.4.3rc1
 
 [ZBX-22797] fixed client connection memory leak (esneiders)
-[ZBX-21886] added support for compiling under windows with official file properties
+[ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
 
 -------------------------------------------------------------------------------
 Changes for 6.4.2
