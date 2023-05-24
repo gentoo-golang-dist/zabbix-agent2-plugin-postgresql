@@ -27,10 +27,10 @@ import (
 	"git.zabbix.com/ap/postgresql/plugin"
 )
 
-const PLUGIN_VERSION_MAJOR = 6
-const PLUGIN_VERSION_MINOR = 4
+const PLUGIN_VERSION_MAJOR = 7
+const PLUGIN_VERSION_MINOR = 0
 const PLUGIN_VERSION_PATCH = 0
-const PLUGIN_VERSION_RC    = "beta6"
+const PLUGIN_VERSION_RC    = "alpha1"
 
 func main() {
 	handleFlags()
