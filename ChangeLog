@@ -1,6 +1,6 @@
 Changes for 6.0.19rc1
 
-[ZBX-22868] fixed defaults when hardcoded value is provided
+[ZBX-22868] fixed defaults when hardcoded value is provided (esneiders)
 
 -------------------------------------------------------------------------------
 Changes for 6.0.18
