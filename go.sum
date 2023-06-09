@@ -2,6 +2,8 @@ git.zabbix.com/ap/plugin-support v1.2.2-0.20230503081642-61ed4a9d9246 h1:nRrITHm
 git.zabbix.com/ap/plugin-support v1.2.2-0.20230503081642-61ed4a9d9246/go.mod h1:hBZQJDWXEBg2DpEIGzQD8R9xrvfdwveqLlJgDRVagHk=
 git.zabbix.com/ap/plugin-support v1.2.2-0.20230519084103-f3bfe0222b0d h1:AELZC1RgtlQSTl9lFFUCo4qSZWgXJxLrf/cE3tUMgso=
 git.zabbix.com/ap/plugin-support v1.2.2-0.20230519084103-f3bfe0222b0d/go.mod h1:F82aoIfLotyv5ExPLCnbUXklH89O6iS1jeU1Kh3lYGs=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20230609120326-abfec67b29da h1:SGrLbxs3//G2fEtQSUNJFix1wZN+5h5fegZbIMZNuWg=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20230609120326-abfec67b29da/go.mod h1:F82aoIfLotyv5ExPLCnbUXklH89O6iS1jeU1Kh3lYGs=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
