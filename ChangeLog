@@ -1,3 +1,8 @@
+Changes for 6.0.20rc1
+
+[ZBX-23104] fixed memory leak by updating postgresql package (esneiders)
+
+--------------------------------------------------------------------------------
 Changes for 6.0.19
 
 6.0.19rc1 was released as 6.0.19 without any changes
