@@ -1,6 +1,7 @@
 Changes for 7.0.0alpha3
 
-7.0.0alpha2 was released as 7.0.0alpha3 without any changes
+Bug fixes:
+[ZBX-22535] fixed Zabbix agent 2 configuration with empty values (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha2
