@@ -61,10 +61,11 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 		return nil, err
 	}
 
-	details, err := tlsconfig.CreateDetails(params["sessionName"], params["TLSConnect"],
-		params["TLSCAFile"], params["TLSCertFile"], params["TLSKeyFile"], params["URI"])
-	if err != nil {
-		return nil, zbxerr.ErrorInvalidConfiguration.Wrap(err)
+	details := tlsconfig.Details{
+		TlsConnect:  params["TLSConnect"],
+		TlsCaFile:   params["TLSCAFile"],
+		TlsCertFile: params["TLSCertFile"],
+		TlsKeyFile:  params["TLSKeyFile"],
 	}
 
 	dbname := url.QueryEscape(params["Database"])
