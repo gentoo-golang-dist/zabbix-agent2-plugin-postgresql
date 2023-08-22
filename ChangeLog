@@ -1,3 +1,10 @@
+Changes for 7.0.0alpha4
+
+Bug fixes:
+
+[ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
+
+--------------------------------------------------------------------------------
 Changes for 7.0.0alpha3
 
 Bug fixes:
