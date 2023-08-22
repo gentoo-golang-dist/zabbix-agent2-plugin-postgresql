@@ -19,7 +19,6 @@ package plugin
 
 import (
 	"context"
-	"crypto/tls"
 	"database/sql"
 	"fmt"
 	"net"
@@ -225,14 +224,7 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 		return nil, err
 	}
 
-	dsn := fmt.Sprintf("host=%s port=%s dbname=%s user=%s",
-		host, port, dbname, uri.User())
-
-	if uri.Password() != "" {
-		dsn += " password=" + uri.Password()
-	}
-
-	client, err := createTLSClient(dsn, c.connectTimeout, details)
+	client, err := createClient(createDNS(host, port, dbname, uri.User(), uri.Password(), details), c.connectTimeout)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +255,39 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 	return c.connections[uri], nil
 }
 
-func createTLSClient(dsn string, timeout time.Duration, details tlsconfig.Details) (*sql.DB, error) {
+func createDNS(host, port, dbname, user, password string, details tlsconfig.Details) string {
+	dsn := fmt.Sprintf("host=%s port=%s dbname=%s user=%s", host, port, dbname, user)
+
+	tmp := make(map[string]string)
+	tmp["password"] = password
+	tmp["sslmode"] = renameTLS(details.TlsConnect)
+	tmp["sslrootcert"] = details.TlsCaFile
+	tmp["sslcert"] = details.TlsCertFile
+	tmp["sslkey"] = details.TlsKeyFile
+
+	for k, v := range tmp {
+		if v != "" {
+			dsn = fmt.Sprintf("%s %s=%s", dsn, k, v)
+		}
+	}
+
+	return dsn
+}
+
+func renameTLS(in string) string {
+	switch in {
+	case "required":
+		return "require"
+	case "verify_ca":
+		return "verify-ca"
+	case "verify_full":
+		return "verify-full"
+	default:
+		return in
+	}
+}
+
+func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 	config, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		return nil, err
@@ -279,25 +303,7 @@ func createTLSClient(dsn string, timeout time.Duration, details tlsconfig.Detail
 		return conn, err
 	}
 
-	config.ConnConfig.TLSConfig, err = getTLSConfig(details)
-	if err != nil {
-		return nil, err
-	}
-
 	return stdlib.OpenDB(*config.ConnConfig), nil
-}
-
-func getTLSConfig(details tlsconfig.Details) (*tls.Config, error) {
-	switch details.TlsConnect {
-	case "required":
-		return &tls.Config{InsecureSkipVerify: true}, nil
-	case "verify_ca":
-		return tlsconfig.CreateConfig(details, true)
-	case "verify_full":
-		return tlsconfig.CreateConfig(details, false)
-	}
-
-	return nil, nil
 }
 
 // get returns a connection with given uri if it exists and also updates lastTimeAccess, otherwise returns nil.
