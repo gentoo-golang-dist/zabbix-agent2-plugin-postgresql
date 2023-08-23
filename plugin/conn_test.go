@@ -49,13 +49,13 @@ func Test_createDNS(t *testing.T) {
 			[]string{"host=127.0.0.1", "port=123", "dbname=postgres", "user=foo", "password=bar"},
 		},
 		{
-			"tls_connect_required",
+			"tls_connect_require",
 			args{
 				host:    "127.0.0.1",
 				port:    "123",
 				dbname:  "postgres",
 				user:    "foo",
-				details: tlsconfig.Details{TlsConnect: "required"}},
+				details: tlsconfig.Details{TlsConnect: "require"}},
 			[]string{"host=127.0.0.1", "port=123", "dbname=postgres", "user=foo", "sslmode=require"},
 		},
 		{
@@ -65,7 +65,7 @@ func Test_createDNS(t *testing.T) {
 				port:    "123",
 				dbname:  "postgres",
 				user:    "foo",
-				details: tlsconfig.Details{TlsConnect: "verify_ca", TlsCaFile: "path/to/ca"}},
+				details: tlsconfig.Details{TlsConnect: "verify-ca", TlsCaFile: "path/to/ca"}},
 			[]string{
 				"host=127.0.0.1",
 				"port=123",
@@ -83,7 +83,7 @@ func Test_createDNS(t *testing.T) {
 				dbname: "postgres",
 				user:   "foo",
 				details: tlsconfig.Details{
-					TlsConnect:  "verify_full",
+					TlsConnect:  "verify-full",
 					TlsCaFile:   "path/to/ca",
 					TlsCertFile: "path/to/cert",
 					TlsKeyFile:  "path/to/key",
