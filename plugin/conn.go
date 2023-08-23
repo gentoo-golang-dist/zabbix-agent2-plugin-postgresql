@@ -46,7 +46,6 @@ const (
 	key      = "sslkey"
 
 	// connType
-
 	disable    = "disable"
 	require    = "require"
 	verifyCa   = "verify-ca"
