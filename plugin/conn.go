@@ -354,18 +354,27 @@ func (c *ConnManager) GetConnection(uri uri.URI, params map[string]string) (conn
 }
 
 func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
+	tlsType := renameTLS(params[tlsConnectParam])
+	validateCA := true
+
+	if tlsType == "" {
+		tlsType = "disable"
+		validateCA = false
+	}
+
 	details := tlsconfig.NewDetails(
 		params[metric.SessionParam],
-		renameTLS(params[tlsConnectParam]),
+		tlsType,
 		params[tlsCAParam],
 		params[tlsCertParam],
 		params[tlsKeyParam],
 		params[uriParam],
+		"disable",
 		"require",
 		"verify-ca",
 		"verify-full",
 	)
 
-	err := details.Validate(true, false, false)
+	err := details.Validate(validateCA, false, false)
 	return details, err
 }
