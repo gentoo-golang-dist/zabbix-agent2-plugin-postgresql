@@ -24,7 +24,6 @@ import (
 	"time"
 
 	"git.zabbix.com/ap/plugin-support/metric"
-	"git.zabbix.com/ap/plugin-support/tlsconfig"
 	"git.zabbix.com/ap/plugin-support/uri"
 	"git.zabbix.com/ap/plugin-support/zbxerr"
 
@@ -61,13 +60,6 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 		return nil, err
 	}
 
-	details := tlsconfig.Details{
-		TlsConnect:  params["TLSConnect"],
-		TlsCaFile:   params["TLSCAFile"],
-		TlsCertFile: params["TLSCertFile"],
-		TlsKeyFile:  params["TLSKeyFile"],
-	}
-
 	dbname := url.QueryEscape(params["Database"])
 
 	uri, err := uri.NewWithCreds(params["URI"]+"?dbname="+dbname, params["User"], params["Password"], uriDefaults)
@@ -80,7 +72,7 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 		return nil, zbxerr.ErrorUnsupportedMetric
 	}
 
-	conn, err := p.connMgr.GetConnection(*uri, details)
+	conn, err := p.connMgr.GetConnection(*uri, params)
 	if err != nil {
 		// Special logic of processing connection errors should be used if pgsql.ping is requested
 		// because it must return pingFailed if any error occurred.
