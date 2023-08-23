@@ -45,6 +45,13 @@ const (
 	cert     = "sslcert"
 	key      = "sslkey"
 
+	// connType
+
+	disable    = "disable"
+	require    = "require"
+	verifyCa   = "verify-ca"
+	verifyFull = "verify-full"
+
 	MinSupportedPGVersion = 100000
 )
 
@@ -358,8 +365,7 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 	validateCA := true
 
 	if tlsType == "" {
-		tlsType = "disable"
-		validateCA = false
+		tlsType = disable
 	}
 
 	details := tlsconfig.NewDetails(
@@ -369,11 +375,15 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 		params[tlsCertParam],
 		params[tlsKeyParam],
 		params[uriParam],
-		"disable",
-		"require",
-		"verify-ca",
-		"verify-full",
+		disable,
+		require,
+		verifyCa,
+		verifyFull,
 	)
+
+	if tlsType == disable || tlsType == require {
+		validateCA = false
+	}
 
 	err := details.Validate(validateCA, false, false)
 	return details, err
