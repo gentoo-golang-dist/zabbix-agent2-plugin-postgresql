@@ -30,7 +30,7 @@ import (
 const PLUGIN_VERSION_MAJOR = 7
 const PLUGIN_VERSION_MINOR = 0
 const PLUGIN_VERSION_PATCH = 0
-const PLUGIN_VERSION_RC    = "alpha4"
+const PLUGIN_VERSION_RC    = "alpha5"
 
 func main() {
 	handleFlags()
