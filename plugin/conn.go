@@ -19,7 +19,6 @@ package plugin
 
 import (
 	"context"
-	"crypto/tls"
 	"database/sql"
 	"fmt"
 	"net"
@@ -29,6 +28,7 @@ import (
 	"sync"
 	"time"
 
+	"git.zabbix.com/ap/plugin-support/metric"
 	"git.zabbix.com/ap/plugin-support/tlsconfig"
 	"git.zabbix.com/ap/plugin-support/uri"
 	"git.zabbix.com/ap/plugin-support/zbxerr"
@@ -37,7 +37,22 @@ import (
 	"github.com/omeid/go-yarn"
 )
 
-const MinSupportedPGVersion = 100000
+const (
+	// pgx dns field names
+	password = "password"
+	mode     = "sslmode"
+	rootCA   = "sslrootcert"
+	cert     = "sslcert"
+	key      = "sslkey"
+
+	// connType
+	disable    = "disable"
+	require    = "require"
+	verifyCa   = "verify-ca"
+	verifyFull = "verify-full"
+
+	MinSupportedPGVersion = 100000
+)
 
 type PostgresClient interface {
 	Query(ctx context.Context, query string, args ...interface{}) (rows *sql.Rows, err error)
@@ -225,14 +240,7 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 		return nil, err
 	}
 
-	dsn := fmt.Sprintf("host=%s port=%s dbname=%s user=%s",
-		host, port, dbname, uri.User())
-
-	if uri.Password() != "" {
-		dsn += " password=" + uri.Password()
-	}
-
-	client, err := createTLSClient(dsn, c.connectTimeout, details)
+	client, err := createClient(createDNS(host, port, dbname, uri.User(), uri.Password(), details), c.connectTimeout)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +271,40 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 	return c.connections[uri], nil
 }
 
-func createTLSClient(dsn string, timeout time.Duration, details tlsconfig.Details) (*sql.DB, error) {
+func createDNS(host, port, dbname, user, pass string, details tlsconfig.Details) string {
+	dsn := fmt.Sprintf("host=%s port=%s dbname=%s user=%s", host, port, dbname, user)
+
+	tmp := map[string]string{
+		password: pass,
+		mode:     details.TlsConnect,
+		rootCA:   details.TlsCaFile,
+		cert:     details.TlsCertFile,
+		key:      details.TlsKeyFile,
+	}
+
+	for k, v := range tmp {
+		if v != "" {
+			dsn = fmt.Sprintf("%s %s=%s", dsn, k, v)
+		}
+	}
+
+	return dsn
+}
+
+func renameTLS(in string) string {
+	switch in {
+	case "required":
+		return "require"
+	case "verify_ca":
+		return "verify-ca"
+	case "verify_full":
+		return "verify-full"
+	default:
+		return in
+	}
+}
+
+func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 	config, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		return nil, err
@@ -279,25 +320,7 @@ func createTLSClient(dsn string, timeout time.Duration, details tlsconfig.Detail
 		return conn, err
 	}
 
-	config.ConnConfig.TLSConfig, err = getTLSConfig(details)
-	if err != nil {
-		return nil, err
-	}
-
 	return stdlib.OpenDB(*config.ConnConfig), nil
-}
-
-func getTLSConfig(details tlsconfig.Details) (*tls.Config, error) {
-	switch details.TlsConnect {
-	case "required":
-		return &tls.Config{InsecureSkipVerify: true}, nil
-	case "verify_ca":
-		return tlsconfig.CreateConfig(details, true)
-	case "verify_full":
-		return tlsconfig.CreateConfig(details, false)
-	}
-
-	return nil, nil
 }
 
 // get returns a connection with given uri if it exists and also updates lastTimeAccess, otherwise returns nil.
@@ -314,19 +337,53 @@ func (c *ConnManager) get(uri uri.URI) *PGConn {
 }
 
 // GetConnection returns an existing connection or creates a new one.
-func (c *ConnManager) GetConnection(uri uri.URI, details tlsconfig.Details) (conn *PGConn, err error) {
+func (c *ConnManager) GetConnection(uri uri.URI, params map[string]string) (conn *PGConn, err error) {
 	c.Lock()
 	defer c.Unlock()
 
 	conn = c.get(uri)
-
-	if conn == nil {
-		conn, err = c.create(uri, details)
+	if conn != nil {
+		return
 	}
 
+	details, err := getTlsDetails(params)
+	if err != nil {
+		return nil, err
+	}
+
+	conn, err = c.create(uri, details)
 	if err != nil {
 		err = zbxerr.ErrorConnectionFailed.Wrap(err)
 	}
 
 	return
+}
+
+func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
+	tlsType := renameTLS(params[tlsConnectParam])
+	validateCA := true
+
+	if tlsType == "" {
+		tlsType = disable
+	}
+
+	details := tlsconfig.NewDetails(
+		params[metric.SessionParam],
+		tlsType,
+		params[tlsCAParam],
+		params[tlsCertParam],
+		params[tlsKeyParam],
+		params[uriParam],
+		disable,
+		require,
+		verifyCa,
+		verifyFull,
+	)
+
+	if tlsType == disable || tlsType == require {
+		validateCA = false
+	}
+
+	err := details.Validate(validateCA, false, false)
+	return details, err
 }

@@ -55,6 +55,16 @@ const (
 	keyReplicationStatus               = "pgsql.replication.status"
 	keyUptime                          = "pgsql.uptime"
 	keyWal                             = "pgsql.wal.stat"
+
+	uriParam        = "URI"
+	tcpParam        = "tcp"
+	userParam       = "User"
+	databaseParam   = "Database"
+	passwordParam   = "Password"
+	tlsConnectParam = "TLSConnect"
+	tlsCAParam      = "TLSCAFile"
+	tlsCertParam    = "TLSCertFile"
+	tlsKeyParam     = "TLSKeyFile"
 )
 
 // handlerFunc defines an interface must be implemented by handlers.
@@ -162,21 +172,23 @@ func (v PostgresURIValidator) Validate(value *string) error {
 
 // Common params: [URI|Session][,User][,Password][,Database]
 var (
-	paramURI = metric.NewConnParam("URI", "URI to connect or session name.").
+	paramURI = metric.NewConnParam(uriParam, "URI to connect or session name.").
 			WithDefault(uriDefaults.Scheme + "://localhost:" + uriDefaults.Port).WithSession().
 			WithValidator(PostgresURIValidator{
 			Defaults:       uriDefaults,
-			AllowedSchemes: []string{"tcp", "postgresql", "unix"},
+			AllowedSchemes: []string{tcpParam, "postgresql", "unix"},
 		})
-	paramUsername = metric.NewConnParam("User", "PostgreSQL user.").WithDefault("postgres")
-	paramPassword = metric.NewConnParam("Password", "User's password.").WithDefault("").
+	paramUsername = metric.NewConnParam(userParam, "PostgreSQL user.").WithDefault("postgres")
+	paramPassword = metric.NewConnParam(passwordParam, "User's password.").
+			WithDefault("").
 			WithValidator(metric.LenValidator{Max: &maxPassLen})
-	paramDatabase = metric.NewConnParam("Database", "Database name to be used for connection.").
-			WithDefault("postgres").WithValidator(metric.LenValidator{Min: &minDBNameLen, Max: &maxDBNameLen})
-	paramTLSConnect  = metric.NewSessionOnlyParam("TLSConnect", "DB connection encryption type.").WithDefault("")
-	paramTLSCaFile   = metric.NewSessionOnlyParam("TLSCAFile", "TLS ca file path.").WithDefault("")
-	paramTLSCertFile = metric.NewSessionOnlyParam("TLSCertFile", "TLS cert file path.").WithDefault("")
-	paramTLSKeyFile  = metric.NewSessionOnlyParam("TLSKeyFile", "TLS key file path.").WithDefault("")
+	paramDatabase = metric.NewConnParam(databaseParam, "Database name to be used for connection.").
+			WithDefault("postgres").
+			WithValidator(metric.LenValidator{Min: &minDBNameLen, Max: &maxDBNameLen})
+	paramTLSConnect  = metric.NewSessionOnlyParam(tlsConnectParam, "DB connection encryption type.").WithDefault("")
+	paramTLSCaFile   = metric.NewSessionOnlyParam(tlsCAParam, "TLS ca file path.").WithDefault("")
+	paramTLSCertFile = metric.NewSessionOnlyParam(tlsCertParam, "TLS cert file path.").WithDefault("")
+	paramTLSKeyFile  = metric.NewSessionOnlyParam(tlsKeyParam, "TLS key file path.").WithDefault("")
 )
 
 var metrics = metric.MetricSet{

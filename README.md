@@ -71,8 +71,9 @@ A connection can be configured using either keys' parameters or named sessions.
 
 *Notes*:  
 * You can leave any connection parameter empty, a default hard-coded value will be used in the such case.
-* TLS information can be passed only with sessions.
-* Embedded URI credentials (userinfo) are forbidden and will be ignored. So, you can't pass the credentials by this:   
+* TLS information can be passed only from configuration file.
+* TLS certificates validation relies on SAN instead of CN, based on https://pkg.go.dev/crypto/x509#Certificate.VerifyHostname
+* Embedded URI credentials (userinfo) are forbidden and will be ignored. So, you can't pass the credentials by this: 
   
       pgsql.ping[tcp://user:password@127.0.0.1/postgres] — WRONG  
   
