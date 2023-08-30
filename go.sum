@@ -1,5 +1,5 @@
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230727113441-f6d586857c14 h1:MlhseUdh0DFJ+Vg3KkJu8B+YZMqFotg1DMK7fv5I2ug=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230727113441-f6d586857c14/go.mod h1:B+HpVBZbBMBttTFc0NuChmMkWepNj7yFPCefmggo+0U=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20230830115138-70c19a28dd7c h1:X3CIwJkOAveOdHZo3QqBQSyvHtgOkAtIT1P+mjVSMbU=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20230830115138-70c19a28dd7c/go.mod h1:B+HpVBZbBMBttTFc0NuChmMkWepNj7yFPCefmggo+0U=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
