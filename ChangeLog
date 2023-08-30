@@ -5,6 +5,11 @@ Bug fixes:
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
 
 --------------------------------------------------------------------------------
+Changes for 6.4.6
+
+6.4.6rc1 was released as 6.4.6 without any changes
+ 
+--------------------------------------------------------------------------------
 Changes for 6.4.5
 
 6.4.4 was released as 6.4.5 without any changes
