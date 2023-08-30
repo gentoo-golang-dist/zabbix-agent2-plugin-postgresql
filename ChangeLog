@@ -1,8 +1,8 @@
 Changes for 6.0.22rc1
 
-New features:
-
 Bug fixes:
+
+[ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 6.0.21
