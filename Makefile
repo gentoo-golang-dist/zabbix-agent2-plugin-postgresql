@@ -128,3 +128,17 @@ ifneq ($(OS),Windows_NT)
 	tar -czvf ./$${dist_archive} ./$${distdir}; \
 	rm -rf ./$${distdir}
 endif
+
+sbom.json:
+	CGO_CFLAGS="${CGO_CFLAGS}" CGO_LDFLAGS="${CGO_LDFLAGS}" cyclonedx-gomod mod \
+		   -output-version 1.4 \
+		   -licenses -assert-licenses -json -output "$@"
+
+sbom.xml:
+	CGO_CFLAGS="${CGO_CFLAGS}" CGO_LDFLAGS="${CGO_LDFLAGS}" cyclonedx-gomod mod \
+		   -output-version 1.4 \
+		   -licenses -assert-licenses -output "$@"
+
+sbom: sbom.json
+
+.PHONY: sbom
