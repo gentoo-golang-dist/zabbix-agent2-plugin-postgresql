@@ -1,5 +1,11 @@
 Changes for 7.0.0alpha5
 
+Bug fixes:
+[ZBX-22532] update flag handling to use common function from plugin-support (rzvejs)
+
+--------------------------------------------------------------------------------
+Changes for 7.0.0alpha5
+
 New features:
 
 Bug fixes:
@@ -46,4 +52,3 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
