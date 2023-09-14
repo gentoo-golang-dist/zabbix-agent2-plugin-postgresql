@@ -1,6 +1,12 @@
 Changes for 7.0.0alpha5
 
 New features:
+[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
+
+--------------------------------------------------------------------------------
+Changes for 7.0.0alpha5
+
+New features:
 
 Bug fixes:
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
@@ -46,4 +52,3 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
