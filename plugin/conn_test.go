@@ -107,6 +107,7 @@ func Test_createDNS(t *testing.T) {
 				tt.args.dbname,
 				tt.args.user,
 				tt.args.password,
+				"",
 				tt.args.details,
 			)
 
