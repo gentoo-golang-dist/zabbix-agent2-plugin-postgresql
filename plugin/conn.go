@@ -39,11 +39,12 @@ import (
 
 const (
 	// pgx dns field names
-	password = "password"
-	mode     = "sslmode"
-	rootCA   = "sslrootcert"
-	cert     = "sslcert"
-	key      = "sslkey"
+	password  = "password"
+	mode      = "sslmode"
+	rootCA    = "sslrootcert"
+	cert      = "sslcert"
+	key       = "sslkey"
+	cacheMode = "statement_cache_mode"
 
 	// connType
 	disable    = "disable"
@@ -71,6 +72,11 @@ type PGConn struct {
 	version        int
 	queryStorage   *yarn.Yarn
 	address        string
+}
+
+type connID struct {
+	uri       *uri.URI
+	cacheMode string
 }
 
 var errorQueryNotFound = "query %q not found"
@@ -140,7 +146,7 @@ func (conn *PGConn) updateAccessTime() {
 type ConnManager struct {
 	sync.Mutex
 	connMutex      sync.Mutex
-	connections    map[uri.URI]*PGConn
+	connections    map[connID]*PGConn
 	keepAlive      time.Duration
 	connectTimeout time.Duration
 	callTimeout    time.Duration
@@ -154,7 +160,7 @@ func NewConnManager(keepAlive, connectTimeout, callTimeout,
 	ctx, cancel := context.WithCancel(context.Background())
 
 	connMgr := &ConnManager{
-		connections:    make(map[uri.URI]*PGConn),
+		connections:    make(map[connID]*PGConn),
 		keepAlive:      keepAlive,
 		connectTimeout: connectTimeout,
 		callTimeout:    callTimeout,
@@ -172,11 +178,11 @@ func (c *ConnManager) closeUnused() {
 	c.connMutex.Lock()
 	defer c.connMutex.Unlock()
 
-	for uri, conn := range c.connections {
+	for details, conn := range c.connections {
 		if time.Since(conn.lastTimeAccess) > c.keepAlive {
 			conn.client.Close()
-			delete(c.connections, uri)
-			Impl.Debugf("[%s] Closed unused connection: %s", Name, uri.Addr())
+			delete(c.connections, details)
+			Impl.Debugf("[%s] Closed unused connection: %s", Name, details.uri.Addr())
 		}
 	}
 }
@@ -209,22 +215,22 @@ func (c *ConnManager) housekeeper(ctx context.Context, interval time.Duration) {
 }
 
 // create creates a new connection with given credentials.
-func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, error) {
+func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, error) {
 	c.connMutex.Lock()
 	defer c.connMutex.Unlock()
 
-	if _, ok := c.connections[uri]; ok {
+	if _, ok := c.connections[ci]; ok {
 		// Should never happen.
 		panic("connection already exists")
 	}
 
 	ctx := context.Background()
 
-	host := uri.Host()
-	port := uri.Port()
+	host := ci.uri.Host()
+	port := ci.uri.Port()
 
-	if uri.Scheme() == "unix" {
-		socket := uri.Addr()
+	if ci.uri.Scheme() == "unix" {
+		socket := ci.uri.Addr()
 		host = filepath.Dir(socket)
 
 		ext := filepath.Ext(filepath.Base(socket))
@@ -235,12 +241,14 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 		port = ext[1:]
 	}
 
-	dbname, err := url.QueryUnescape(uri.GetParam("dbname"))
+	dbname, err := url.QueryUnescape(ci.uri.GetParam("dbname"))
 	if err != nil {
 		return nil, err
 	}
 
-	client, err := createClient(createDNS(host, port, dbname, uri.User(), uri.Password(), details), c.connectTimeout)
+	client, err := createClient(
+		createDNS(host, port, dbname, ci.uri.User(), ci.uri.Password(), ci.cacheMode, details), c.connectTimeout,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -256,30 +264,31 @@ func (c *ConnManager) create(uri uri.URI, details tlsconfig.Details) (*PGConn, e
 		return nil, fmt.Errorf("PostgreSQL version %d is not supported", serverVersion)
 	}
 
-	c.connections[uri] = &PGConn{
+	c.connections[ci] = &PGConn{
 		client:         client,
 		callTimeout:    c.callTimeout,
 		version:        serverVersion,
 		lastTimeAccess: time.Now(),
 		ctx:            ctx,
 		queryStorage:   &c.queryStorage,
-		address:        uri.Addr(),
+		address:        ci.uri.Addr(),
 	}
 
-	Impl.Debugf("[%s] Created new connection: %s", Name, uri.Addr())
+	Impl.Debugf("[%s] Created new connection: %s", Name, ci.uri.Addr())
 
-	return c.connections[uri], nil
+	return c.connections[ci], nil
 }
 
-func createDNS(host, port, dbname, user, pass string, details tlsconfig.Details) string {
+func createDNS(host, port, dbname, user, pass, mode string, details tlsconfig.Details) string {
 	dsn := fmt.Sprintf("host=%s port=%s dbname=%s user=%s", host, port, dbname, user)
 
 	tmp := map[string]string{
-		password: pass,
-		mode:     details.TlsConnect,
-		rootCA:   details.TlsCaFile,
-		cert:     details.TlsCertFile,
-		key:      details.TlsKeyFile,
+		password:  pass,
+		mode:      details.TlsConnect,
+		rootCA:    details.TlsCaFile,
+		cert:      details.TlsCertFile,
+		key:       details.TlsKeyFile,
+		cacheMode: mode,
 	}
 
 	for k, v := range tmp {
@@ -305,10 +314,14 @@ func renameTLS(in string) string {
 }
 
 func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
+	Impl.Errf("dsn: %s", dsn)
+
 	config, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		return nil, err
 	}
+
+	Impl.Errf("config.ConnConfig.RuntimeParams: %+v", config.ConnConfig.RuntimeParams)
 
 	config.ConnConfig.DialFunc = func(ctx context.Context, network, addr string) (net.Conn, error) {
 		d := net.Dialer{}
@@ -324,11 +337,11 @@ func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 }
 
 // get returns a connection with given uri if it exists and also updates lastTimeAccess, otherwise returns nil.
-func (c *ConnManager) get(uri uri.URI) *PGConn {
+func (c *ConnManager) get(cd connID) *PGConn {
 	c.connMutex.Lock()
 	defer c.connMutex.Unlock()
 
-	if conn, ok := c.connections[uri]; ok {
+	if conn, ok := c.connections[cd]; ok {
 		conn.updateAccessTime()
 		return conn
 	}
@@ -337,11 +350,11 @@ func (c *ConnManager) get(uri uri.URI) *PGConn {
 }
 
 // GetConnection returns an existing connection or creates a new one.
-func (c *ConnManager) GetConnection(uri uri.URI, params map[string]string) (conn *PGConn, err error) {
+func (c *ConnManager) GetConnection(ci connID, params map[string]string) (conn *PGConn, err error) {
 	c.Lock()
 	defer c.Unlock()
 
-	conn = c.get(uri)
+	conn = c.get(ci)
 	if conn != nil {
 		return
 	}
@@ -351,7 +364,7 @@ func (c *ConnManager) GetConnection(uri uri.URI, params map[string]string) (conn
 		return nil, err
 	}
 
-	conn, err = c.create(uri, details)
+	conn, err = c.create(ci, details)
 	if err != nil {
 		err = zbxerr.ErrorConnectionFailed.Wrap(err)
 	}
@@ -386,4 +399,18 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 
 	err := details.Validate(validateCA, false, false)
 	return details, err
+}
+
+func createConnID(params map[string]string) (connID, error) {
+	u, err := uri.NewWithCreds(
+		fmt.Sprintf("%s?dbname=%s", params["URI"], url.QueryEscape(params["Database"])),
+		params["User"],
+		params["Password"],
+		uriDefaults,
+	)
+	if err != nil {
+		return connID{}, err
+	}
+
+	return connID{uri: u, cacheMode: ""}, nil
 }
