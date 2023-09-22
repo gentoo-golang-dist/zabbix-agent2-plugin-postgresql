@@ -399,14 +399,14 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 
 func createConnID(params map[string]string) (connID, error) {
 	u, err := uri.NewWithCreds(
-		fmt.Sprintf("%s?dbname=%s", params["URI"], url.QueryEscape(params["Database"])),
-		params["User"],
-		params["Password"],
+		fmt.Sprintf("%s?dbname=%s", params[uriParam], url.QueryEscape(params[databaseParam])),
+		params[userParam],
+		params[passwordParam],
 		uriDefaults,
 	)
 	if err != nil {
 		return connID{}, err
 	}
 
-	return connID{uri: u, cacheMode: ""}, nil
+	return connID{uri: u, cacheMode: params[cacheModeParam]}, nil
 }
