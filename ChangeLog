@@ -1,12 +1,14 @@
-Changes for 6.4.8rc1
+Changes for ***
 
 New features:
-[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
+
+Bug fixes:
 
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha5
 
 New features:
+[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
 
 Bug fixes:
 
@@ -26,7 +28,7 @@ Bug fixes:
 Changes for 6.4.6
 
 6.4.6rc1 was released as 6.4.6 without any changes
- 
+
 --------------------------------------------------------------------------------
 Changes for 6.4.5
 
