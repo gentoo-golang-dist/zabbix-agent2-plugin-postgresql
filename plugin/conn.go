@@ -40,7 +40,7 @@ import (
 const (
 	// pgx dns field names
 	password  = "password"
-	mode      = "sslmode"
+	sslMode   = "sslmode"
 	rootCA    = "sslrootcert"
 	cert      = "sslcert"
 	key       = "sslkey"
@@ -178,11 +178,11 @@ func (c *ConnManager) closeUnused() {
 	c.connMutex.Lock()
 	defer c.connMutex.Unlock()
 
-	for details, conn := range c.connections {
+	for ci, conn := range c.connections {
 		if time.Since(conn.lastTimeAccess) > c.keepAlive {
 			conn.client.Close()
-			delete(c.connections, details)
-			Impl.Debugf("[%s] Closed unused connection: %s", Name, details.uri.Addr())
+			delete(c.connections, ci)
+			Impl.Debugf("[%s] Closed unused connection: %s", Name, ci.uri.Addr())
 		}
 	}
 }
@@ -190,9 +190,9 @@ func (c *ConnManager) closeUnused() {
 // closeAll closes all existed connections.
 func (c *ConnManager) closeAll() {
 	c.connMutex.Lock()
-	for uri, conn := range c.connections {
+	for ci, conn := range c.connections {
 		conn.client.Close()
-		delete(c.connections, uri)
+		delete(c.connections, ci)
 	}
 	c.connMutex.Unlock()
 }
@@ -284,7 +284,7 @@ func createDNS(host, port, dbname, user, pass, mode string, details tlsconfig.De
 
 	tmp := map[string]string{
 		password:  pass,
-		mode:      details.TlsConnect,
+		sslMode:   details.TlsConnect,
 		rootCA:    details.TlsCaFile,
 		cert:      details.TlsCertFile,
 		key:       details.TlsKeyFile,
@@ -314,14 +314,10 @@ func renameTLS(in string) string {
 }
 
 func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
-	Impl.Errf("dsn: %s", dsn)
-
 	config, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		return nil, err
 	}
-
-	Impl.Errf("config.ConnConfig.RuntimeParams: %+v", config.ConnConfig.RuntimeParams)
 
 	config.ConnConfig.DialFunc = func(ctx context.Context, network, addr string) (net.Conn, error) {
 		d := net.Dialer{}
