@@ -335,13 +335,13 @@ var metrics = metric.MetricSet{
 			paramTLSCaFile, paramTLSCertFile, paramTLSKeyFile,
 		}, false),
 
-	keyVersion: metric.New("Returns PostgreSQL version.",
+	keyUptime: metric.New("Returns uptime.",
 		[]*metric.Param{
 			paramURI, paramUsername, paramPassword, paramDatabase, paramTLSConnect,
 			paramTLSCaFile, paramTLSCertFile, paramTLSKeyFile,
 		}, false),
 
-	keyUptime: metric.New("Returns uptime.",
+	keyVersion: metric.New("Returns PostgreSQL version.",
 		[]*metric.Param{
 			paramURI, paramUsername, paramPassword, paramDatabase, paramTLSConnect,
 			paramTLSCaFile, paramTLSCertFile, paramTLSKeyFile,
