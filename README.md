@@ -66,6 +66,10 @@ The Zabbix Agent's configuration file is used to configure plugins.
 **Plugins.PostgreSQL.Sessions.*.TLSKeyFile** — Full pathname of a file containing the PostgreSQL private key.
 *Default value:* 
 
+**Plugins.PostgreSQL.Sessions.*.CacheMode** — Cache mode for PostgreSQL connection.
+*Default value:* prepare
+*Accepted values:*  prepare, describe
+
 ### Configuring connection
 A connection can be configured using either keys' parameters or named sessions.     
 
