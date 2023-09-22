@@ -1,7 +1,8 @@
-Changes for 7.0.0alpha5
+Changes for ***
 
 Bug fixes:
-[ZBX-22532] update flag handling to use common function from plugin-support (rzvejs)
+
+New features:
 
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha5
@@ -10,6 +11,7 @@ New features:
 
 Bug fixes:
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
+[ZBX-22532] update flag handling to use common function from plugin-support (rzvejs)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha4
