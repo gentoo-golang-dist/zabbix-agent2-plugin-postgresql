@@ -24,6 +24,7 @@ import (
 
 	"git.zabbix.com/ap/plugin-support/plugin/comms"
 	"git.zabbix.com/ap/plugin-support/plugin/container"
+	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"git.zabbix.com/ap/postgresql/plugin"
 )
 
@@ -59,7 +60,7 @@ func main() {
 		PLUGIN_VERSION_PATCH,
 	)
 	if err != nil {
-		if !errors.Is(err, comms.ErrOSExitZero) {
+		if !errors.Is(err, zbxerr.ErrorOSExitZero) {
 			panic(fmt.Sprintf("failed to handle flags %s", err.Error()))
 		}
 

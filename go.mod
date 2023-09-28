@@ -3,7 +3,7 @@ module git.zabbix.com/ap/postgresql
 go 1.19
 
 require (
-	git.zabbix.com/ap/plugin-support v1.2.2-0.20230830115154-0cdc16dc3195 //TODO: FIX VERSION.
+	git.zabbix.com/ap/plugin-support v1.2.2-0.20230928085235-86ad9b5ebf94 //TODO: FIX VERSION.
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/omeid/go-yarn v0.0.1
 )
@@ -24,4 +24,3 @@ require (
 	golang.org/x/text v0.11.0 // indirect
 	golang.org/x/tools v0.11.0 // indirect
 )
-
