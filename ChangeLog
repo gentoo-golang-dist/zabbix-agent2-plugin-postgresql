@@ -5,7 +5,7 @@ New features:
 Bug fixes:
 
 --------------------------------------------------------------------------------
-Changes for 7.0.0alpha5
+Changes for 6.4.8rc1
 
 New features:
 [ZBXNEXT-7097] add pgsql.version metric (rzvejs)
