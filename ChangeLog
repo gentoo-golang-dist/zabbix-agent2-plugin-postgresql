@@ -1,3 +1,11 @@
+Changes for 7.0.0alpha6
+
+New features:
+
+Bug fixes:
+[ZBX-22735] update plugin support version
+
+--------------------------------------------------------------------------------
 Changes for 7.0.0alpha5
 
 New features:
@@ -46,4 +54,3 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
