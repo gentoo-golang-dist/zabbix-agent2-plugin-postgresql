@@ -1,7 +1,5 @@
 Changes for 7.0.0alpha5
 
-New features:
-
 Bug fixes:
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
 
