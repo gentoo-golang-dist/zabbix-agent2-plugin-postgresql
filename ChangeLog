@@ -4,6 +4,7 @@ New features:
 
 Bug fixes:
 [ZBXNEXT-8699] fixed connection leak (esneiders)
+[ZBX-17208] update flag handling to use common function from plugin-support (rzvejs)
 
 --------------------------------------------------------------------------------
 Changes for 6.4.10
@@ -48,11 +49,9 @@ Changes for 6.4.7
 Changes for 6.4.7rc1
 
 New features:
-
 [ZBX-23217] added cache mode parameter (esneiders)
 
 Bug fixes:
-
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
 
 --------------------------------------------------------------------------------
