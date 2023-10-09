@@ -1,6 +1,14 @@
+Changes for ***
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
 Changes for 7.0.0alpha7
 
 New features:
+[ZBX-22735] update plugin support version (rzvejs)
 
 Bug fixes:
 
@@ -56,4 +64,3 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
