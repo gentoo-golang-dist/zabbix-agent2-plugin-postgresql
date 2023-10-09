@@ -3,6 +3,7 @@ Changes for 6.0.23rc1
 New features:
 
 Bug fixes:
+[ZBX-22735] updated plugin support (rzvejs)
 
 --------------------------------------------------------------------------------
 Changes for 6.0.22
@@ -95,6 +96,5 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
 
 
