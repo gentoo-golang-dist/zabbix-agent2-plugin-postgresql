@@ -5,7 +5,7 @@ New features:
 Bug fixes:
 
 --------------------------------------------------------------------------------
-Changes for 7.0.0alpha6
+Changes for 7.0.0alpha7
 
 New features:
 [ZBX-22735] update plugin support version (rzvejs)
@@ -13,9 +13,12 @@ New features:
 Bug fixes:
 
 --------------------------------------------------------------------------------
-Changes for 7.0.0alpha5
+Changes for 7.0.0alpha6
 
-New features:
+7.0.0alpha6 released without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.0alpha5
 
 Bug fixes:
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
