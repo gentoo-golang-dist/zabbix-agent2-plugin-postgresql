@@ -1,11 +1,14 @@
 Changes for ***
 
-Bug fixes:
-
 New features:
+
+Bug fixes:
 
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha7
+
+New features:
+[ZBX-22735] update plugin support version (rzvejs)
 
 Bug fixes:
 [ZBX-22532] update flag handling to use common function from plugin-support (rzvejs)
