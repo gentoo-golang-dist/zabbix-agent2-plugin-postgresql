@@ -11,6 +11,7 @@ New features:
 [ZBXNEXT-7097] add pgsql.version metric (rzvejs)
 
 Bug fixes:
+[ZBX-22735] updated plugin support (rzvejs)
 
 --------------------------------------------------------------------------------
 Changes for 6.4.7
