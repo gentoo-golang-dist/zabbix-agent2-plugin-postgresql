@@ -1,6 +1,14 @@
+Changes for ***
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
 Changes for 6.0.23rc1
 
 New features:
+[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
 
 Bug fixes:
 [ZBX-22735] updated plugin support (rzvejs)
@@ -14,7 +22,6 @@ Changes for 6.0.22
 Changes for 6.0.22rc1
 
 Bug fixes:
-
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
 
 --------------------------------------------------------------------------------
@@ -96,5 +103,8 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> add907c5ac8aa9d096e7e7ca8382cbf2310dd78b
