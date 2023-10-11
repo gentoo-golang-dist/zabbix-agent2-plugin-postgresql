@@ -355,5 +355,8 @@ var metrics = metric.MetricSet{
 }
 
 func init() {
-	plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
+    err := plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
+    if err != nil {
+        panic(err)
+    }
 }
