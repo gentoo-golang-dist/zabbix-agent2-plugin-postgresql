@@ -9,6 +9,7 @@ Changes for 7.0.0alpha7
 
 New features:
 [ZBX-22735] update plugin support version (rzvejs)
+[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
 
 Bug fixes:
 [ZBX-22532] update flag handling to use common function from plugin-support (rzvejs)
