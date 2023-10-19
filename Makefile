@@ -85,10 +85,10 @@ dist:
 ifneq ($(OS),Windows_NT)
 	cd $(TOPDIR); \
 	go mod vendor; \
-	major_verison=$(lastword $(shell grep 'const PLUGIN_VERSION_MAJOR' ./main.go)); \
-	minor_verison=$(lastword $(shell grep 'const PLUGIN_VERSION_MINOR' ./main.go)); \
-	patch_verison=$(lastword $(shell grep 'const PLUGIN_VERSION_PATCH' ./main.go)); \
-	alphatag=$(lastword $(shell grep 'const PLUGIN_VERSION_RC' ./main.go)); \
+	major_verison=$(lastword $(shell grep 'PLUGIN_VERSION_MAJOR =' ./main.go)); \
+	minor_verison=$(lastword $(shell grep 'PLUGIN_VERSION_MINOR =' ./main.go)); \
+	patch_verison=$(lastword $(shell grep 'PLUGIN_VERSION_PATCH =' ./main.go)); \
+	alphatag=$(lastword $(shell grep 'PLUGIN_VERSION_RC    =' ./main.go)); \
 	lic_years=$(word 3, $(shell grep ' Copyright 2001-' ./main.go)); \
 	distdir="$(PACKAGE)-$${major_verison}.$${minor_verison}.$${patch_verison}$${alphatag}"; \
 	dist_archive="$${distdir}.tar.gz"; \
