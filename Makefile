@@ -70,7 +70,7 @@ else
 	rm -rf "$(TOPDIR)/vendor"
 	rm -rf "$(TOPDIR)/$(PACKAGE)"*
 endif
-	go clean -cache "$(TOPDIR)/..."
+	go clean "$(TOPDIR)/..."
 
 check:
 	go test -v -tags postgresql_tests "$(TOPDIR)/..."
