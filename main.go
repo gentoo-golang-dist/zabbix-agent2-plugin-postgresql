@@ -29,8 +29,8 @@ import (
 
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 4
-const PLUGIN_VERSION_PATCH = 8
-const PLUGIN_VERSION_RC    = ""
+const PLUGIN_VERSION_PATCH = 9
+const PLUGIN_VERSION_RC    = "rc1"
 
 func main() {
 	handleFlags()
