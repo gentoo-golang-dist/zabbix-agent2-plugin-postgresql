@@ -12,10 +12,10 @@ ifneq ("$(shell findstr ZABBIX_RC_NUM $(TOPDIR)\windres\resource.h)","")
 ifeq ("$(WINDRES_FLAGS)","")
 WINDRES_FLAGS := \
 	-D ZABBIX_LICENSE_YEARS='\"$(word 3,$(shell findstr Copyright $(TOPDIR)\main.go | findstr 2001-20))\"' \
-	-D ZABBIX_VERSION_MAJOR=$(lastword $(shell findstr const $(TOPDIR)\main.go | findstr VERSION_MAJOR)) \
-	-D ZABBIX_VERSION_MINOR=$(lastword $(shell findstr const $(TOPDIR)\main.go | findstr VERSION_MINOR)) \
-	-D ZABBIX_VERSION_PATCH=$(lastword $(shell findstr const $(TOPDIR)\main.go | findstr VERSION_PATCH)) \
-	-D ZABBIX_VERSION_RC='\"$(lastword $(shell findstr const $(TOPDIR)\main.go | findstr VERSION_RC))\"' \
+	-D ZABBIX_VERSION_MAJOR=$(lastword $(shell findstr VERSION_MAJOR $(TOPDIR)\main.go | findstr =)) \
+	-D ZABBIX_VERSION_MINOR=$(lastword $(shell findstr VERSION_MINOR $(TOPDIR)\main.go | findstr =)) \
+	-D ZABBIX_VERSION_PATCH=$(lastword $(shell findstr VERSION_PATCH $(TOPDIR)\main.go | findstr =)) \
+	-D ZABBIX_VERSION_RC='\"$(lastword $(shell findstr VERSION_RC $(TOPDIR)\main.go | findstr =))\"' \
 	-D ZABBIX_VERSION_RC_NUM=1000
 endif
 endif
@@ -70,7 +70,7 @@ else
 	rm -rf "$(TOPDIR)/vendor"
 	rm -rf "$(TOPDIR)/$(PACKAGE)"*
 endif
-	go clean -cache "$(TOPDIR)/..."
+	go clean "$(TOPDIR)/..."
 
 check:
 	go test -v -tags postgresql_tests "$(TOPDIR)/..."
@@ -85,10 +85,10 @@ dist:
 ifneq ($(OS),Windows_NT)
 	cd $(TOPDIR); \
 	go mod vendor; \
-	major_verison=$(lastword $(shell grep 'const PLUGIN_VERSION_MAJOR' ./main.go)); \
-	minor_verison=$(lastword $(shell grep 'const PLUGIN_VERSION_MINOR' ./main.go)); \
-	patch_verison=$(lastword $(shell grep 'const PLUGIN_VERSION_PATCH' ./main.go)); \
-	alphatag=$(lastword $(shell grep 'const PLUGIN_VERSION_RC' ./main.go)); \
+	major_verison=$(lastword $(shell grep 'PLUGIN_VERSION_MAJOR =' ./main.go)); \
+	minor_verison=$(lastword $(shell grep 'PLUGIN_VERSION_MINOR =' ./main.go)); \
+	patch_verison=$(lastword $(shell grep 'PLUGIN_VERSION_PATCH =' ./main.go)); \
+	alphatag=$(lastword $(shell grep 'PLUGIN_VERSION_RC    =' ./main.go)); \
 	lic_years=$(word 3, $(shell grep ' Copyright 2001-' ./main.go)); \
 	distdir="$(PACKAGE)-$${major_verison}.$${minor_verison}.$${patch_verison}$${alphatag}"; \
 	dist_archive="$${distdir}.tar.gz"; \

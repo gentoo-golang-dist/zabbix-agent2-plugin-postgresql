@@ -1,10 +1,31 @@
-Changes for 7.0.0alpha5
+Changes for 7.0.0alpha8
 
 New features:
 
 New features:
 
 [ZBX-23217] added cache mode parameter (esneiders)
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 7.0.0alpha7
+
+New features:
+[ZBX-22735] update plugin support version (rzvejs)
+[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
+
+Bug fixes:
+[ZBX-22532] update flag handling to use common function from plugin-support (rzvejs)
+[ZBX-23599] fix windows properies build (rzvejs)
+
+--------------------------------------------------------------------------------
+Changes for 7.0.0alpha6
+
+7.0.0alpha6 released without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.0alpha5
 
 Bug fixes:
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
@@ -50,4 +71,3 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
