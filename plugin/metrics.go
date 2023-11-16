@@ -179,6 +179,9 @@ var metrics = metric.MetricSet{
 	keyUptime: metric.New(
 		"Returns uptime.", getParameters(nil), false,
 	),
+	keyVersion: metric.New(
+		"Returns PostgreSQL version.", getParameters(nil), false,
+	),
 	keyWal: metric.New(
 		"Returns JSON wal by type.", getParameters(nil), false,
 	),
