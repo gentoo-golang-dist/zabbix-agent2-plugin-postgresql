@@ -1,6 +1,8 @@
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230830115138-70c19a28dd7c h1:X3CIwJkOAveOdHZo3QqBQSyvHtgOkAtIT1P+mjVSMbU=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20230830115138-70c19a28dd7c/go.mod h1:B+HpVBZbBMBttTFc0NuChmMkWepNj7yFPCefmggo+0U=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20231017090800-2ee690c4669b h1:b53ABrzoW7dwf1ObxQOXisyVHI0ZideepRLCWcNIAqM=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20231017090800-2ee690c4669b/go.mod h1:B+HpVBZbBMBttTFc0NuChmMkWepNj7yFPCefmggo+0U=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/DATA-DOG/go-sqlmock v1.5.0 h1:Shsta01QNfFxHCfpW6YH2STWB0MudeXXEWMr20OEh60=
+github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q5eFN3EC/SaM=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
 github.com/Microsoft/go-winio v0.6.0 h1:slsWYD/zyx7lCXoZVlvQrj0hPTM1HI4+v1sIda2yDvg=

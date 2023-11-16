@@ -29,10 +29,6 @@ import (
 	"git.zabbix.com/ap/plugin-support/uri"
 )
 
-func init() {
-	plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
-}
-
 const (
 	keyArchiveSize                     = "pgsql.archive"
 	keyAutovacuum                      = "pgsql.autovacuum.count"
@@ -58,6 +54,7 @@ const (
 	keyReplicationRecoveryRole         = "pgsql.replication.recovery_role"
 	keyReplicationStatus               = "pgsql.replication.status"
 	keyUptime                          = "pgsql.uptime"
+	keyVersion                         = "pgsql.version"
 	keyWal                             = "pgsql.wal.stat"
 
 	uriParam        = "URI"
@@ -182,6 +179,9 @@ var metrics = metric.MetricSet{
 	keyUptime: metric.New(
 		"Returns uptime.", getParameters(nil), false,
 	),
+	keyVersion: metric.New(
+		"Returns PostgreSQL version.", getParameters(nil), false,
+	),
 	keyWal: metric.New(
 		"Returns JSON wal by type.", getParameters(nil), false,
 	),
@@ -201,53 +201,58 @@ type additionalParam struct {
 	position int
 }
 
+func init() {
+	plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
+}
+
 // getHandlerFunc returns a handlerFunc related to a given key.
 func getHandlerFunc(key string) handlerFunc {
 	switch key {
-	case keyDatabasesDiscovery:
-		return databasesDiscoveryHandler
-	case keyDatabasesBloating:
-		return databasesBloatingHandler
-	case keyDatabaseSize:
-		return databaseSizeHandler
-	case keyDatabaseAge:
-		return databaseAgeHandler
 	case keyArchiveSize:
 		return archiveHandler
-	case keyPing:
-		return pingHandler
-	case keyConnections:
-		return connectionsHandler
-	case keyWal:
-		return walHandler
 	case keyAutovacuum:
 		return autovacuumHandler
-	case keyDBStat,
-		keyDBStatSum:
-		return dbStatHandler
 	case keyBgwriter:
 		return bgwriterHandler
-	case keyCustomQuery:
-		return customQueryHandler
-	case keyUptime:
-		return uptimeHandler
 	case keyCache:
 		return cacheHandler
-	case keyReplicationCount,
-		keyReplicationStatus,
-		keyReplicationLagSec,
-		keyReplicationRecoveryRole,
-		keyReplicationLagB,
-		keyReplicationProcessInfo:
-		return replicationHandler
-	case keyReplicationProcessNameDiscovery:
-		return processNameDiscoveryHandler
+	case keyConnections:
+		return connectionsHandler
+	case keyCustomQuery:
+		return customQueryHandler
+	case keyDBStat, keyDBStatSum:
+		return dbStatHandler
+	case keyDatabaseAge:
+		return databaseAgeHandler
+	case keyDatabasesBloating:
+		return databasesBloatingHandler
+	case keyDatabasesDiscovery:
+		return databasesDiscoveryHandler
+	case keyDatabaseSize:
+		return databaseSizeHandler
 	case keyLocks:
 		return locksHandler
 	case keyOldestXid:
 		return oldestXIDHandler
+	case keyPing:
+		return pingHandler
 	case keyQueries:
 		return queriesHandler
+	case keyReplicationCount,
+		keyReplicationLagB,
+		keyReplicationLagSec,
+		keyReplicationProcessInfo,
+		keyReplicationRecoveryRole,
+		keyReplicationStatus:
+		return replicationHandler
+	case keyReplicationProcessNameDiscovery:
+		return processNameDiscoveryHandler
+	case keyUptime:
+		return uptimeHandler
+	case keyVersion:
+		return versionHandler
+	case keyWal:
+		return walHandler
 	default:
 		return nil
 	}

@@ -1,3 +1,29 @@
+Changes for 6.4.9rc1
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 6.4.8
+
+6.4.8rc1 was released as 6.4.8 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.8rc1
+
+New features:
+[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
+
+Bug fixes:
+[ZBX-22735] updated plugin support (rzvejs)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.7
+
+6.4.7rc1 was released as 6.4.7 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 6.4.7rc1
 
 New features:
@@ -12,7 +38,7 @@ Bug fixes:
 Changes for 6.4.6
 
 6.4.6rc1 was released as 6.4.6 without any changes
- 
+
 --------------------------------------------------------------------------------
 Changes for 6.4.5
 
@@ -72,4 +98,3 @@ Changes for 1.2.0
 initial release
 
 --------------------------------------------------------------------------------
-
