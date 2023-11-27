@@ -46,7 +46,7 @@ const (
 	PLUGIN_VERSION_MAJOR = 7
 	PLUGIN_VERSION_MINOR = 0
 	PLUGIN_VERSION_PATCH = 0
-	PLUGIN_VERSION_RC    = "alpha8"
+	PLUGIN_VERSION_RC    = "alpha9"
 )
 
 func main() {
