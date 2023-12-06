@@ -31,6 +31,7 @@ func Test_createDNS(t *testing.T) {
 		dbname   string
 		user     string
 		password string
+		mode     string
 		details  tlsconfig.Details
 	}
 	tests := []struct {
@@ -98,6 +99,62 @@ func Test_createDNS(t *testing.T) {
 				"sslkey=path/to/key",
 			},
 		},
+		{
+			"mode describe",
+			args{
+				host:   "127.0.0.1",
+				port:   "123",
+				dbname: "postgres",
+				user:   "foo",
+				mode:   "describe",
+			},
+			[]string{
+				"host=127.0.0.1", "port=123",
+				"dbname=postgres",
+				"user=foo",
+				"statement_cache_mode=describe",
+			},
+		}, {
+			"mode prepare",
+			args{
+				host:   "127.0.0.1",
+				port:   "123",
+				dbname: "postgres",
+				user:   "foo",
+				mode:   "prepare",
+			},
+			[]string{
+				"host=127.0.0.1", "port=123",
+				"dbname=postgres",
+				"user=foo",
+				"statement_cache_mode=prepare",
+			},
+		},
+		{
+			"full",
+			args{
+				host:   "127.0.0.1",
+				port:   "123",
+				dbname: "postgres",
+				user:   "foo",
+				mode:   "prepare",
+				details: tlsconfig.Details{
+					TlsConnect:  "verify-full",
+					TlsCaFile:   "path/to/ca",
+					TlsCertFile: "path/to/cert",
+					TlsKeyFile:  "path/to/key",
+				}},
+			[]string{
+				"host=127.0.0.1", "port=123",
+				"dbname=postgres",
+				"user=foo",
+				"statement_cache_mode=prepare",
+				"sslmode=verify-full",
+				"sslrootcert=path/to/ca",
+				"sslcert=path/to/cert",
+				"sslkey=path/to/key",
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -107,6 +164,7 @@ func Test_createDNS(t *testing.T) {
 				tt.args.dbname,
 				tt.args.user,
 				tt.args.password,
+				tt.args.mode,
 				tt.args.details,
 			)
 

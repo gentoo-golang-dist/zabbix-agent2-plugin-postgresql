@@ -47,6 +47,9 @@ type Session struct {
 
 	// Key filepath for PostgreSQL server.
 	TLSKeyFile string `conf:"name=TLSKeyFile,optional"`
+
+	// CacheMode for PostgreSQL server.
+	CacheMode string `conf:"name=CacheMode,optional"`
 }
 
 // PluginOptions are options for PostgreSQL connection.

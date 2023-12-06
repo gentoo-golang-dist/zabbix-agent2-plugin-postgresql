@@ -2,6 +2,10 @@ Changes for 7.0.0alpha9
 
 New features:
 
+New features:
+
+[ZBX-23217] added cache mode parameter (esneiders)
+
 Bug fixes:
 
 --------------------------------------------------------------------------------
