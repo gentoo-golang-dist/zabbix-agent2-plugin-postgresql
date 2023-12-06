@@ -2,6 +2,10 @@ Changes for 6.0.25rc1
 
 New features:
 
+New features:
+
+[ZBX-23217] added cache mode parameter (esneiders)
+
 Bug fixes:
 
 --------------------------------------------------------------------------------
