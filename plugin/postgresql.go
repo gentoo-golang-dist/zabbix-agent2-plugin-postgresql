@@ -20,11 +20,9 @@ package plugin
 import (
 	"context"
 	"net/http"
-	"net/url"
 	"time"
 
 	"git.zabbix.com/ap/plugin-support/metric"
-	"git.zabbix.com/ap/plugin-support/uri"
 	"git.zabbix.com/ap/plugin-support/zbxerr"
 
 	"github.com/omeid/go-yarn"
@@ -49,7 +47,7 @@ type Plugin struct {
 var Impl Plugin
 
 // Export implements the Exporter interface.
-func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider) (result interface{}, err error) {
+func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider) (result any, err error) {
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
 		return nil, err
@@ -60,9 +58,7 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 		return nil, err
 	}
 
-	dbname := url.QueryEscape(params["Database"])
-
-	uri, err := uri.NewWithCreds(params["URI"]+"?dbname="+dbname, params["User"], params["Password"], uriDefaults)
+	connID, err := createConnID(params)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +68,7 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 		return nil, zbxerr.ErrorUnsupportedMetric
 	}
 
-	conn, err := p.connMgr.GetConnection(*uri, params)
+	conn, err := p.connMgr.GetConnection(connID, params)
 	if err != nil {
 		// Special logic of processing connection errors should be used if pgsql.ping is requested
 		// because it must return pingFailed if any error occurred.

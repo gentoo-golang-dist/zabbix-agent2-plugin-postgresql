@@ -36,6 +36,10 @@ Changes for 6.4.7
 --------------------------------------------------------------------------------
 Changes for 6.4.7rc1
 
+New features:
+
+[ZBX-23217] added cache mode parameter (esneiders)
+
 Bug fixes:
 
 [ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
