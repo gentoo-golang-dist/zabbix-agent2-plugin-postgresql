@@ -75,7 +75,7 @@ type PGConn struct {
 }
 
 type connID struct {
-	uri       *uri.URI
+	uri       uri.URI
 	cacheMode string
 }
 
@@ -408,5 +408,5 @@ func createConnID(params map[string]string) (connID, error) {
 		return connID{}, err
 	}
 
-	return connID{uri: u, cacheMode: params[cacheModeParam]}, nil
+	return connID{uri: *u, cacheMode: params[cacheModeParam]}, nil
 }
