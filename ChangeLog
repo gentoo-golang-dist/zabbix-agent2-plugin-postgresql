@@ -1,7 +1,8 @@
 Changes for 6.4.11rc1
 
-Bug fixes:
+New features:
 
+Bug fixes:
 [ZBXNEXT-8699] fixed connection leak (esneiders)
 
 --------------------------------------------------------------------------------
