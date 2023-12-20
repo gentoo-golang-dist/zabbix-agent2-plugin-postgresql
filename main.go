@@ -22,8 +22,8 @@ import (
 	"fmt"
 	"os"
 
-	"git.zabbix.com/ap/plugin-support/plugin/comms"
 	"git.zabbix.com/ap/plugin-support/plugin/container"
+	"git.zabbix.com/ap/plugin-support/plugin/flag"
 	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"git.zabbix.com/ap/postgresql/plugin"
 )
@@ -50,7 +50,7 @@ const (
 )
 
 func main() {
-	err := comms.HandleFlags(
+	err := flag.HandleFlags(
 		plugin.Name,
 		os.Args[0],
 		COPYRIGHT_MESSAGE,

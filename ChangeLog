@@ -1,3 +1,11 @@
+Changes for 7.0.0beta1
+
+New features:
+[ZBX-17208] use new flags handling function package location (rzvejs)
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
 Changes for 7.0.0alpha9
 
 New features:
