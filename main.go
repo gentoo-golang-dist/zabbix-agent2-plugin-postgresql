@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright 2001-2023 Zabbix SIA
+** Copyright 2001-2024 Zabbix SIA
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ func handleFlags() {
 }
 
 func copyrightMessage() string {
-	return  "Copyright 2001-2023 Zabbix SIA\n" +
+	return  "Copyright 2001-2024 Zabbix SIA\n" +
 		"Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
 		"you may not use this file except in compliance with the License.\n" +
 		"You may obtain a copy of the License at\n\n" +
