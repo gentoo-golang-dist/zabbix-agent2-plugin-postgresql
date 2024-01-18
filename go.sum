@@ -1,5 +1,5 @@
-git.zabbix.com/ap/plugin-support v1.2.2-0.20231218090100-ad5bdcf7eca8 h1:CCwY3CiFjki9q3BRNtLnqTAqM5oMu6RnOebt6Qe2cWs=
-git.zabbix.com/ap/plugin-support v1.2.2-0.20231218090100-ad5bdcf7eca8/go.mod h1:FLyfsn/a9DjxDBgeMZsgIyTuvvnRm64Tuf32DaA0zcs=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20240118125041-eaf87bd58f23 h1:vhUxgwsTeCa1QcEQT4/UGHPAH2bSTdrzF/F/ZaBZhps=
+git.zabbix.com/ap/plugin-support v1.2.2-0.20240118125041-eaf87bd58f23/go.mod h1:FLyfsn/a9DjxDBgeMZsgIyTuvvnRm64Tuf32DaA0zcs=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/DATA-DOG/go-sqlmock v1.5.0 h1:Shsta01QNfFxHCfpW6YH2STWB0MudeXXEWMr20OEh60=
 github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q5eFN3EC/SaM=
