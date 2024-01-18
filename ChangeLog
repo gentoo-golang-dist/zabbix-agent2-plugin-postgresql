@@ -4,6 +4,7 @@ New features:
 
 Bug fixes:
 [ZBXNEXT-8699] fixed connection leak (esneiders)
+[ZBX-17208] update flag handling to use common function from plugin-support (rzvejs)
 
 --------------------------------------------------------------------------------
 Changes for 6.0.25
