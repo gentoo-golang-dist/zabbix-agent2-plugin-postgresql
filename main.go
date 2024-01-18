@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright 2001-2023 Zabbix SIA
+** Copyright 2001-2024 Zabbix SIA
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -32,10 +32,10 @@ import (
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 0
 const PLUGIN_VERSION_PATCH = 26
-const PLUGIN_VERSION_RC    = "rc1"
+const PLUGIN_VERSION_RC = "rc1"
 
 const COPYRIGHT_MESSAGE = //
-`Copyright 2001-2023 Zabbix SIA
+`Copyright 2001-2024 Zabbix SIA
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
