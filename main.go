@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright 2001-2023 Zabbix SIA
+** Copyright 2001-2024 Zabbix SIA
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import (
 )
 
 const COPYRIGHT_MESSAGE = //
-`Copyright 2001-2023 Zabbix SIA
+`Copyright 2001-2024 Zabbix SIA
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -46,7 +46,7 @@ const (
 	PLUGIN_VERSION_MAJOR = 7
 	PLUGIN_VERSION_MINOR = 0
 	PLUGIN_VERSION_PATCH = 0
-	PLUGIN_VERSION_RC    = "alpha9"
+	PLUGIN_VERSION_RC    = "beta1"
 )
 
 func main() {
