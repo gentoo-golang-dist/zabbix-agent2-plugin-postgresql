@@ -31,7 +31,7 @@ import (
 // DO NOT GROUP THESE CONSTANTS! The makefile needs, them as is.
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 4
-const PLUGIN_VERSION_PATCH = 11
+const PLUGIN_VERSION_PATCH = 12
 const PLUGIN_VERSION_RC = ""
 
 const COPYRIGHT_MESSAGE = //
