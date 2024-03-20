@@ -1,11 +1,10 @@
 Changes for 7.0.0beta2
 
-New features:
+Changes for 7.0.0beta2
 
-Bug fixes:
+7.0.0beta1 was released as 7.0.0beta2 without any changes
 
 --------------------------------------------------------------------------------
-Changes for 7.0.0beta1
 
 New features:
 [ZBX-17208] use new flags handling function package location (rzvejs)
