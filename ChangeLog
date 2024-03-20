@@ -1,21 +1,19 @@
 Changes for 6.0.28rc1
 
-Changes for 6.0.28rc1
-
 6.0.27 was released as 6.0.28rc1 without any changes
 
 --------------------------------------------------------------------------------
+Changes for 6.0.28
 
 6.0.27rc1 was released as 6.0.27 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.27rc1
 
-Changes for 6.0.27rc1
-
 6.0.26 was released as 6.0.27rc1 without any changes
 
 --------------------------------------------------------------------------------
+Changes for 6.0.27
 
 6.0.26rc1 was released as 6.0.26 without any changes
 
@@ -37,8 +35,6 @@ Changes for 6.0.25rc1
 New features:
 [ZBX-23217] added cache mode parameter (esneiders)
 
-Bug fixes:
-
 --------------------------------------------------------------------------------
 Changes for 6.0.24
 
@@ -47,7 +43,7 @@ Changes for 6.0.24
 --------------------------------------------------------------------------------
 Changes for 6.0.24rc1
 
-Bug fixes:
+6.0.23 was released as 6.0.24rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.23
