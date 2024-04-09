@@ -28,10 +28,11 @@ import (
 	"sync"
 	"time"
 
+	"git.zabbix.com/ap/plugin-support/errs"
+	"git.zabbix.com/ap/plugin-support/log"
 	"git.zabbix.com/ap/plugin-support/metric"
 	"git.zabbix.com/ap/plugin-support/tlsconfig"
 	"git.zabbix.com/ap/plugin-support/uri"
-	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/jackc/pgx/v4/stdlib"
 	"github.com/omeid/go-yarn"
@@ -93,9 +94,10 @@ func (conn *PGConn) Query(ctx context.Context, query string, args ...interface{}
 }
 
 // QueryByName executes a query from queryStorage by its name and returns a single row.
-func (conn *PGConn) QueryByName(ctx context.Context, queryName string, args ...interface{}) (rows *sql.Rows, err error) {
-	if sql, ok := (*conn.queryStorage).Get(queryName + sqlExt); ok {
-		normalizedSQL := strings.TrimRight(strings.TrimSpace(sql), ";")
+func (conn *PGConn) QueryByName(ctx context.Context, queryName string, args ...any) (*sql.Rows, error) {
+	querySQL, ok := (*conn.queryStorage).Get(queryName + sqlExt)
+	if ok {
+		normalizedSQL := strings.TrimRight(strings.TrimSpace(querySQL), ";")
 
 		return conn.Query(ctx, normalizedSQL, args...)
 	}
@@ -115,9 +117,12 @@ func (conn *PGConn) QueryRow(ctx context.Context, query string, args ...interfac
 }
 
 // QueryRowByName executes a query from queryStorage by its name and returns a single row.
-func (conn *PGConn) QueryRowByName(ctx context.Context, queryName string, args ...interface{}) (row *sql.Row, err error) {
-	if sql, ok := (*conn.queryStorage).Get(queryName + sqlExt); ok {
-		normalizedSQL := strings.TrimRight(strings.TrimSpace(sql), ";")
+func (conn *PGConn) QueryRowByName(
+	ctx context.Context, queryName string, args ...any,
+) (*sql.Row, error) {
+	querySQL, ok := (*conn.queryStorage).Get(queryName + sqlExt)
+	if ok {
+		normalizedSQL := strings.TrimRight(strings.TrimSpace(querySQL), ";")
 
 		return conn.QueryRow(ctx, normalizedSQL, args...)
 	}
@@ -144,8 +149,7 @@ func (conn *PGConn) updateAccessTime() {
 
 // ConnManager is a thread-safe structure for manage connections.
 type ConnManager struct {
-	sync.Mutex
-	connMutex      sync.Mutex
+	connectionsMu  sync.Mutex
 	connections    map[connID]*PGConn
 	keepAlive      time.Duration
 	connectTimeout time.Duration
@@ -156,7 +160,8 @@ type ConnManager struct {
 
 // NewConnManager initializes connManager structure and runs Go Routine that watches for unused connections.
 func NewConnManager(keepAlive, connectTimeout, callTimeout,
-	hkInterval time.Duration, queryStorage yarn.Yarn) *ConnManager {
+	hkInterval time.Duration, queryStorage yarn.Yarn,
+) *ConnManager {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	connMgr := &ConnManager{
@@ -175,8 +180,8 @@ func NewConnManager(keepAlive, connectTimeout, callTimeout,
 
 // closeUnused closes each connection that has not been accessed at least within the keepalive interval.
 func (c *ConnManager) closeUnused() {
-	c.connMutex.Lock()
-	defer c.connMutex.Unlock()
+	c.connectionsMu.Lock()
+	defer c.connectionsMu.Unlock()
 
 	for ci, conn := range c.connections {
 		if time.Since(conn.lastTimeAccess) > c.keepAlive {
@@ -189,12 +194,12 @@ func (c *ConnManager) closeUnused() {
 
 // closeAll closes all existed connections.
 func (c *ConnManager) closeAll() {
-	c.connMutex.Lock()
+	c.connectionsMu.Lock()
 	for ci, conn := range c.connections {
 		conn.client.Close()
 		delete(c.connections, ci)
 	}
-	c.connMutex.Unlock()
+	c.connectionsMu.Unlock()
 }
 
 // housekeeper repeatedly checks for unused connections and closes them.
@@ -216,8 +221,8 @@ func (c *ConnManager) housekeeper(ctx context.Context, interval time.Duration) {
 
 // create creates a new connection with given credentials.
 func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, error) {
-	c.connMutex.Lock()
-	defer c.connMutex.Unlock()
+	c.connectionsMu.Lock()
+	defer c.connectionsMu.Unlock()
 
 	if _, ok := c.connections[ci]; ok {
 		// Should never happen.
@@ -332,27 +337,13 @@ func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 	return stdlib.OpenDB(*config.ConnConfig), nil
 }
 
-// get returns a connection with given uri if it exists and also updates lastTimeAccess, otherwise returns nil.
-func (c *ConnManager) get(cd connID) *PGConn {
-	c.connMutex.Lock()
-	defer c.connMutex.Unlock()
-
-	if conn, ok := c.connections[cd]; ok {
-		conn.updateAccessTime()
-		return conn
-	}
-
-	return nil
-}
-
 // GetConnection returns an existing connection or creates a new one.
-func (c *ConnManager) GetConnection(ci connID, params map[string]string) (conn *PGConn, err error) {
-	c.Lock()
-	defer c.Unlock()
-
-	conn = c.get(ci)
+func (c *ConnManager) GetConnection(
+	ci connID, params map[string]string, //nolint:gocritic
+) (*PGConn, error) {
+	conn := c.getConn(ci)
 	if conn != nil {
-		return
+		return conn, nil
 	}
 
 	details, err := getTlsDetails(params)
@@ -362,10 +353,44 @@ func (c *ConnManager) GetConnection(ci connID, params map[string]string) (conn *
 
 	conn, err = c.create(ci, details)
 	if err != nil {
-		err = zbxerr.ErrorConnectionFailed.Wrap(err)
+		return nil, errs.Wrap(err, "failed to create connection")
 	}
 
-	return
+	return c.setConn(ci, conn), nil
+}
+
+// get returns a connection with given uri if it exists and also updates
+// lastTimeAccess, otherwise returns nil.
+func (c *ConnManager) getConn(cd connID) *PGConn { //nolint:gocritic
+	c.connectionsMu.Lock()
+	defer c.connectionsMu.Unlock()
+
+	conn, ok := c.connections[cd]
+	if !ok {
+		return nil
+	}
+
+	conn.updateAccessTime()
+
+	return conn
+}
+
+func (c *ConnManager) setConn(cd connID, conn *PGConn) *PGConn { //nolint:gocritic
+	c.connectionsMu.Lock()
+	defer c.connectionsMu.Unlock()
+
+	existingConn, ok := c.connections[cd]
+	if ok {
+		conn.client.Close() //nolint:errcheck,gosec
+
+		log.Debugf("Closed redundant connection: %s", cd.uri.Addr())
+
+		return existingConn
+	}
+
+	c.connections[cd] = conn
+
+	return conn
 }
 
 func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
