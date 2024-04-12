@@ -221,14 +221,6 @@ func (c *ConnManager) housekeeper(ctx context.Context, interval time.Duration) {
 
 // create creates a new connection with given credentials.
 func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, error) {
-	c.connectionsMu.Lock()
-	defer c.connectionsMu.Unlock()
-
-	if _, ok := c.connections[ci]; ok {
-		// Should never happen.
-		panic("connection already exists")
-	}
-
 	ctx := context.Background()
 
 	host := ci.uri.Host()
@@ -252,7 +244,16 @@ func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, err
 	}
 
 	client, err := createClient(
-		createDNS(host, port, dbname, ci.uri.User(), ci.uri.Password(), ci.cacheMode, details), c.connectTimeout,
+		createDNS(
+			host,
+			port,
+			dbname,
+			ci.uri.User(),
+			ci.uri.Password(),
+			ci.cacheMode,
+			details,
+		),
+		c.connectTimeout,
 	)
 	if err != nil {
 		return nil, err
@@ -269,7 +270,9 @@ func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, err
 		return nil, fmt.Errorf("PostgreSQL version %d is not supported", serverVersion)
 	}
 
-	c.connections[ci] = &PGConn{
+	Impl.Debugf("[%s] Created new connection: %s", Name, ci.uri.Addr())
+
+	return &PGConn{
 		client:         client,
 		callTimeout:    c.callTimeout,
 		version:        serverVersion,
@@ -277,11 +280,7 @@ func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, err
 		ctx:            ctx,
 		queryStorage:   &c.queryStorage,
 		address:        ci.uri.Addr(),
-	}
-
-	Impl.Debugf("[%s] Created new connection: %s", Name, ci.uri.Addr())
-
-	return c.connections[ci], nil
+	}, nil
 }
 
 func createDNS(host, port, dbname, user, pass, mode string, details tlsconfig.Details) string {
