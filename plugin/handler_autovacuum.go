@@ -32,7 +32,7 @@ func autovacuumHandler(ctx context.Context, conn PostgresClient,
 
 	query := `SELECT count(*)
 				FROM pg_catalog.pg_stat_activity
-			   WHERE query like '%%autovacuum%%'
+				WHERE backend_type = 'autovacuum worker'
 				 AND state <> 'idle'
 				 AND pid <> pg_catalog.pg_backend_pid()`
 

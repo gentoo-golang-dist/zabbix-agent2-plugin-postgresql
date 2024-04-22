@@ -3,6 +3,7 @@ Changes for 7.0.0rc1
 New features:
 
 Bug fixes:
+[ZBX-24278] Improved PostgreSQL autovacuum's count query (abrosimovs)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.0beta3
