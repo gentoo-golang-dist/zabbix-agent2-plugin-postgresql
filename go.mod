@@ -6,6 +6,7 @@ require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/omeid/go-yarn v0.0.1
+	golang.zabbix.com/sdk v1.2.2-0.20240422113804-afdee2611563
 )
 
 require (
@@ -23,5 +24,4 @@ require (
 	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.11.0 // indirect
-	golang.zabbix.com/sdk v1.2.2-0.20240422113804-afdee2611563 // indirect
 )
