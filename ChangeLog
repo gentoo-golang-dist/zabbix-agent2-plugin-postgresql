@@ -1,7 +1,19 @@
 Changes for 6.4.15rc1
 
+New features:
+
 Bug fixes:
 [ZBX-24186] added support of arm64 to Makefile (mprihodko)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.14
+
+6.4.14rc1 was released as 6.4.14 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.14rc1
+
+6.4.13 was released as 6.4.14rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.4.13

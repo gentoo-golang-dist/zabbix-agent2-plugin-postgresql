@@ -31,8 +31,8 @@ import (
 // DO NOT GROUP THESE CONSTANTS! The makefile needs, them as is.
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 4
-const PLUGIN_VERSION_PATCH = 13
-const PLUGIN_VERSION_RC = ""
+const PLUGIN_VERSION_PATCH = 15
+const PLUGIN_VERSION_RC = "rc1"
 
 const COPYRIGHT_MESSAGE = //
 `Copyright 2001-2024 Zabbix SIA
