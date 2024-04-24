@@ -22,10 +22,10 @@ import (
 	"fmt"
 	"os"
 
-	"git.zabbix.com/ap/plugin-support/plugin/container"
-	"git.zabbix.com/ap/plugin-support/plugin/flag"
-	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"git.zabbix.com/ap/postgresql/plugin"
+	"golang.zabbix.com/sdk/plugin/container"
+	"golang.zabbix.com/sdk/plugin/flag"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 const COPYRIGHT_MESSAGE = //
@@ -46,7 +46,7 @@ const (
 	PLUGIN_VERSION_MAJOR = 7
 	PLUGIN_VERSION_MINOR = 0
 	PLUGIN_VERSION_PATCH = 0
-	PLUGIN_VERSION_RC    = "beta3"
+	PLUGIN_VERSION_RC    = "rc1"
 )
 
 func main() {
