@@ -22,12 +22,10 @@ import (
 	"net/http"
 	"time"
 
-	"git.zabbix.com/ap/plugin-support/metric"
-	"git.zabbix.com/ap/plugin-support/zbxerr"
-
 	"github.com/omeid/go-yarn"
-
-	"git.zabbix.com/ap/plugin-support/plugin"
+	"golang.zabbix.com/sdk/metric"
+	"golang.zabbix.com/sdk/plugin"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 const (

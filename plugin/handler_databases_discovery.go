@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 
-	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // databasesDiscoveryHandler gets names of all databases and returns JSON if all is OK or nil otherwise.
