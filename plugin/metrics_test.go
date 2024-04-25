@@ -23,7 +23,7 @@ import (
 	"strings"
 	"testing"
 
-	"git.zabbix.com/ap/plugin-support/metric"
+	"golang.zabbix.com/sdk/metric"
 )
 
 func Test_getParameters(t *testing.T) {
