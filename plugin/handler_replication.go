@@ -23,8 +23,8 @@ import (
 	"errors"
 	"strconv"
 
-	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // replicationHandler gets info about recovery state if all is OK or nil otherwise.

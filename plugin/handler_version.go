@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 
-	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // versionHandler queries the version of the PostgreSQL server returns string
