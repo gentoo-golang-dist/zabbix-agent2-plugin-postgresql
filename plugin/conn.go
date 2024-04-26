@@ -28,13 +28,13 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v4/stdlib"
+	"github.com/omeid/go-yarn"
 	"golang.zabbix.com/sdk/metric"
 	"golang.zabbix.com/sdk/tlsconfig"
 	"golang.zabbix.com/sdk/uri"
 	"golang.zabbix.com/sdk/zbxerr"
-	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/jackc/pgx/v4/stdlib"
-	"github.com/omeid/go-yarn"
 )
 
 const (

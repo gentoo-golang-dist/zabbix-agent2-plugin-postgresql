@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 
-	"golang.zabbix.com/sdk/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // walHandler executes select from directory which contains wal files and returns JSON if all is OK or nil otherwise.

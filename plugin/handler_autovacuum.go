@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 
-	"golang.zabbix.com/sdk/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // autovacuumHandler returns count of autovacuum workers if all is OK or nil otherwise.

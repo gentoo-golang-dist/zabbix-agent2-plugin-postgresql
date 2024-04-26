@@ -23,8 +23,8 @@ import (
 	"errors"
 	"strings"
 
-	"golang.zabbix.com/sdk/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // customQueryHandler executes custom user queries from *.sql files.

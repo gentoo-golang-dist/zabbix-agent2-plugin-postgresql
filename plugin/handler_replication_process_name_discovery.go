@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 
-	"golang.zabbix.com/sdk/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // processNameDiscoveryHandler gets names of all sender processes in pg_stat_replication

@@ -22,8 +22,8 @@ import (
 	"errors"
 	"fmt"
 
-	"golang.zabbix.com/sdk/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 const pgVersionWithChecksum = 120000

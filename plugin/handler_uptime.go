@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 
-	"golang.zabbix.com/sdk/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // uptimeHandler finds difference btw current time and
