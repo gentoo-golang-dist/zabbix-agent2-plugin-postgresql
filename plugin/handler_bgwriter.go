@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 
-	"git.zabbix.com/ap/plugin-support/zbxerr"
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // bgwriterHandler executes select  with statistics from pg_stat_bgwriter

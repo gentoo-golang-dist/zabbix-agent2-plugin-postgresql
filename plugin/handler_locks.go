@@ -21,7 +21,7 @@ import (
 	"context"
 	"errors"
 
-	"git.zabbix.com/ap/plugin-support/zbxerr"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // locksHandler executes select from pg_stat_database command and returns JSON if all is OK or nil otherwise.

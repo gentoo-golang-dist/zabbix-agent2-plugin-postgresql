@@ -3,10 +3,10 @@ module git.zabbix.com/ap/postgresql
 go 1.19
 
 require (
-	git.zabbix.com/ap/plugin-support v1.2.2-0.20240424125304-2f5e81bb89fe
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/omeid/go-yarn v0.0.1
+	golang.zabbix.com/sdk v1.2.2-0.20240425093730-51f7a0d58ef0
 )
 
 require (
