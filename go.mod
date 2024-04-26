@@ -1,4 +1,4 @@
-module git.zabbix.com/ap/postgresql
+module golang.zabbix.com/plugin/postgresql
 
 go 1.19
 
