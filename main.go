@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"os"
 
-	"git.zabbix.com/ap/postgresql/plugin"
+	"golang.zabbix.com/plugin/postgresql/plugin"
 	"golang.zabbix.com/sdk/plugin/container"
 	"golang.zabbix.com/sdk/plugin/flag"
 	"golang.zabbix.com/sdk/zbxerr"
