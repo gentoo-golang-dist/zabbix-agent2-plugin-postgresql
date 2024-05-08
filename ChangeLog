@@ -5,6 +5,7 @@ New features:
 
 Bug fixes:
 [ZBX-24186] added support of arm64 to Makefile (mprihodko)
+[ZBX-24278] improved PostgreSQL autovacuum's count query (abrosimovs)
 
 --------------------------------------------------------------------------------
 Changes for 6.4.14
