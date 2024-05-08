@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"git.zabbix.com/ap/plugin-support/zbxerr"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // queriesHandler executes select from pg_database command and returns JSON if all is OK or nil otherwise.
