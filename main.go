@@ -22,16 +22,16 @@ import (
 	"fmt"
 	"os"
 
-	"git.zabbix.com/ap/plugin-support/plugin/container"
-	"git.zabbix.com/ap/plugin-support/plugin/flag"
-	"git.zabbix.com/ap/plugin-support/zbxerr"
-	"git.zabbix.com/ap/postgresql/plugin"
+	"golang.zabbix.com/plugin/postgresql/plugin"
+	"golang.zabbix.com/sdk/plugin/container"
+	"golang.zabbix.com/sdk/plugin/flag"
+	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // DO NOT GROUP THESE CONSTANTS! The makefile needs, them as is.
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 4
-const PLUGIN_VERSION_PATCH = 14
+const PLUGIN_VERSION_PATCH = 15
 const PLUGIN_VERSION_RC = "rc1"
 
 const COPYRIGHT_MESSAGE = //
