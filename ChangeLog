@@ -1,8 +1,16 @@
---------------------------------------------------------------------------------
 Changes for 6.0.30rc1
 
+New features:
+[ZBXNEXT-9039] added Go compiler version to Zabbix agent 2 plugin version output (mprihodko)
+
 Bug fixes:
-[ZBX-24278] Improved PostgreSQL autovacuum's count query (abrosimovs)
+[ZBX-24186] added support of arm64 to Makefile (mprihodko)
+[ZBX-24278] improved PostgreSQL autovacuum's count query (abrosimovs)
+
+--------------------------------------------------------------------------------
+Changes for 6.0.29
+
+6.0.29rc1 was released as 6.0.29 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.29rc1

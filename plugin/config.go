@@ -18,8 +18,8 @@
 package plugin
 
 import (
-	"git.zabbix.com/ap/plugin-support/conf"
-	"git.zabbix.com/ap/plugin-support/plugin"
+	"golang.zabbix.com/sdk/conf"
+	"golang.zabbix.com/sdk/plugin"
 )
 
 // Session struct holds individual options for PostgreSQL connection for each session.

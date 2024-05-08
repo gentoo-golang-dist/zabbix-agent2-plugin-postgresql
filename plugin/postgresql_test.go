@@ -25,9 +25,9 @@ import (
 	"reflect"
 	"testing"
 
-	"git.zabbix.com/ap/plugin-support/log"
-	"git.zabbix.com/ap/plugin-support/plugin"
 	"github.com/omeid/go-yarn"
+	"golang.zabbix.com/sdk/log"
+	"golang.zabbix.com/sdk/plugin"
 )
 
 var testParamDatabase = map[string]string{"Database": "postgres"}
