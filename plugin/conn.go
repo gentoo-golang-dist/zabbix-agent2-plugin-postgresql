@@ -28,14 +28,14 @@ import (
 	"sync"
 	"time"
 
-	"git.zabbix.com/ap/plugin-support/errs"
-	"git.zabbix.com/ap/plugin-support/log"
-	"git.zabbix.com/ap/plugin-support/metric"
-	"git.zabbix.com/ap/plugin-support/tlsconfig"
-	"git.zabbix.com/ap/plugin-support/uri"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/jackc/pgx/v4/stdlib"
 	"github.com/omeid/go-yarn"
+	"golang.zabbix.com/sdk/errs"
+	"golang.zabbix.com/sdk/log"
+	"golang.zabbix.com/sdk/metric"
+	"golang.zabbix.com/sdk/tlsconfig"
+	"golang.zabbix.com/sdk/uri"
 )
 
 const (
