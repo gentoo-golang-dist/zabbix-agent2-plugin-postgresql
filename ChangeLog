@@ -107,18 +107,12 @@ Changes for 7.0.0alpha1
 -------------------------------------------------------------------------------
 Changes for 6.4.17
 
-6.4.0beta6 was released as 6.4.17 without any changes
+6.4.17rc1 was released as 6.4.17 without any changes
 
---------------------------------------------------------------------------------
-Changes for 6.4.0beta6
-
-[ZBXNEXT-826] switched to Zabbix versioning (yurii)
-[ZBX-22061] fixed custom query read on empty parameter (esneiders)
+-------------------------------------------------------------------------------
 Changes for 6.4.17rc1
 
-New features:
-
-Bug fixes:
+6.4.16 was released as 6.4.17rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.4.16
@@ -297,7 +291,12 @@ Changes for 6.4.0beta6
 --------------------------------------------------------------------------------
 Changes for 6.0.32
 
-6.0.31 was released as 6.0.32 without any changes
+6.0.32rc1 was released as 6.0.32 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.0.32rc1
+
+6.0.31 was released as 6.0.32rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.31
