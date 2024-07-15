@@ -113,6 +113,9 @@ Changes for 6.4.0beta6
 [ZBX-22061] fixed custom query read on empty parameter (esneiders)
 
 --------------------------------------------------------------------------------
+1.2.1 was released as 6.0.32 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 1.2.1
 
 [ZBX-21206] changed connection to be per database (esneiders)
