@@ -107,6 +107,11 @@ Changes for 7.0.0alpha1
 [ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
 
 -------------------------------------------------------------------------------
+Changes for 6.4.17
+
+6.4.0beta6 was released as 6.4.17 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 6.4.0beta6
 
 [ZBXNEXT-826] switched to Zabbix versioning (yurii)
