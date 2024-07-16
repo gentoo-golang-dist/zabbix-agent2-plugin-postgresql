@@ -105,6 +105,13 @@ Changes for 7.0.0alpha1
 [ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
 
 -------------------------------------------------------------------------------
+Changes for 6.4.18rc1
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
 Changes for 6.4.17
 
 6.4.17rc1 was released as 6.4.17 without any changes
