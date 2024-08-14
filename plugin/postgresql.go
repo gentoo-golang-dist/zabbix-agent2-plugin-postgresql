@@ -16,6 +16,7 @@ package plugin
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -42,7 +43,7 @@ type Plugin struct {
 var Impl Plugin
 
 // Export implements the Exporter interface.
-func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider) (result any, err error) {
+func (p *Plugin) Export(key string, rawParams []string, pctx plugin.ContextProvider) (result any, err error) {
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
 		return nil, err
@@ -76,12 +77,24 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 		return nil, err
 	}
 
-	ctx, cancel := context.WithTimeout(conn.ctx, conn.callTimeout)
+	var timeout time.Duration
+
+	if conn.callTimeout < time.Second*time.Duration(pctx.Timeout()) {
+		timeout = time.Second * time.Duration(pctx.Timeout())
+	} else {
+		timeout = conn.callTimeout
+	}
+
+	ctx, cancel := context.WithTimeout(conn.ctx, timeout)
 	defer cancel()
 
 	result, err = handleMetric(ctx, conn, key, params, extraParams...)
 
 	if err != nil {
+		if ctx.Err() == context.DeadlineExceeded {
+			err = zbxerr.ErrorCannotFetchData.Wrap(fmt.Errorf("query execution timeout exceeded"))
+		}
+
 		p.Errf(err.Error())
 	}
 
