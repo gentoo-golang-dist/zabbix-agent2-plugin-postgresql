@@ -16,7 +16,7 @@ package plugin
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"net/http"
 	"time"
 
