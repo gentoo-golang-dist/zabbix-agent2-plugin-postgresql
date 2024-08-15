@@ -32,6 +32,8 @@ const (
 	hkInterval = 10
 )
 
+var errQueryExecutionTimeout = errors.New("query execution timeout exceeded")
+
 // Plugin inherits plugin.Base and store plugin-specific data.
 type Plugin struct {
 	plugin.Base
@@ -91,8 +93,8 @@ func (p *Plugin) Export(key string, rawParams []string, pctx plugin.ContextProvi
 	result, err = handleMetric(ctx, conn, key, params, extraParams...)
 
 	if err != nil {
-		if ctx.Err() == context.DeadlineExceeded {
-			err = zbxerr.ErrorCannotFetchData.Wrap(fmt.Errorf("query execution timeout exceeded"))
+		if errors.Is(ctx.Err(), context.DeadlineExceeded) {
+			err = zbxerr.ErrorCannotFetchData.Wrap(errQueryExecutionTimeout)
 		}
 
 		p.Errf(err.Error())
