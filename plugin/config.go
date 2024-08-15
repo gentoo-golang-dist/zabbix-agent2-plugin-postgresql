@@ -19,6 +19,7 @@ package plugin
 
 import (
 	"golang.zabbix.com/sdk/conf"
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/plugin"
 )
 
@@ -54,8 +55,6 @@ type Session struct {
 
 // PluginOptions are options for PostgreSQL connection.
 type PluginOptions struct {
-	plugin.SystemOptions `conf:"optional,name=System"`
-
 	// Timeout is the maximum time in seconds for waiting when a connection has to be established.
 	// Default value equals to the global agent timeout.
 	Timeout int `conf:"optional,range=1:30"`
@@ -80,7 +79,8 @@ type PluginOptions struct {
 // Configure implements the Configurator interface.
 // Initializes configuration structures.
 func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
-	if err := conf.Unmarshal(options, &p.options); err != nil {
+	err := conf.UnmarshalStrict(options, &p.options)
+	if err != nil {
 		p.Errf("cannot unmarshal configuration options: %s", err)
 	}
 
@@ -98,5 +98,10 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
 func (p *Plugin) Validate(options interface{}) error {
 	var opts PluginOptions
 
-	return conf.Unmarshal(options, &opts)
+	err := conf.UnmarshalStrict(options, &opts)
+	if err != nil {
+		return errs.Wrap(err, "failed to validation options")
+	}
+
+	return nil
 }
