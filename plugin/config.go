@@ -81,7 +81,7 @@ type PluginOptions struct {
 func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
 	err := conf.UnmarshalStrict(options, &p.options)
 	if err != nil {
-		p.Errf("cannot unmarshal configuration options: %s", err)
+		p.Errf("cannot unmarshal configuration options: %s", err.Error())
 	}
 
 	if p.options.Timeout == 0 {
