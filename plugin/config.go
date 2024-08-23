@@ -77,7 +77,7 @@ type PluginOptions struct {
 // Initializes configuration structures.
 func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
 	if err := conf.UnmarshalStrict(options, &p.options); err != nil {
-		p.Errf("cannot unmarshal configuration options: %s", err)
+		p.Errf("cannot unmarshal configuration options: %s", err.Error())
 	}
 
 	if p.options.Timeout == 0 {
