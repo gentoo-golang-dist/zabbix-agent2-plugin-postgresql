@@ -60,7 +60,8 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("failed to create plugin handler %s", err.Error()))
 	}
-	plugin.Impl.Logger = &h
+
+	plugin.Impl.Logger = h
 
 	err = h.Execute()
 	if err != nil {
