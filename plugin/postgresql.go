@@ -21,6 +21,7 @@ import (
 	"time"
 
 	"github.com/omeid/go-yarn"
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/metric"
 	"golang.zabbix.com/sdk/plugin"
 	"golang.zabbix.com/sdk/zbxerr"
@@ -32,8 +33,6 @@ const (
 	hkInterval = 10
 )
 
-var errQueryExecutionTimeout = errors.New("query execution timeout exceeded")
-
 // Plugin inherits plugin.Base and store plugin-specific data.
 type Plugin struct {
 	plugin.Base
@@ -44,8 +43,16 @@ type Plugin struct {
 // Impl is the pointer to the plugin implementation.
 var Impl Plugin
 
+func getQueryTimeout(conn *PGConn, ctx plugin.ContextProvider) time.Duration {
+	if conn.callTimeout < time.Second*time.Duration(ctx.Timeout()) {
+		return time.Second * time.Duration(ctx.Timeout())
+	}
+
+	return conn.callTimeout
+}
+
 // Export implements the Exporter interface.
-func (p *Plugin) Export(key string, rawParams []string, pctx plugin.ContextProvider) (result any, err error) {
+func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvider) (any, error) {
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
 		return nil, err
@@ -79,25 +86,26 @@ func (p *Plugin) Export(key string, rawParams []string, pctx plugin.ContextProvi
 		return nil, err
 	}
 
-	var timeout time.Duration
-
-	if conn.callTimeout < time.Second*time.Duration(pctx.Timeout()) {
-		timeout = time.Second * time.Duration(pctx.Timeout())
-	} else {
-		timeout = conn.callTimeout
-	}
-
-	ctx, cancel := context.WithTimeout(conn.ctx, timeout)
+	timeout := getQueryTimeout(conn, ctx)
+	handlerCtx, cancel := context.WithTimeout(conn.ctx, timeout)
 	defer cancel()
 
-	result, err = handleMetric(ctx, conn, key, params, extraParams...)
-
+	result, err := handleMetric(handlerCtx, conn, key, params, extraParams...)
 	if err != nil {
-		if errors.Is(ctx.Err(), context.DeadlineExceeded) {
-			err = zbxerr.ErrorCannotFetchData.Wrap(errQueryExecutionTimeout)
+		ctxErr := handlerCtx.Err()
+		if ctxErr != nil && errors.Is(ctxErr, context.DeadlineExceeded) {
+			p.Errf(
+				"failed to handle metric: query execution timeout %s exceeded: %s",
+				timeout.String(),
+				err.Error(),
+			)
+
+			return nil, errs.New("query execution timeout exceeded")
 		}
 
-		p.Errf(err.Error())
+		p.Errf("failed to handle metric %q: %s", key, err.Error())
+
+		return nil, err
 	}
 
 	return result, err
