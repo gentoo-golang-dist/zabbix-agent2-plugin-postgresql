@@ -44,6 +44,8 @@ type Plugin struct {
 var Impl Plugin
 
 // Export implements the Exporter interface.
+//
+//nolint:gocyclo,cyclop
 func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvider) (any, error) {
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
