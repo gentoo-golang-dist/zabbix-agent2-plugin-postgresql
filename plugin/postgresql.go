@@ -43,14 +43,6 @@ type Plugin struct {
 // Impl is the pointer to the plugin implementation.
 var Impl Plugin
 
-func getQueryTimeout(conn *PGConn, ctx plugin.ContextProvider) time.Duration {
-	if conn.callTimeout < time.Second*time.Duration(ctx.Timeout()) {
-		return time.Second * time.Duration(ctx.Timeout())
-	}
-
-	return conn.callTimeout
-}
-
 // Export implements the Exporter interface.
 func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvider) (any, error) {
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
@@ -86,7 +78,12 @@ func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvid
 		return nil, err
 	}
 
-	timeout := getQueryTimeout(conn, ctx)
+	timeout := conn.callTimeout
+
+	if conn.callTimeout < time.Second*time.Duration(ctx.Timeout()) {
+		timeout = time.Second * time.Duration(ctx.Timeout())
+	}
+
 	handlerCtx, cancel := context.WithTimeout(conn.ctx, timeout)
 	defer cancel()
 
