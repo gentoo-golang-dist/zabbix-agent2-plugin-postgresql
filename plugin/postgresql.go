@@ -46,7 +46,7 @@ var Impl Plugin
 // Export implements the Exporter interface.
 //
 //nolint:gocyclo,cyclop
-func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvider) (any, error) {
+func (p *Plugin) Export(key string, rawParams []string, pluginCtx plugin.ContextProvider) (any, error) {
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
 		return nil, err
@@ -82,8 +82,8 @@ func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvid
 
 	timeout := conn.callTimeout
 
-	if conn.callTimeout < time.Second*time.Duration(ctx.Timeout()) {
-		timeout = time.Second * time.Duration(ctx.Timeout())
+	if conn.callTimeout < time.Second*time.Duration(pluginCtx.Timeout()) {
+		timeout = time.Second * time.Duration(pluginCtx.Timeout())
 	}
 
 	handlerCtx, cancel := context.WithTimeout(conn.ctx, timeout)
