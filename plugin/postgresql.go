@@ -82,7 +82,7 @@ func (p *Plugin) Export(key string, rawParams []string, pluginCtx plugin.Context
 
 	timeout := conn.callTimeout
 
-	if conn.callTimeout < time.Second*time.Duration(pluginCtx.Timeout()) {
+	if timeout < time.Second*time.Duration(pluginCtx.Timeout()) {
 		timeout = time.Second * time.Duration(pluginCtx.Timeout())
 	}
 
