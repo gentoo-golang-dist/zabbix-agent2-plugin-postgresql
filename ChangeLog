@@ -209,6 +209,11 @@ Changes for 6.4.0beta6
 [ZBX-22061] fixed custom query read on empty parameter (esneiders)
 
 --------------------------------------------------------------------------------
+Changes for 6.0.34
+
+6.0.34rc2 was released as 6.0.34 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 6.0.34rc2
 
 6.0.34rc1 was released as 6.0.34rc2 without any changes
