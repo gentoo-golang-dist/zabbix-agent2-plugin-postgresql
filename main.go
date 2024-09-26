@@ -32,7 +32,7 @@ import (
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 0
 const PLUGIN_VERSION_PATCH = 34
-const PLUGIN_VERSION_RC = "rc2"
+const PLUGIN_VERSION_RC = ""
 
 const COPYRIGHT_MESSAGE = //
 `Copyright (C) 2001-2024 Zabbix SIA
