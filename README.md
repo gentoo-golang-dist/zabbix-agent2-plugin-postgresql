@@ -39,7 +39,7 @@ PostgreSQL plugin can be executed on its own with these parameters:
 The Zabbix Agent's configuration file is used to configure plugins.
 
 **Plugins.PostgreSQL.CallTimeout** — The maximum time in seconds for waiting when a request has to be done.  
-Global item-type timeout (or individual item timeout) will override this value if it is smaller.
+Global item-type timeout (or individual item timeout) will override this value if it is greater.
 *Default value:* equals the global Timeout configuration parameter defined in Zabbix agent 2 configuration file.
 *Limits:* 1-30
 
