@@ -47,6 +47,10 @@ var Impl Plugin
 //
 //nolint:gocyclo,cyclop
 func (p *Plugin) Export(key string, rawParams []string, pluginCtx plugin.ContextProvider) (any, error) {
+	if key == keyCustomQuery && !p.options.CustomQueriesEnabled {
+		return nil, errs.Errorf("key %s is disabled", keyCustomQuery)
+	}
+
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
 		return nil, err
