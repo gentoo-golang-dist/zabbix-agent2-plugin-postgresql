@@ -48,7 +48,13 @@ Global item-type timeout (or individual item timeout) will override this value i
 *Limits:* 1-30
 
 **Plugins.PostgreSQL.CustomQueriesPath** — Full pathname of a directory containing *.sql* files with custom queries.  
-*Default value:* — (the feature is disabled by default)
+*Default value:* — /usr/local/share/zabbix/custom-queries/postgreSQL (for unix systems)
+*Default value:* — *:\Program Files\Zabbix Agent 2\Custom Queries\PostgreSQL (for windows systems, 
+where * is drive name taken from programfiles environment variable )
+
+**Plugins.PostgreSQL.CustomQueriesEnabled** — Enables or disables custom query key. (the feature is disabled by default)
+*Default value:* — false
+*Accepted values:*  true, false
 
 **Plugins.PostgreSQL.KeepAlive** — Sets a time for waiting before unused connections will be closed.  
 *Default value:* 300 sec.  
