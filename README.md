@@ -50,7 +50,7 @@ Global item-type timeout (or individual item timeout) will override this value i
 **Plugins.PostgreSQL.CustomQueriesPath** — Full pathname of a directory containing *.sql* files with custom queries.  
 *Default value:* — /usr/local/share/zabbix/custom-queries/postgreSQL (for unix systems)
 *Default value:* — *:\Program Files\Zabbix Agent 2\Custom Queries\PostgreSQL (for windows systems, 
-where * is drive name taken from programfiles environment variable )
+where * is drive name taken from programfiles environment variable)
 
 **Plugins.PostgreSQL.CustomQueriesEnabled** — Enables or disables custom query key. (the feature is disabled by default)
 *Default value:* — false
