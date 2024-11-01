@@ -21,7 +21,7 @@ included in the **agent** configuration file *zabbix_agent2.conf*.
 E.g:
 You should add the following option to the **plugin** configuration file:
 
-    Plugins.PostgreSQL.System.Path=/path/to/executable/postgresql
+    Plugins.PostgreSQL.System.Path=/usr/libexec/zabbix/zabbix-agent2-plugin-postgresql
 
 Then the config file needs to be included in the main Zabbix agent 2 config file via the *Include* command.
 
