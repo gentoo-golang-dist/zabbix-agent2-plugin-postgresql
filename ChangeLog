@@ -12,12 +12,15 @@ Changes for 7.0.5
 --------------------------------------------------------------------------------
 Changes for 7.0.5rc1
 
-7.0.4 was released as 7.0.5rc1 without any changes
+New features:
+[ZBXNEXT-9281] added configurable item timeout support (dgoloscapov)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.4
 
-7.0.4rc1 was released as 7.0.4 without any changes
+Bug fixes:
+[ZBX-24245] fixed invalid Zabbix agent 2 and plugin protocol log message (esneiders)
+[ZBX-24619] updated atomic variables to be more safe (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.4rc1
