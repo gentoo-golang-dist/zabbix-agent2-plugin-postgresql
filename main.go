@@ -31,7 +31,7 @@ import (
 // DO NOT GROUP THESE CONSTANTS! The makefile needs, them as is.
 const PLUGIN_VERSION_MAJOR = 6
 const PLUGIN_VERSION_MINOR = 0
-const PLUGIN_VERSION_PATCH = 34
+const PLUGIN_VERSION_PATCH = 37
 const PLUGIN_VERSION_RC = "rc1"
 
 const COPYRIGHT_MESSAGE = //
@@ -70,7 +70,8 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("failed to create plugin handler %s", err.Error()))
 	}
-	plugin.Impl.Logger = &h
+
+	plugin.Impl.Logger = h
 
 	err = h.Execute()
 	if err != nil {
