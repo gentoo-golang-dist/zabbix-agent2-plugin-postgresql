@@ -35,7 +35,7 @@ const (
 	PLUGIN_VERSION_MAJOR = 7
 	PLUGIN_VERSION_MINOR = 2
 	PLUGIN_VERSION_PATCH = 0
-	PLUGIN_VERSION_RC    = "alpha1"
+	PLUGIN_VERSION_RC    = "rc1"
 )
 
 func main() {
@@ -60,7 +60,8 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("failed to create plugin handler %s", err.Error()))
 	}
-	plugin.Impl.Logger = &h
+
+	plugin.Impl.Logger = h
 
 	err = h.Execute()
 	if err != nil {
