@@ -16,10 +16,12 @@ package plugin
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"time"
 
 	"github.com/omeid/go-yarn"
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/metric"
 	"golang.zabbix.com/sdk/plugin"
 	"golang.zabbix.com/sdk/zbxerr"
@@ -42,7 +44,9 @@ type Plugin struct {
 var Impl Plugin
 
 // Export implements the Exporter interface.
-func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider) (result any, err error) {
+//
+//nolint:gocyclo,cyclop
+func (p *Plugin) Export(key string, rawParams []string, pluginCtx plugin.ContextProvider) (any, error) {
 	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
 		return nil, err
@@ -76,13 +80,31 @@ func (p *Plugin) Export(key string, rawParams []string, _ plugin.ContextProvider
 		return nil, err
 	}
 
-	ctx, cancel := context.WithTimeout(conn.ctx, conn.callTimeout)
+	timeout := conn.callTimeout
+
+	if timeout < time.Second*time.Duration(pluginCtx.Timeout()) {
+		timeout = time.Second * time.Duration(pluginCtx.Timeout())
+	}
+
+	handlerCtx, cancel := context.WithTimeout(conn.ctx, timeout)
 	defer cancel()
 
-	result, err = handleMetric(ctx, conn, key, params, extraParams...)
-
+	result, err := handleMetric(handlerCtx, conn, key, params, extraParams...)
 	if err != nil {
-		p.Errf(err.Error())
+		ctxErr := handlerCtx.Err()
+		if ctxErr != nil && errors.Is(ctxErr, context.DeadlineExceeded) {
+			p.Errf(
+				"failed to handle metric: query execution timeout %s exceeded: %s",
+				timeout.String(),
+				err.Error(),
+			)
+
+			return nil, errs.New("query execution timeout exceeded")
+		}
+
+		p.Errf("failed to handle metric %q: %s", key, err.Error())
+
+		return nil, err
 	}
 
 	return result, err
