@@ -1,20 +1,44 @@
-Changes for 7.2.0alpha2
+Changes for 7.2.0rc2
+
+7.2.0rc1 was released as 7.2.0rc2 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.2.0rc1
 
 New features:
+[ZBXNEXT-9533] added support of configuration parameters specified by environment variables (mprihodko)
 
-Bug fixes:
+--------------------------------------------------------------------------------
+Changes for 7.2.0beta1
+
+7.2.0alpha1 was released as 7.2.0beta1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.2.0alpha1
 
-7.0.5rc1 was released as 7.2.0alpha1 without any changes
+New features:
+[ZBXNEXT-9281] added configurable item timeout support (dgoloscapov)
+
+Bug fixes:
+[ZBX-24245] fixed invalid Zabbix agent 2 and plugin protocol log message (esneiders)
+[ZBX-24619] updated atomic variables to be more safe (esneiders)
 
 --------------------------------------------------------------------------------
-Changes for 7.0.6rc1
+Changes for 7.0.7rc1
 
 New features:
 
 Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 7.0.6
+
+7.0.6rc1 was released as 7.0.6 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.6rc1
+
+7.0.5 was released as 7.0.6rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.0.5
@@ -168,22 +192,36 @@ Bug fixes:
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha2
 
+Bug fixes:
 [ZBX-22868] fixed defaults when hardcoded value is provided (esneiders)
 
 -------------------------------------------------------------------------------
 Changes for 7.0.0alpha1
 
+New features:
 [ZBXNEXT-8330] updated with support for defaults (esneiders)
+
+Bug fixes:
 [ZBX-22797] fixed client connection memory leak (esneiders)
 [ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
 [ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
 
 -------------------------------------------------------------------------------
-Changes for 6.4.20rc1
+Changes for 6.4.21rc1
 
 New features:
 
 Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 6.4.20
+
+6.4.20rc1 was released as 6.4.20 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.20rc1
+
+6.4.19 was released as 6.4.20rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.4.19
@@ -216,11 +254,21 @@ Changes for 6.4.17rc1
 6.4.16 was released as 6.4.17rc1 without any changes
 
 --------------------------------------------------------------------------------
-Changes for 6.0.36rc1
+Changes for 6.0.37rc1
 
 New features:
 
 Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 6.0.36
+
+6.0.36rc1 was released as 6.0.36 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.0.36rc1
+
+6.0.35 was released as 6.0.36rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.35
