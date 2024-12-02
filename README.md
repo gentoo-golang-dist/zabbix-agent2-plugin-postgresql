@@ -8,7 +8,7 @@ You can extend it or create your template for your specific needs.
 
 ## Requirements
 - Zabbix Agent 2
-- Go >= 1.18 (required only to build from source)
+- Go >= 1.21 (required only to build from source)
 
 ## Supported versions
 PostgreSQL, version 10, 11, 12, 13, 14, 15
