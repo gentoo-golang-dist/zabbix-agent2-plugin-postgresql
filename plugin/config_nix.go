@@ -1,3 +1,6 @@
+//go:build !windows
+// +build !windows
+
 /*
 ** Copyright (C) 2001-2025 Zabbix SIA
 **
@@ -14,36 +17,8 @@
 
 package plugin
 
-import (
-	"context"
-	"errors"
-
-	"github.com/jackc/pgx/v4"
-	"golang.zabbix.com/sdk/zbxerr"
-)
-
-// versionHandler queries the version of the PostgreSQL server returns string
-// response.
-func versionHandler(
-	ctx context.Context,
-	conn PostgresClient,
-	_ string, _ map[string]string, _ ...string,
-) (any, error) {
-	var version string
-
-	row, err := conn.QueryRow(ctx, `SELECT version();`)
-	if err != nil {
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
+func (pc *PluginOptions) setCustomQueriesPathDefault() {
+	if pc.CustomQueriesEnabled && pc.CustomQueriesPath == "" {
+		pc.CustomQueriesPath = "/usr/local/share/zabbix/custom-queries/postgresql"
 	}
-
-	err = row.Scan(&version)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, zbxerr.ErrorEmptyResult.Wrap(err)
-		}
-
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
-	}
-
-	return version, nil
 }

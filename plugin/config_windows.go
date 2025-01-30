@@ -15,35 +15,14 @@
 package plugin
 
 import (
-	"context"
-	"errors"
-
-	"github.com/jackc/pgx/v4"
-	"golang.zabbix.com/sdk/zbxerr"
+	"fmt"
+	"os"
 )
 
-// versionHandler queries the version of the PostgreSQL server returns string
-// response.
-func versionHandler(
-	ctx context.Context,
-	conn PostgresClient,
-	_ string, _ map[string]string, _ ...string,
-) (any, error) {
-	var version string
-
-	row, err := conn.QueryRow(ctx, `SELECT version();`)
-	if err != nil {
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
+func (pc *PluginOptions) setCustomQueriesPathDefault() {
+	if pc.CustomQueriesEnabled && pc.CustomQueriesPath == "" {
+		pc.CustomQueriesPath = fmt.Sprintf(
+			"%s\\Zabbix Agent 2\\Custom Queries\\Postgresql", os.Getenv("ProgramFiles"),
+		)
 	}
-
-	err = row.Scan(&version)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, zbxerr.ErrorEmptyResult.Wrap(err)
-		}
-
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
-	}
-
-	return version, nil
 }
