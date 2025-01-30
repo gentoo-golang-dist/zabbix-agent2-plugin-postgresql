@@ -1,8 +1,48 @@
-Changes for 7.0.7rc1
+Changes for 7.0.10rc1
 
 New features:
 
 Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 7.0.9
+
+7.0.9rc2 was released as 7.0.9 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.9rc2
+
+7.0.9rc1 was released as 7.0.9rc2 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.9rc1
+
+7.0.8 was released as 7.0.9rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.8
+
+7.0.8rc2 was released as 7.0.8 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.8rc2
+
+7.0.8rc1 was released as 7.0.8rc2 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.8rc1
+
+7.0.7 was released as 7.0.8rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.7
+
+7.0.7rc1 was released as 7.0.7 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.7rc1
+
+7.0.6 was released as 7.0.7rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.0.6
@@ -28,14 +68,14 @@ New features:
 --------------------------------------------------------------------------------
 Changes for 7.0.4
 
-Bug fixes:
-[ZBX-24245] fixed invalid Zabbix agent 2 and plugin protocol log message (esneiders)
-[ZBX-24619] updated atomic variables to be more safe (esneiders)
+7.0.4rc1 was released as 7.0.4 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.0.4rc1
 
-7.0.3 was released as 7.0.4rc1 without any changes
+Bug fixes:
+...G...... [ZBX-24619] updated atomic variables to be more safe (esneiders)
+...G...... [ZBX-24245] fixed invalid Zabbix agent 2 and plugin protocol log message (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.3
@@ -180,11 +220,21 @@ Changes for 7.0.0alpha1
 [ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
 
 -------------------------------------------------------------------------------
-Changes for 6.4.21rc1
+Changes for 6.4.22rc1
 
 New features:
 
 Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 6.4.21
+
+6.4.21rc1 was released as 6.4.21 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.21rc1
+
+6.4.20 was released as 6.4.21rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.4.20
@@ -401,11 +451,31 @@ Changes for 6.4.0beta6
 [ZBX-22061] fixed custom query read on empty parameter (esneiders)
 
 --------------------------------------------------------------------------------
-Changes for 6.0.37rc1
+Changes for 6.0.39rc1
 
 New features:
 
 Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 6.0.38
+
+6.0.38rc1 was released as 6.0.38 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.0.38rc1
+
+6.0.37 was released as 6.0.38rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.0.37
+
+6.0.37rc1 was released as 6.0.37 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.0.37rc1
+
+6.0.36 was released as 6.0.37rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.36
@@ -440,7 +510,9 @@ Changes for 6.0.34rc2
 --------------------------------------------------------------------------------
 Changes for 6.0.34rc1
 
-6.0.33 was released as 6.0.34rc1 without any changes
+Bug fixes:
+...G...... [ZBX-24619] updated atomic variables to be more safe (esneiders)
+...G...... [ZBX-24245] fixed invalid Zabbix agent 2 and plugin protocol log message (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 6.0.33
