@@ -1,12 +1,14 @@
 module golang.zabbix.com/plugin/postgresql
 
-go 1.19
+go 1.21
+
+toolchain go1.23.1
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/omeid/go-yarn v0.0.1
-	golang.zabbix.com/sdk v1.2.2-0.20241204093139-bf2487d06c77
+	golang.zabbix.com/sdk v1.2.2-0.20250130124632-436121f05f4e
 )
 
 require (
