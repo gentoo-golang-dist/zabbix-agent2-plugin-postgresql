@@ -55,6 +55,7 @@ type Session struct {
 
 // PluginOptions are options for PostgreSQL connection.
 type PluginOptions struct {
+	System plugin.SystemOptions `conf:"optional"`
 	// Timeout is the maximum time in seconds for waiting when a connection has to be established.
 	// Default value equals to the global agent timeout.
 	Timeout int `conf:"optional,range=1:30"`
