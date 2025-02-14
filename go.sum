@@ -187,8 +187,8 @@ golang.org/x/xerrors v0.0.0-20190513163551-3ee3066db522/go.mod h1:I/5z698sn9Ka8T
 golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
-golang.zabbix.com/sdk v1.2.2-0.20250130124604-26a4e8a31442 h1:2ivIQPinItQnzyT7cTVfpiAg168wAkVKnK2Z1HxiUAY=
-golang.zabbix.com/sdk v1.2.2-0.20250130124604-26a4e8a31442/go.mod h1:8saHaop4b0JnDaePDT7oArefRKBU/Ew7pqUJpeBX4J0=
+golang.zabbix.com/sdk v1.2.2-0.20250214072518-dd7b5f86464b h1:9fgI0g/x857ZXIRcv4ks3AtqNRYGeZgUhTgYsfJlaS8=
+golang.zabbix.com/sdk v1.2.2-0.20250214072518-dd7b5f86464b/go.mod h1:8saHaop4b0JnDaePDT7oArefRKBU/Ew7pqUJpeBX4J0=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
