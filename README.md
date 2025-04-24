@@ -11,7 +11,7 @@ You can extend it or create your template for your specific needs.
 - Go >= 1.21 (required only to build from source)
 
 ## Supported versions
-PostgreSQL, version 10, 11, 12, 13, 14, 15
+PostgreSQL, version 10, 11, 12, 13, 14, 15, 16, 17
 
 ## Plugin setup
 *Plugins.PostgreSQL.System.Path* variable needs to be set in Zabbix agent 2 configuration file with the path to the
@@ -165,23 +165,42 @@ AND pid <> pg_catalog.pg_backend_pid()
 > SQL query.
 
 **pgsql.bgwriter[\<commonParams\>]** — statistics about the background writer process's activity.  
-*Returns:* Result of the
+*Returns:* 
+ - For PostgreSQL < 17
 ```sql
-SELECT row_to_json (T)
+SELECT row_to_json(T)
 FROM (
-SELECT
-checkpoints_timed
-, checkpoints_req
-, checkpoint_write_time
-, checkpoint_sync_time
-, buffers_checkpoint
-, buffers_clean
-, maxwritten_clean
-, buffers_backend
-, buffers_backend_fsync
-, buffers_alloc
-FROM pg_catalog.pg_stat_bgwriter
-) T
+    SELECT
+        checkpoints_timed,
+        checkpoints_req,
+        checkpoint_write_time,
+        checkpoint_sync_time,
+        buffers_checkpoint,
+        buffers_clean,
+        maxwritten_clean,
+        buffers_backend,
+        buffers_backend_fsync,
+        buffers_alloc
+    FROM pg_catalog.pg_stat_bgwriter
+) T;
+```
+ - For PostgreSQL 17 and above
+```sql
+SELECT row_to_json(T)
+FROM (
+    SELECT  
+        psc.num_timed AS checkpoints_timed,
+        psc.num_requested AS checkpoints_req,
+        psc.write_time AS checkpoint_write_time,
+        psc.sync_time AS checkpoint_sync_time,
+        psc.buffers_written AS buffers_checkpoint,
+        psb.buffers_clean AS buffers_clean,
+        psb.maxwritten_clean AS maxwritten_clean,
+        psb.buffers_alloc AS buffers_alloc
+    FROM 
+        pg_catalog.pg_stat_checkpointer AS psc, 
+        pg_catalog.pg_stat_bgwriter AS psb
+) T;
 ```
 > SQL query JSON format.
 
