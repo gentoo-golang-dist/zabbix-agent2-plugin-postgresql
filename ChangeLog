@@ -246,29 +246,29 @@ Changes for 6.0.19rc1
 
 [ZBX-22868] fixed defaults when hardcoded value is provided (esneiders)
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Changes for 6.0.18
 
 6.0.18rc1 was released as 6.0.18 without any changes
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Changes for 6.0.18rc1
 
 [ZBX-22797] fixed client connection memory leak (esneiders)
 [ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Changes for 6.0.17
 
 [ZBXNEXT-8330] updated with support for defaults (esneiders)
 [ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Changes for 6.0.16
 
 [ZBXNEXT-826] updated copyright year to 2023 (mprihodko)
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Changes for 6.0.15
 
 6.0.14 was released as 6.0.15 without any changes
