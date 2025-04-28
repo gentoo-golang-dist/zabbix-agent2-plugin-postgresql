@@ -444,6 +444,180 @@ Changes for 6.4.17rc1
 6.4.16 was released as 6.4.17rc1 without any changes
 
 --------------------------------------------------------------------------------
+Changes for 6.4.16
+
+6.4.16rc2 was released as 6.4.16 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.16rc2
+
+6.4.16rc1 was released as 6.4.16rc2 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.16rc1
+
+6.4.15 was released as 6.4.16rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.15
+
+6.4.15rc1 was released as 6.4.15 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.15rc1
+
+New features:
+[ZBXNEXT-9039] added Go compiler version to Zabbix agent 2 plugin version output (mprihodko)
+[ZBX-24210] improve new conn creation concurrency, bump plugin support version (rzvejs)
+
+Bug fixes:
+[ZBX-24186] added support of arm64 to Makefile (mprihodko)
+[ZBX-24278] improved PostgreSQL autovacuum&amp;apos;s count query (abrosimovs)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.14
+
+6.4.14rc1 was released as 6.4.14 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.14rc1
+
+6.4.13 was released as 6.4.14rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.13
+
+6.4.13rc1 was released as 6.4.13 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.13rc1
+
+6.4.12 was released as 6.4.13rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.12
+
+6.4.12rc1 was released as 6.4.12 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.12rc1
+
+6.4.11 was released as 6.4.12rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.11
+
+6.4.11rc1 was released as 6.4.11 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.11rc1
+
+Bug fixes:
+[ZBXNEXT-8699] fixed connection leak (esneiders)
+[ZBX-17208] update flag handling to use common function from plugin-support (rzvejs)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.10
+
+6.4.10rc1 was released as 6.4.10 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.10rc1
+
+6.4.9 was released as 6.4.10rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.9
+
+6.4.9rc1 was released as 6.4.9 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.9rc1
+
+6.4.8 was released as 6.4.9rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.8
+
+6.4.8rc1 was released as 6.4.8 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.8rc1
+
+New features:
+[ZBXNEXT-7097] add pgsql.version metric (rzvejs)
+
+Bug fixes:
+[ZBX-22735] updated plugin support (rzvejs)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.7
+
+6.4.7rc1 was released as 6.4.7 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.7rc1
+
+New features:
+[ZBX-23217] added cache mode parameter (esneiders)
+
+Bug fixes:
+[ZBX-23217] fixed TLS connections parameters and requirements (esneiders)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.6
+
+6.4.6rc1 was released as 6.4.6 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.5
+
+6.4.4 was released as 6.4.5 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.4
+
+6.4.4rc1 was released as 6.4.4 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.4rc1
+
+[ZBX-22868] fixed defaults when hardcoded value is provided (esneiders)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.3
+
+6.4.3rc1 was released as 6.4.3 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.3rc1
+
+[ZBX-22797] fixed client connection memory leak (esneiders)
+[ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.2
+
+[ZBXNEXT-8330] updated with support for defaults (esneiders)
+[ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
+
+--------------------------------------------------------------------------------
+Changes for 6.4.1rc1
+
+6.4.0 was released as 6.4.1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.0
+
+6.4.0beta6 released as 6.4.0 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.4.0beta6
+
+[ZBXNEXT-826] switched to Zabbix versioning (yurii)
+[ZBX-22061] fixed custom query read on empty parameter (esneiders)
+
+--------------------------------------------------------------------------------
 Changes for 6.0.41rc1
 
 New features:
