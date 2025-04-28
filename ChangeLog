@@ -783,11 +783,6 @@ Changes for 6.0.13rc1
 [ZBX-21206] changed connection to be per database (esneiders)
 
 --------------------------------------------------------------------------------
-Changes for 1.2.1
-
-[ZBX-21206] changed connection to be per database (esneiders)
-
---------------------------------------------------------------------------------
 Changes for 1.2.0
 
 initial release
