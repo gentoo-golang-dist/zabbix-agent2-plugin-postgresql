@@ -747,7 +747,7 @@ New features:
 
 Bug fixes:
 [ZBX-24186] added support of arm64 to Makefile (mprihodko)
-[ZBX-24278] improved PostgreSQL autovacuum&amp;apos;s count query (abrosimovs)
+[ZBX-24278] improved PostgreSQL autovacuum's count query (abrosimovs)
 
 --------------------------------------------------------------------------------
 Changes for 6.0.29
@@ -908,7 +908,7 @@ Changes for 6.0.13
 Changes for 6.0.13rc1
 
 [ZBXNEXT-826] switched to Zabbix versioning (yurii)
- [ZBX-21206] changed connection to be per database (esneiders)
+[ZBX-21206] changed connection to be per database (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 1.2.0
