@@ -245,12 +245,16 @@ Bug fixes:
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha2
 
+Bug fixes:
 [ZBX-22868] fixed defaults when hardcoded value is provided (esneiders)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.0alpha1
 
+New features:
 [ZBXNEXT-8330] updated with support for defaults (esneiders)
+
+Bug fixes:
 [ZBX-22797] fixed client connection memory leak (esneiders)
 [ZBX-22373] updated go.mod/sum to allow mixing session and key parameter for Zabbix agent 2 items (esneiders)
 [ZBX-21886] added support for compiling under windows with official file properties (MVekslers)
