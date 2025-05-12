@@ -2,6 +2,7 @@ Changes for 7.0.13rc1
 
 New features:
 ...G...... [ZBXNEXT-9917] added pgsql.bgwriter key support for postgres 17 (sjurgensons)
+
 Bug fixes:
 
 --------------------------------------------------------------------------------
