@@ -7,8 +7,8 @@ congestion, latency, CPU and memory usage. Best for use in conjunction with the 
 You can extend it or create your template for your specific needs.
 
 ## Requirements
-- Zabbix Agent 2
-- Go >= 1.21 (required only to build from source)
+- Zabbix Agent 2.
+- Go version 1.23 or newer (required only for building the plugin from the source).
 
 ## Supported versions
 PostgreSQL, version 10, 11, 12, 13, 14, 15, 16, 17
