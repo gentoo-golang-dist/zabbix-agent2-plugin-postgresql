@@ -6,7 +6,7 @@ require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/omeid/go-yarn v0.0.1
-	golang.zabbix.com/sdk v1.2.2-0.20250522085316-3a2741b8efdb
+	golang.zabbix.com/sdk v1.2.2-0.20250609103208-d0bf4c1d30ca
 )
 
 require (
