@@ -17,6 +17,7 @@ package plugin
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -138,6 +139,22 @@ func (p *Plugin) setCustomQuery() yarn.Yarn {
 	}
 
 	return queryStorage
+}
+
+// Test initiates plugin, runs one call and exits
+// todo make unit tests
+func (p *Plugin) Test(key string, params []string, ctx plugin.ContextProvider) (any, error) {
+	p.Init(Name)
+	p.Configure(&plugin.GlobalOptions{Timeout: 30}, nil)
+	p.Start()
+	defer p.Stop()
+
+	result, err := p.Export(key, params, ctx)
+	if err != nil {
+		return nil, fmt.Errorf("test failed: %w", err)
+	}
+
+	return result, nil
 }
 
 // Stop implements the Runner interface and frees resources when plugin is deactivated.
