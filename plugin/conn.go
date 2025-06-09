@@ -54,10 +54,10 @@ const (
 )
 
 type PostgresClient interface {
-	Query(ctx context.Context, query string, args ...interface{}) (rows *sql.Rows, err error)
-	QueryByName(ctx context.Context, queryName string, args ...interface{}) (rows *sql.Rows, err error)
-	QueryRow(ctx context.Context, query string, args ...interface{}) (row *sql.Row, err error)
-	QueryRowByName(ctx context.Context, queryName string, args ...interface{}) (row *sql.Row, err error)
+	Query(ctx context.Context, query string, args ...any) (rows *sql.Rows, err error)
+	QueryByName(ctx context.Context, queryName string, args ...any) (rows *sql.Rows, err error)
+	QueryRow(ctx context.Context, query string, args ...any) (row *sql.Row, err error)
+	QueryRowByName(ctx context.Context, queryName string, args ...any) (row *sql.Row, err error)
 	PostgresVersion() int
 }
 
@@ -80,14 +80,14 @@ type connID struct {
 var errorQueryNotFound = "query %q not found"
 
 // Query wraps pgxpool.Query.
-func (conn *PGConn) Query(ctx context.Context, query string, args ...interface{}) (rows *sql.Rows, err error) {
-	rows, err = conn.client.QueryContext(ctx, query, args...)
+func (conn *PGConn) Query(ctx context.Context, query string, args ...any) (*sql.Rows, error) {
+	rows, err := conn.client.QueryContext(ctx, query, args...)
 
 	if ctxErr := ctx.Err(); ctxErr != nil {
-		err = ctxErr
+		return nil, errs.Wrap(ctxErr, "failed to query row")
 	}
 
-	return
+	return rows, errs.Wrap(err, "failed to execute query")
 }
 
 // QueryByName executes a query from queryStorage by its name and returns a single row.
@@ -103,14 +103,16 @@ func (conn *PGConn) QueryByName(ctx context.Context, queryName string, args ...a
 }
 
 // QueryRow wraps pgxpool.QueryRow.
-func (conn *PGConn) QueryRow(ctx context.Context, query string, args ...interface{}) (row *sql.Row, err error) {
-	row = conn.client.QueryRowContext(ctx, query, args...)
+func (conn *PGConn) QueryRow(ctx context.Context, query string, args ...any) (*sql.Row, error) {
+	row := conn.client.QueryRowContext(ctx, query, args...)
+
+	var err error
 
 	if ctxErr := ctx.Err(); ctxErr != nil {
-		err = ctxErr
+		return nil, errs.Wrap(ctxErr, "failed to query row")
 	}
 
-	return
+	return row, err
 }
 
 // QueryRowByName executes a query from queryStorage by its name and returns a single row.
@@ -237,7 +239,7 @@ func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, err
 
 	dbname, err := url.QueryUnescape(ci.uri.GetParam("dbname"))
 	if err != nil {
-		return nil, err
+		return nil, errs.Wrap(err, "cannot get dbname")
 	}
 
 	client, err := createClient(
@@ -317,17 +319,18 @@ func renameTLS(in string) string {
 func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 	config, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
-		return nil, err
+		return nil, errs.Wrap(err, "cannot parse config")
 	}
 
 	config.ConnConfig.DialFunc = func(ctx context.Context, network, addr string) (net.Conn, error) {
 		d := net.Dialer{}
 		ctxTimeout, cancel := context.WithTimeout(context.Background(), timeout)
+
 		defer cancel()
 
 		conn, err := d.DialContext(ctxTimeout, network, addr)
 
-		return conn, err
+		return conn, errs.Wrap(err, "cannot connect to server")
 	}
 
 	return stdlib.OpenDB(*config.ConnConfig), nil
@@ -426,7 +429,7 @@ func createConnID(params map[string]string) (connID, error) {
 		uriDefaults,
 	)
 	if err != nil {
-		return connID{}, err
+		return connID{}, errs.Wrap(err, "cannot create URI validator")
 	}
 
 	return connID{uri: *u, cacheMode: params[cacheModeParam]}, nil

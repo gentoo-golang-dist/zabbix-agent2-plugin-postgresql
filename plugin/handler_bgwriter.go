@@ -26,7 +26,7 @@ import (
 // bgwriterHandler executes select  with statistics from pg_stat_bgwriter
 // and returns JSON if all is OK or nil otherwise.
 func bgwriterHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var bgwriterJSON string
 
 	const queryV1 = `

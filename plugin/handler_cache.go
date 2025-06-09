@@ -24,7 +24,7 @@ import (
 
 // cacheHandler finds cache hit percent and returns int64 if all is OK or nil otherwise.
 func cacheHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var cache float64
 
 	query := `SELECT round(sum(blks_hit)*100/sum(blks_hit+blks_read), 2) FROM pg_catalog.pg_stat_database;`

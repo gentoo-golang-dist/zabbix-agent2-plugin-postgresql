@@ -80,7 +80,7 @@ func TestPlugin_Export(t *testing.T) {
 		name       string
 		p          *Plugin
 		args       args
-		wantResult interface{}
+		wantResult any
 		wantErr    bool
 	}{
 		{

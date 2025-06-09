@@ -42,7 +42,7 @@ func TestPlugin_pingHandler(t *testing.T) {
 		name    string
 		p       *Plugin
 		args    args
-		want    interface{}
+		want    any
 		wantErr bool
 	}{
 		{

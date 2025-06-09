@@ -42,7 +42,7 @@ const (
 func main() {
 	args, err := flag.HandleFlags()
 	if err != nil {
-		panic(fmt.Sprintf("failed to handle flags %s", err.Error()))
+		panic("failed to handle flags" + err.Error())
 	}
 
 	pluginInfo := &sdkplugin.Info{
@@ -60,6 +60,7 @@ func main() {
 		// exit if parameter supposed to exit after execution
 		return
 	}
+
 	if err != nil {
 		panic(err)
 	}

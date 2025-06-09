@@ -24,7 +24,7 @@ import (
 
 // archiveHandler gets info about count and size of archive files and returns JSON if all is OK or nil otherwise.
 func archiveHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var archiveCountJSON, archiveSizeJSON string
 
 	queryArchiveCount := `SELECT row_to_json(T)

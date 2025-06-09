@@ -21,6 +21,7 @@ import (
 	"regexp"
 	"strings"
 
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/metric"
 	"golang.zabbix.com/sdk/plugin"
 	"golang.zabbix.com/sdk/uri"
@@ -195,7 +196,7 @@ type PostgresURIValidator struct {
 
 // handlerFunc defines an interface must be implemented by handlers.
 type handlerFunc func(ctx context.Context, conn PostgresClient, key string,
-	params map[string]string, extraParams ...string) (res interface{}, err error)
+	params map[string]string, extraParams ...string) (res any, err error)
 
 type additionalParam struct {
 	param    *metric.Param
@@ -262,10 +263,11 @@ func (v PostgresURIValidator) Validate(value *string) error {
 
 	u, err := uri.New(*value, v.Defaults)
 	if err != nil {
-		return err
+		return errs.Wrap(err, "cannot create URI validator")
 	}
 
 	isValidScheme := false
+
 	if v.AllowedSchemes != nil {
 		for _, s := range v.AllowedSchemes {
 			if u.Scheme() == s {

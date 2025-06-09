@@ -141,12 +141,13 @@ func (p *Plugin) setCustomQuery() yarn.Yarn {
 	return queryStorage
 }
 
-// Test initiates plugin, runs one call and exits
-// todo make unit tests
+// Test initiates plugin, runs one call and exits.
+// todo make unit tests.
 func (p *Plugin) Test(key string, params []string, ctx plugin.ContextProvider) (any, error) {
 	p.Init(Name)
 	p.Configure(&plugin.GlobalOptions{Timeout: 30}, nil)
 	p.Start()
+
 	defer p.Stop()
 
 	result, err := p.Export(key, params, ctx)

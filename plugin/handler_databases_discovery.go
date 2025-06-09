@@ -24,7 +24,7 @@ import (
 
 // databasesDiscoveryHandler gets names of all databases and returns JSON if all is OK or nil otherwise.
 func databasesDiscoveryHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var databasesJSON string
 
 	query := `SELECT json_build_object ('data',json_agg(json_build_object('{#DBNAME}',d.datname)))
