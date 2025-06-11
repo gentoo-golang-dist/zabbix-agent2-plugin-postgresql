@@ -2,6 +2,9 @@ module golang.zabbix.com/plugin/postgresql
 
 go 1.23.0
 
+//todo remove
+replace golang.zabbix.com/sdk v1.2.2-0.20250530120847-11563a4dfc74 => golang.zabbix.com/sdk v1.2.2-0.20250611085901-555253e44a38
+
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/google/go-cmp v0.6.0
