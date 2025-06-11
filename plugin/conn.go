@@ -82,12 +82,16 @@ var errorQueryNotFound = "query %q not found"
 // Query wraps pgxpool.Query.
 func (conn *PGConn) Query(ctx context.Context, query string, args ...any) (*sql.Rows, error) {
 	rows, err := conn.client.QueryContext(ctx, query, args...)
-
-	if ctxErr := ctx.Err(); ctxErr != nil {
-		return nil, errs.Wrap(ctxErr, "failed to query row")
+	if err != nil {
+		return nil, errs.Wrap(err, "failed to execute query")
 	}
 
-	return rows, errs.Wrap(err, "failed to execute query")
+	ctxErr := ctx.Err()
+	if ctxErr != nil {
+		return nil, errs.Wrap(ctxErr, "failed to query due to context error")
+	}
+
+	return rows, nil
 }
 
 // QueryByName executes a query from queryStorage by its name and returns a single row.
@@ -106,13 +110,12 @@ func (conn *PGConn) QueryByName(ctx context.Context, queryName string, args ...a
 func (conn *PGConn) QueryRow(ctx context.Context, query string, args ...any) (*sql.Row, error) {
 	row := conn.client.QueryRowContext(ctx, query, args...)
 
-	var err error
-
-	if ctxErr := ctx.Err(); ctxErr != nil {
+	ctxErr := ctx.Err()
+	if ctxErr != nil {
 		return nil, errs.Wrap(ctxErr, "failed to query row")
 	}
 
-	return row, err
+	return row, nil
 }
 
 // QueryRowByName executes a query from queryStorage by its name and returns a single row.
@@ -130,10 +133,11 @@ func (conn *PGConn) QueryRowByName(
 }
 
 // GetPostgresVersion exec SQL query to retrieve the version of PostgreSQL server we are currently connected to.
-func getPostgresVersion(ctx context.Context, conn *sql.DB) (version int, err error) {
-	err = conn.QueryRowContext(ctx, `select current_setting('server_version_num');`).Scan(&version)
+func getPostgresVersion(ctx context.Context, conn *sql.DB) (int, error) {
+	var version int
+	err := conn.QueryRowContext(ctx, `select current_setting('server_version_num');`).Scan(&version)
 
-	return
+	return version, errs.Wrap(err, "failed to get server version")
 }
 
 // PostgresVersion returns the version of PostgreSQL server we are currently connected to.
@@ -329,8 +333,11 @@ func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 		defer cancel()
 
 		conn, err := d.DialContext(ctxTimeout, network, addr)
+		if err != nil {
+			return nil, errs.Wrap(err, "cannot connect to server")
+		}
 
-		return conn, errs.Wrap(err, "cannot connect to server")
+		return conn, nil
 	}
 
 	return stdlib.OpenDB(*config.ConnConfig), nil
