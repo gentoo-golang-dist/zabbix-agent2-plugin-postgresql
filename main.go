@@ -46,8 +46,8 @@ func main() {
 	}
 
 	pluginInfo := &sdkplugin.Info{
-		PluginName:       plugin.Name,
-		PluginBinName:    os.Args[0],
+		Name:             plugin.Name,
+		BinName:          os.Args[0],
 		CopyrightMessage: COPYRIGHT_MESSAGE,
 		MajorVersion:     PLUGIN_VERSION_MAJOR,
 		MinorVersion:     PLUGIN_VERSION_MINOR,
@@ -55,14 +55,16 @@ func main() {
 		Alphatag:         PLUGIN_VERSION_RC,
 	}
 
-	err = flag.DecideActionFromFlags(args, pluginInfo, plugin.Impl.Test)
-	if errors.Is(err, errs.ErrExitGracefully) {
-		// exit if parameter supposed to exit after execution
-		return
-	}
+	err = flag.DecideActionFromFlags(args, &plugin.Impl, pluginInfo, nil)
 
 	if err != nil {
-		panic(err)
+		if !errors.Is(err, errs.ErrExitGracefully) {
+			fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+			os.Exit(1)
+		}
+
+		// exit gracefully if parameter supposed to exit after execution
+		os.Exit(0)
 	}
 
 	h, err := container.NewHandler(plugin.Impl.Name())
