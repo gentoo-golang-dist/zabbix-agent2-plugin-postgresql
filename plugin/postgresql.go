@@ -17,7 +17,6 @@ package plugin
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -32,6 +31,13 @@ const (
 	Name       = "PostgreSQL"
 	sqlExt     = ".sql"
 	hkInterval = 10
+)
+
+var (
+	_ plugin.Runner       = (*Plugin)(nil)
+	_ plugin.Configurator = (*Plugin)(nil)
+	_ plugin.Exporter     = (*Plugin)(nil)
+	_ plugin.Accessor     = (*Plugin)(nil)
 )
 
 // Plugin inherits plugin.Base and store plugin-specific data.
@@ -87,7 +93,7 @@ func (p *Plugin) Export(key string, rawParams []string, pluginCtx plugin.Context
 
 	timeout := conn.callTimeout
 
-	if timeout < time.Second*time.Duration(pluginCtx.Timeout()) {
+	if pluginCtx != nil && timeout < time.Second*time.Duration(pluginCtx.Timeout()) {
 		timeout = time.Second * time.Duration(pluginCtx.Timeout())
 	}
 
@@ -139,23 +145,6 @@ func (p *Plugin) setCustomQuery() yarn.Yarn {
 	}
 
 	return queryStorage
-}
-
-// Test initiates plugin, runs one call and exits.
-// todo make unit tests.
-func (p *Plugin) Test(key string, params []string, ctx plugin.ContextProvider) (any, error) {
-	p.Init(Name)
-	p.Configure(&plugin.GlobalOptions{Timeout: 30}, nil)
-	p.Start()
-
-	defer p.Stop()
-
-	result, err := p.Export(key, params, ctx)
-	if err != nil {
-		return nil, fmt.Errorf("test failed: %w", err)
-	}
-
-	return result, nil
 }
 
 // Stop implements the Runner interface and frees resources when plugin is deactivated.
