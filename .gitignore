@@ -109,3 +109,5 @@ fabric.properties
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,visualstudiocode
+#generated bin
+/zabbix-agent2-plugin-postgresql
