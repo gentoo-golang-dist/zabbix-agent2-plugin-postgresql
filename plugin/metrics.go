@@ -22,6 +22,7 @@ import (
 	"strings"
 
 	"golang.zabbix.com/sdk/errs"
+	"golang.zabbix.com/sdk/log"
 	"golang.zabbix.com/sdk/metric"
 	"golang.zabbix.com/sdk/plugin"
 	"golang.zabbix.com/sdk/uri"
@@ -185,8 +186,17 @@ var metrics = metric.MetricSet{
 	),
 }
 
-func init() {
-	plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
+func init() { //todo remove init and global variable Impl
+	err := log.Open(log.Console, log.Info, "", 0)
+	if err != nil {
+		panic(errs.Wrap(err, "failed to open log"))
+	}
+
+	Impl.Logger = log.New(Name)
+	err = plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
+	if err != nil {
+		panic(err)
+	}
 }
 
 type PostgresURIValidator struct {
