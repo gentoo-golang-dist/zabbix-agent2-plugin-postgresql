@@ -34,7 +34,7 @@ the license. There is NO WARRANTY, to the extent permitted by law.`
 const (
 	PLUGIN_VERSION_MAJOR = 7
 	PLUGIN_VERSION_MINOR = 2
-	PLUGIN_VERSION_PATCH = 9     //nolint:revive
+	PLUGIN_VERSION_PATCH = 10     //nolint:revive
 	PLUGIN_VERSION_RC    = "" //nolint:revive
 )
 
