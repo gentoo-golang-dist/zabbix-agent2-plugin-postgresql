@@ -69,6 +69,7 @@ DISTFILES = \
 	main.go \
 	Makefile \
 	postgresql.conf \
+	postgresql.win.conf \
 	README.md
 
 DIST_SUBDIRS = \
