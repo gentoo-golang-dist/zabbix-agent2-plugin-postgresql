@@ -42,7 +42,7 @@ const (
 func main() {
 	args, err := flag.HandleFlags()
 	if err != nil {
-		panic("failed to handle flags" + err.Error())
+		exitWithError(errs.Wrap(err, "failed to handle flags: "))
 	}
 
 	pluginInfo := &sdkplugin.Info{
@@ -56,26 +56,33 @@ func main() {
 	}
 
 	err = flag.DecideActionFromFlags(args, &plugin.Impl, pluginInfo, nil)
-
 	if err != nil {
-		if !errors.Is(err, errs.ErrExitGracefully) {
-			fmt.Fprintf(os.Stderr, "%s\n", err.Error())
-			os.Exit(1)
+		if errors.Is(err, errs.ErrExitGracefully) {
+			// exit gracefully if parameter supposed to exit after execution
+			exitGracefully()
 		}
 
-		// exit gracefully if parameter supposed to exit after execution
-		os.Exit(0)
+		exitWithError(errs.Wrap(err, "failed to execute plugin functions: "))
 	}
 
 	h, err := container.NewHandler(plugin.Impl.Name())
 	if err != nil {
-		panic(fmt.Sprintf("failed to create plugin handler %s", err.Error()))
+		exitWithError(errs.Wrap(err, "failed to create plugin handler: "))
 	}
 
 	plugin.Impl.Logger = h
 
 	err = h.Execute()
 	if err != nil {
-		panic(fmt.Sprintf("failed to execute plugin handler %s", err.Error()))
+		exitWithError(errs.Wrap(err, "failed to execute plugin handler: "))
 	}
+}
+
+func exitWithError(err error) {
+	fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+	os.Exit(1)
+}
+
+func exitGracefully() {
+	os.Exit(0)
 }
