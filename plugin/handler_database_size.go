@@ -24,7 +24,7 @@ import (
 
 // databaseSizeHandler gets info about count and size of archive files and returns JSON if all is OK or nil otherwise.
 func databaseSizeHandler(ctx context.Context, conn PostgresClient,
-	_ string, params map[string]string, _ ...string) (interface{}, error) {
+	_ string, params map[string]string, _ ...string) (any, error) {
 	var countSize int64
 
 	query := `SELECT pg_database_size(datname::text)

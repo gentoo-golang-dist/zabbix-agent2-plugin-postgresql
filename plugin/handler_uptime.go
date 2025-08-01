@@ -25,7 +25,7 @@ import (
 // uptimeHandler finds difference btw current time and
 // postmaster start time and returns int64 if all is OK or nil otherwise.
 func uptimeHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var uptime float64
 
 	query := `SELECT date_part('epoch', now() - pg_postmaster_start_time());`

@@ -21,6 +21,8 @@ import (
 	"regexp"
 	"strings"
 
+	"golang.zabbix.com/sdk/errs"
+	"golang.zabbix.com/sdk/log"
 	"golang.zabbix.com/sdk/metric"
 	"golang.zabbix.com/sdk/plugin"
 	"golang.zabbix.com/sdk/uri"
@@ -184,8 +186,17 @@ var metrics = metric.MetricSet{
 	),
 }
 
-func init() {
-	plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
+func init() { //todo remove init and global variable Impl
+	err := log.Open(log.Console, log.Info, "", 0)
+	if err != nil {
+		panic(errs.Wrap(err, "failed to open log"))
+	}
+
+	Impl.Logger = log.New(Name)
+	err = plugin.RegisterMetrics(&Impl, Name, metrics.List()...)
+	if err != nil {
+		panic(err)
+	}
 }
 
 type PostgresURIValidator struct {
@@ -195,7 +206,7 @@ type PostgresURIValidator struct {
 
 // handlerFunc defines an interface must be implemented by handlers.
 type handlerFunc func(ctx context.Context, conn PostgresClient, key string,
-	params map[string]string, extraParams ...string) (res interface{}, err error)
+	params map[string]string, extraParams ...string) (res any, err error)
 
 type additionalParam struct {
 	param    *metric.Param
@@ -262,10 +273,11 @@ func (v PostgresURIValidator) Validate(value *string) error {
 
 	u, err := uri.New(*value, v.Defaults)
 	if err != nil {
-		return err
+		return errs.Wrap(err, "cannot create URI validator")
 	}
 
 	isValidScheme := false
+
 	if v.AllowedSchemes != nil {
 		for _, s := range v.AllowedSchemes {
 			if u.Scheme() == s {

@@ -28,7 +28,7 @@ const pgVersionWithChecksum = 120000
 // dbStatHandler executes select from pg_catalog.pg_stat_database
 // command for each database and returns JSON if all is OK or nil otherwise.
 func dbStatHandler(ctx context.Context, conn PostgresClient,
-	key string, _ map[string]string, _ ...string) (interface{}, error) {
+	key string, _ map[string]string, _ ...string) (any, error) {
 	var statJSON, query string
 
 	switch key {

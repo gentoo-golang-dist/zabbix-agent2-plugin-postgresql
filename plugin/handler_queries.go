@@ -24,7 +24,7 @@ import (
 
 // queriesHandler executes select from pg_database command and returns JSON if all is OK or nil otherwise.
 func queriesHandler(ctx context.Context, conn PostgresClient,
-	_ string, params map[string]string, _ ...string) (interface{}, error) {
+	_ string, params map[string]string, _ ...string) (any, error) {
 	var queriesJSON string
 
 	period, err := strconv.Atoi(params["TimePeriod"])

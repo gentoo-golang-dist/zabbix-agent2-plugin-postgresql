@@ -19,12 +19,13 @@ import (
 	"errors"
 
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // walHandler executes select from directory which contains wal files and returns JSON if all is OK or nil otherwise.
 func walHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var walJSON string
 
 	query := `SELECT row_to_json(T)
@@ -44,16 +45,16 @@ func walHandler(ctx context.Context, conn PostgresClient,
 
 	row, err := conn.QueryRow(ctx, query)
 	if err != nil {
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
+		return nil, errs.Wrap(zbxerr.ErrorCannotFetchData, err.Error())
 	}
 
 	err = row.Scan(&walJSON)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, zbxerr.ErrorEmptyResult.Wrap(err)
+			return nil, errs.Wrap(zbxerr.ErrorEmptyResult, err.Error())
 		}
 
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
+		return nil, errs.Wrap(zbxerr.ErrorCannotFetchData, err.Error())
 	}
 
 	return walJSON, nil

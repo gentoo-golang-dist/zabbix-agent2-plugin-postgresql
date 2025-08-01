@@ -25,7 +25,7 @@ import (
 // processNameDiscoveryHandler gets names of all sender processes in pg_stat_replication
 // and returns JSON if all is OK or nil otherwise.
 func processNameDiscoveryHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var appNameJSON string
 
 	query := `SELECT 

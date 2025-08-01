@@ -27,6 +27,7 @@ func Test_getParameters(t *testing.T) {
 	type args struct {
 		additional *additionalParam
 	}
+
 	tests := []struct {
 		name string
 		args args

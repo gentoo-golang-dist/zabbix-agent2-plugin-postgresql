@@ -24,7 +24,7 @@ import (
 
 // autovacuumHandler returns count of autovacuum workers if all is OK or nil otherwise.
 func autovacuumHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var countAutovacuumWorkers int64
 
 	query := `SELECT count(*)

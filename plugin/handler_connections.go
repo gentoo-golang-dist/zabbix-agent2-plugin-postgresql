@@ -24,7 +24,7 @@ import (
 
 // connectionsHandler executes select from pg_stat_activity command and returns JSON if all is OK or nil otherwise.
 func connectionsHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var connectionsJSON string
 
 	query := `SELECT row_to_json(T)

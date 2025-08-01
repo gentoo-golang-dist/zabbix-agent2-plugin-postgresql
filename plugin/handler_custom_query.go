@@ -21,17 +21,18 @@ import (
 	"strings"
 
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/zbxerr"
 )
 
 // customQueryHandler executes custom user queries from *.sql files.
 func customQueryHandler(ctx context.Context, conn PostgresClient,
-	_ string, params map[string]string, extraParams ...string) (interface{}, error) {
+	_ string, params map[string]string, extraParams ...string) (any, error) {
 	queryName := params["QueryName"]
 
-	queryArgs := make([]interface{}, len(extraParams))
-	for i, v := range extraParams {
-		queryArgs[i] = v
+	queryArgs := make([]any, 0, len(extraParams))
+	for _, v := range extraParams {
+		queryArgs = append(queryArgs, v)
 	}
 
 	rows, err := conn.QueryByName(ctx, queryName, queryArgs...)
@@ -48,14 +49,14 @@ func customQueryHandler(ctx context.Context, conn PostgresClient,
 		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
 	}
 
-	values := make([]interface{}, len(columns))
-	valuePointers := make([]interface{}, len(values))
+	values := make([]any, len(columns))       //nolint:makezero
+	valuePointers := make([]any, len(values)) //nolint:makezero
 
 	for i := range values {
 		valuePointers[i] = &values[i]
 	}
 
-	results := make(map[string]interface{})
+	results := make(map[string]any)
 
 	for rows.Next() {
 		err = rows.Scan(valuePointers...)
@@ -71,7 +72,7 @@ func customQueryHandler(ctx context.Context, conn PostgresClient,
 
 		jsonRes, err := json.Marshal(results)
 		if err != nil {
-			return nil, err
+			return nil, errs.Wrap(err, "cannot marshal results")
 		}
 
 		data = append(data, strings.TrimSpace(string(jsonRes)))
@@ -79,13 +80,13 @@ func customQueryHandler(ctx context.Context, conn PostgresClient,
 
 	// Any errors encountered by rows.Next or rows.Scan will be returned here
 	if rows.Err() != nil {
-		return nil, err
+		return nil, errs.Wrap(err, "cannot fetch data")
 	}
 
 	return "[" + strings.Join(data, ",") + "]", nil
 }
 
-func setResult(results map[string]interface{}, values []interface{}, columns []string) {
+func setResult(results map[string]any, values []any, columns []string) {
 	for i, value := range values {
 		switch v := value.(type) {
 		case []uint8:

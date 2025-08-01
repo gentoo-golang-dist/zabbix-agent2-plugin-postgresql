@@ -88,9 +88,11 @@ func Test_versionHandler(t *testing.T) {
 					"versionHandler() error = %v, wantErr %v", err, tt.wantErr,
 				)
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Fatalf("versionHandler() = %v, want %v", got, tt.want)
 			}
+
 			if err := mock.ExpectationsWereMet(); err != nil {
 				t.Fatalf(
 					"versionHandler() sql mock expectations where not met: %s",
