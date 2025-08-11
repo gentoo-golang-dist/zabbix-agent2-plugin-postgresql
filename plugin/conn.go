@@ -285,7 +285,7 @@ func createDNS(host, port, dbname, user, pass, mode string, details tlsconfig.De
 
 	tmp := map[string]string{
 		password:  pass,
-		sslMode:   details.TLSConnect,
+		sslMode:   string(details.TLSConnect),
 		rootCA:    details.TLSCaFile,
 		cert:      details.TLSCertFile,
 		key:       details.TLSKeyFile,
@@ -403,7 +403,7 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 		tlsconfig.WithTLSCaFile(params[tlsCAParam]),
 		tlsconfig.WithTLSCertFile(params[tlsCertParam]),
 		tlsconfig.WithTLSKeyFile(params[tlsKeyParam]),
-		tlsconfig.WithTLSConnect(tlsType),
+		tlsconfig.WithTLSConnect(tlsconfig.TLSConnectionType(tlsType)), //simple conversion due to its limited usage
 		tlsconfig.WithAllowedConnections(
 			disable,
 			require,
