@@ -19,6 +19,7 @@ import (
 	"errors"
 
 	"github.com/jackc/pgx/v4"
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/zbxerr"
 )
 
@@ -33,16 +34,16 @@ func versionHandler(
 
 	row, err := conn.QueryRow(ctx, `SELECT version();`)
 	if err != nil {
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
+		return nil, errs.Wrap(zbxerr.ErrorCannotFetchData, err.Error())
 	}
 
 	err = row.Scan(&version)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, zbxerr.ErrorEmptyResult.Wrap(err)
+			return nil, errs.Wrap(zbxerr.ErrorEmptyResult, err.Error())
 		}
 
-		return nil, zbxerr.ErrorCannotFetchData.Wrap(err)
+		return nil, errs.Wrap(zbxerr.ErrorCannotFetchData, err.Error())
 	}
 
 	return version, nil

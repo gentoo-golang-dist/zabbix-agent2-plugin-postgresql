@@ -24,7 +24,7 @@ import (
 
 // databaseAgeHandler gets age of specific database respectively or nil otherwise.
 func databaseAgeHandler(ctx context.Context, conn PostgresClient,
-	_ string, params map[string]string, _ ...string) (interface{}, error) {
+	_ string, params map[string]string, _ ...string) (any, error) {
 	var countAge int64
 
 	query := `SELECT age(datfrozenxid)

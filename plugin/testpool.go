@@ -23,6 +23,7 @@ import (
 	"os"
 	"time"
 
+	"golang.zabbix.com/sdk/errs"
 	"golang.zabbix.com/sdk/log"
 )
 
@@ -41,12 +42,15 @@ func getEnv() (pgAddr, pgUser, pgPwd, pgDb string) {
 	if pgAddr == "" {
 		pgAddr = "localhost:5432"
 	}
+
 	if pgUser == "" {
 		pgUser = "postgres"
 	}
+
 	if pgPwd == "" {
 		pgPwd = "postgres"
 	}
+
 	if pgDb == "" {
 		pgDb = "postgres"
 	}
@@ -63,7 +67,7 @@ func createConnection() error {
 	if err != nil {
 		log.Critf("[createConnection] cannot create connection to PostgreSQL: %s", err.Error())
 
-		return err
+		return errs.Wrap(err, "cannot create connection to PostgreSQL")
 	}
 
 	var version int
@@ -72,7 +76,7 @@ func createConnection() error {
 	if err != nil {
 		log.Critf("[createConnection] cannot get PostgreSQL version: %s", err.Error())
 
-		return err
+		return errs.Wrap(err, "cannot get PostgreSQL version")
 	}
 
 	sharedConn = &PGConn{

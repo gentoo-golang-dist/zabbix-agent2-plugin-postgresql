@@ -26,7 +26,7 @@ const (
 
 // pingHandler queries 'SELECT 1' and returns pingOk if a connection is alive or pingFailed otherwise.
 func pingHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var res int
 
 	row, err := conn.QueryRow(ctx, fmt.Sprintf("SELECT %d", pingOk))

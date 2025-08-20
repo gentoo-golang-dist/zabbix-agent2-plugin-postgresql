@@ -31,6 +31,7 @@ func Test_createDNS(t *testing.T) {
 		mode     string
 		details  tlsconfig.Details
 	}
+
 	tests := []struct {
 		name string
 		args args
@@ -180,6 +181,7 @@ func Test_renameTLS(t *testing.T) {
 	type args struct {
 		in string
 	}
+
 	tests := []struct {
 		name string
 		args args

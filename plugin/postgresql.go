@@ -33,6 +33,13 @@ const (
 	hkInterval = 10
 )
 
+var (
+	_ plugin.Runner       = (*Plugin)(nil)
+	_ plugin.Configurator = (*Plugin)(nil)
+	_ plugin.Exporter     = (*Plugin)(nil)
+	_ plugin.Accessor     = (*Plugin)(nil)
+)
+
 // Plugin inherits plugin.Base and store plugin-specific data.
 type Plugin struct {
 	plugin.Base
@@ -51,7 +58,12 @@ func (p *Plugin) Export(key string, rawParams []string, pluginCtx plugin.Context
 		return nil, errs.Errorf("key %q is disabled", keyCustomQuery)
 	}
 
-	params, extraParams, hc, err := metrics[key].EvalParams(rawParams, p.options.Sessions)
+	m, ok := metrics[key]
+	if !ok {
+		return nil, errs.Wrapf(zbxerr.ErrorUnsupportedMetric, "unknown metric %q", key)
+	}
+
+	params, extraParams, hc, err := m.EvalParams(rawParams, p.options.Sessions)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +98,7 @@ func (p *Plugin) Export(key string, rawParams []string, pluginCtx plugin.Context
 
 	timeout := conn.callTimeout
 
-	if timeout < time.Second*time.Duration(pluginCtx.Timeout()) {
+	if pluginCtx != nil && timeout < time.Second*time.Duration(pluginCtx.Timeout()) {
 		timeout = time.Second * time.Duration(pluginCtx.Timeout())
 	}
 

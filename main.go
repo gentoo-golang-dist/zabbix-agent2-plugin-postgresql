@@ -20,9 +20,10 @@ import (
 	"os"
 
 	"golang.zabbix.com/plugin/postgresql/plugin"
+	"golang.zabbix.com/sdk/errs"
+	sdkplugin "golang.zabbix.com/sdk/plugin"
 	"golang.zabbix.com/sdk/plugin/container"
 	"golang.zabbix.com/sdk/plugin/flag"
-	"golang.zabbix.com/sdk/zbxerr"
 )
 
 const COPYRIGHT_MESSAGE = //
@@ -39,32 +40,49 @@ const (
 )
 
 func main() {
-	err := flag.HandleFlags(
-		plugin.Name,
-		os.Args[0],
-		COPYRIGHT_MESSAGE,
-		PLUGIN_VERSION_RC,
-		PLUGIN_VERSION_MAJOR,
-		PLUGIN_VERSION_MINOR,
-		PLUGIN_VERSION_PATCH,
-	)
+	args, err := flag.HandleFlags()
 	if err != nil {
-		if !errors.Is(err, zbxerr.ErrorOSExitZero) {
-			panic(fmt.Sprintf("failed to handle flags %s", err.Error()))
+		exitWithError(errs.Wrap(err, "failed to handle flags: "))
+	}
+
+	pluginInfo := &sdkplugin.Info{
+		Name:             plugin.Name,
+		BinName:          os.Args[0],
+		CopyrightMessage: COPYRIGHT_MESSAGE,
+		MajorVersion:     PLUGIN_VERSION_MAJOR,
+		MinorVersion:     PLUGIN_VERSION_MINOR,
+		PatchVersion:     PLUGIN_VERSION_PATCH,
+		Alphatag:         PLUGIN_VERSION_RC,
+	}
+
+	err = flag.DecideActionFromFlags(args, &plugin.Impl, pluginInfo, nil)
+	if err != nil {
+		if errors.Is(err, errs.ErrExitGracefully) {
+			// exit gracefully if parameter supposed to exit after execution
+			exitGracefully()
 		}
 
-		return
+		exitWithError(errs.Wrap(err, "failed to execute plugin functions: "))
 	}
 
 	h, err := container.NewHandler(plugin.Impl.Name())
 	if err != nil {
-		panic(fmt.Sprintf("failed to create plugin handler %s", err.Error()))
+		exitWithError(errs.Wrap(err, "failed to create plugin handler: "))
 	}
 
 	plugin.Impl.Logger = h
 
 	err = h.Execute()
 	if err != nil {
-		panic(fmt.Sprintf("failed to execute plugin handler %s", err.Error()))
+		exitWithError(errs.Wrap(err, "failed to execute plugin handler: "))
 	}
+}
+
+func exitWithError(err error) {
+	fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+	os.Exit(1)
+}
+
+func exitGracefully() {
+	os.Exit(0)
 }

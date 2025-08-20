@@ -24,7 +24,7 @@ import (
 
 // oldestXIDHandler gets age of the oldest xid if all is OK or nil otherwise.
 func oldestXIDHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var resultXID int64
 
 	query := `SELECT greatest(max(age(backend_xmin)), max(age(backend_xid)))

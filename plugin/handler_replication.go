@@ -26,7 +26,7 @@ import (
 
 // replicationHandler gets info about recovery state if all is OK or nil otherwise.
 func replicationHandler(ctx context.Context, conn PostgresClient,
-	key string, _ map[string]string, _ ...string) (interface{}, error) {
+	key string, _ map[string]string, _ ...string) (any, error) {
 	var (
 		replicationResult int64
 		status            int

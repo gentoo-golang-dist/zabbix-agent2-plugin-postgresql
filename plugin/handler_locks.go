@@ -23,7 +23,7 @@ import (
 
 // locksHandler executes select from pg_stat_database command and returns JSON if all is OK or nil otherwise.
 func locksHandler(ctx context.Context, conn PostgresClient,
-	_ string, _ map[string]string, _ ...string) (interface{}, error) {
+	_ string, _ map[string]string, _ ...string) (any, error) {
 	var locksJSON string
 
 	query := `
