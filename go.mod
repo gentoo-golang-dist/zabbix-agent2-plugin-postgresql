@@ -7,7 +7,7 @@ require (
 	github.com/google/go-cmp v0.6.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/omeid/go-yarn v0.0.1
-	golang.zabbix.com/sdk v1.2.2-0.20250813130928-6bd81563f6e3
+	golang.zabbix.com/sdk v1.2.2-0.20250820074234-8a564315c8b0
 )
 
 require (
