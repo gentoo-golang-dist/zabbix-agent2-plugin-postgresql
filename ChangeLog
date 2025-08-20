@@ -1,8 +1,21 @@
+Changes for 7.4.2rc2
+
+7.4.2rc1 was released as 7.4.2rc2 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.4.2rc1
+
+7.4.1 was released as 7.4.2rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.4.1
+
+7.4.1rc1 was released as 7.4.1 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 7.4.1rc1
 
-New features:
-
-Bug fixes:
+7.4.0 was released as 7.4.1rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.4.0
@@ -35,6 +48,21 @@ Changes for 7.4.0alpha1
 
 New features:
 ...G...... [ZBXNEXT-9508] added custom query enable parameter and path default (esneiders)
+
+--------------------------------------------------------------------------------
+Changes for 7.2.12
+
+7.2.12rc1 was released as 7.2.12 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.2.12rc1
+
+7.2.11 was released as 7.2.12rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.2.11
+
+7.2.11rc1 was released as 7.2.11 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.2.11rc1
@@ -176,11 +204,24 @@ New features:
 [ZBXNEXT-9281] added configurable item timeout support (dgoloscapov)
 
 --------------------------------------------------------------------------------
+Changes for 7.0.18rc2
+
+7.0.18rc1 was released as 7.0.18rc2 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.18rc1
+
+7.0.17 was released as 7.0.18rc1 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 7.0.17
+
+7.0.17rc2 was released as 7.0.17 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 7.0.17rc2
 
-New features:
-
-Bug fixes:
+7.0.17rc1 was released as 7.0.17rc2 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.0.17rc1
@@ -705,11 +746,14 @@ Changes for 6.4.0beta6
 [ZBX-22061] fixed custom query read on empty parameter (esneiders)
 
 --------------------------------------------------------------------------------
+Changes for 6.0.41
+
+6.0.41rc1 was released as 6.0.41 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 6.0.41rc1
 
-New features:
-
-Bug fixes:
+6.0.40 was released as 6.0.41rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.40
