@@ -403,7 +403,7 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 		tlsconfig.WithTLSCaFile(params[tlsCAParam]),
 		tlsconfig.WithTLSCertFile(params[tlsCertParam]),
 		tlsconfig.WithTLSKeyFile(params[tlsKeyParam]),
-		tlsconfig.WithTLSConnect(tlsconfig.TLSConnectionType(tlsType)), //simple conversion due to its limited usage
+		tlsconfig.WithTLSConnect(tlsconfig.TLSConnectionType(tlsType)), // simple conversion due to its limited usage
 		tlsconfig.WithAllowedConnections(
 			disable,
 			require,
