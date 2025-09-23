@@ -3,6 +3,18 @@ Changes for 8.0.0alpha1
 New features:
 
 Bug fixes:
+...G...... [ZBX-26956] fixed problem with connection creation at postresql (opucka)
+--------------------------------------------------------------------------------
+Changes for 7.4.3rc1
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 7.4.2
+
+7.4.2rc2 was released as 7.4.2 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.4.2rc2
@@ -55,6 +67,13 @@ Changes for 7.4.0alpha1
 
 New features:
 ...G...... [ZBXNEXT-9508] added custom query enable parameter and path default (esneiders)
+
+--------------------------------------------------------------------------------
+Changes for 7.2.13rc1
+
+New features:
+
+Bug fixes:
 
 --------------------------------------------------------------------------------
 Changes for 7.2.12
@@ -209,6 +228,18 @@ Changes for 7.2.0alpha1
 
 New features:
 [ZBXNEXT-9281] added configurable item timeout support (dgoloscapov)
+
+--------------------------------------------------------------------------------
+Changes for 7.0.19rc1
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 7.0.18
+
+7.0.18rc2 was released as 7.0.18 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.0.18rc2
@@ -751,6 +782,11 @@ Changes for 6.4.0beta6
 
 [ZBXNEXT-826] switched to Zabbix versioning (yurii)
 [ZBX-22061] fixed custom query read on empty parameter (esneiders)
+
+--------------------------------------------------------------------------------
+Changes for 6.0.42rc1
+
+6.0.41 was released as 6.0.42rc1 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 6.0.41

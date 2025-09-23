@@ -137,7 +137,11 @@ func getPostgresVersion(ctx context.Context, conn *sql.DB) (int, error) {
 	var version int
 	err := conn.QueryRowContext(ctx, `select current_setting('server_version_num');`).Scan(&version)
 
-	return version, errs.Wrap(err, "failed to get server version")
+	if err != nil {
+		return 0, errs.Wrap(err, "failed to get server version")
+	}
+
+	return version, nil
 }
 
 // PostgresVersion returns the version of PostgreSQL server we are currently connected to.
