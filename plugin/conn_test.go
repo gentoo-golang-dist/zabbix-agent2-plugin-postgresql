@@ -53,7 +53,7 @@ func Test_createDNS(t *testing.T) {
 				port:    "123",
 				dbname:  "postgres",
 				user:    "foo",
-				details: tlsconfig.Details{TlsConnect: "require"}},
+				details: tlsconfig.Details{TLSConnect: "require"}},
 			[]string{"host=127.0.0.1", "port=123", "dbname=postgres", "user=foo", "sslmode=require"},
 		},
 		{
@@ -63,7 +63,7 @@ func Test_createDNS(t *testing.T) {
 				port:    "123",
 				dbname:  "postgres",
 				user:    "foo",
-				details: tlsconfig.Details{TlsConnect: "verify-ca", TlsCaFile: "path/to/ca"}},
+				details: tlsconfig.Details{TLSConnect: "verify-ca", TLSCaFile: "path/to/ca"}},
 			[]string{
 				"host=127.0.0.1",
 				"port=123",
@@ -81,10 +81,10 @@ func Test_createDNS(t *testing.T) {
 				dbname: "postgres",
 				user:   "foo",
 				details: tlsconfig.Details{
-					TlsConnect:  "verify-full",
-					TlsCaFile:   "path/to/ca",
-					TlsCertFile: "path/to/cert",
-					TlsKeyFile:  "path/to/key",
+					TLSConnect:  "verify-full",
+					TLSCaFile:   "path/to/ca",
+					TLSCertFile: "path/to/cert",
+					TLSKeyFile:  "path/to/key",
 				}},
 			[]string{
 				"host=127.0.0.1", "port=123",
@@ -136,10 +136,10 @@ func Test_createDNS(t *testing.T) {
 				user:   "foo",
 				mode:   "prepare",
 				details: tlsconfig.Details{
-					TlsConnect:  "verify-full",
-					TlsCaFile:   "path/to/ca",
-					TlsCertFile: "path/to/cert",
-					TlsKeyFile:  "path/to/key",
+					TLSConnect:  "verify-full",
+					TLSCaFile:   "path/to/ca",
+					TLSCertFile: "path/to/cert",
+					TLSKeyFile:  "path/to/key",
 				}},
 			[]string{
 				"host=127.0.0.1", "port=123",
