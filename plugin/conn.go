@@ -295,10 +295,10 @@ func createDNS(host, port, dbname, user, pass, mode string, details tlsconfig.De
 
 	tmp := map[string]string{
 		password:  pass,
-		sslMode:   details.TlsConnect,
-		rootCA:    details.TlsCaFile,
-		cert:      details.TlsCertFile,
-		key:       details.TlsKeyFile,
+		sslMode:   string(details.TLSConnect),
+		rootCA:    details.TLSCaFile,
+		cert:      details.TLSCertFile,
+		key:       details.TLSKeyFile,
 		cacheMode: mode,
 	}
 
@@ -413,15 +413,17 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 
 	details := tlsconfig.NewDetails(
 		params[metric.SessionParam],
-		tlsType,
-		params[tlsCAParam],
-		params[tlsCertParam],
-		params[tlsKeyParam],
 		params[uriParam],
-		disable,
-		require,
-		verifyCa,
-		verifyFull,
+		tlsconfig.WithTLSCaFile(params[tlsCAParam]),
+		tlsconfig.WithTLSCertFile(params[tlsCertParam]),
+		tlsconfig.WithTLSKeyFile(params[tlsKeyParam]),
+		tlsconfig.WithTLSConnect(tlsconfig.TLSConnectionType(tlsType)), // simple conversion due to its limited usage
+		tlsconfig.WithAllowedConnections(
+			disable,
+			require,
+			verifyCa,
+			verifyFull,
+		),
 	)
 
 	if tlsType == disable || tlsType == require {
@@ -429,6 +431,7 @@ func getTlsDetails(params map[string]string) (tlsconfig.Details, error) {
 	}
 
 	err := details.Validate(validateCA, false, false)
+
 	return details, err
 }
 
