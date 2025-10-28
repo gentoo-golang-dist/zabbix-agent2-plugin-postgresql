@@ -35,7 +35,7 @@ const (
 	PLUGIN_VERSION_MAJOR = 7
 	PLUGIN_VERSION_MINOR = 2
 	PLUGIN_VERSION_PATCH = 14     //nolint:revive
-	PLUGIN_VERSION_RC    = "rc1" //nolint:revive
+	PLUGIN_VERSION_RC    = "" //nolint:revive
 )
 
 func main() {
