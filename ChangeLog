@@ -1,7 +1,5 @@
 Changes for 8.0.0alpha1
 
-New features:
-
 Bug fixes:
 ...G...... [ZBX-26956] fixed problem with connection creation at postresql (opucka)
 
