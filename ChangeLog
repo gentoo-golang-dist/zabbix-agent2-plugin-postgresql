@@ -11,6 +11,13 @@ Bug fixes:
 ...G...... [ZBX-26956] fixed problem with connection creation at postresql (opucka)
 
 --------------------------------------------------------------------------------
+Changes for 7.4.6rc1
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
 Changes for 7.4.5
 
 7.4.4 was released as 7.4.5 without any changes
