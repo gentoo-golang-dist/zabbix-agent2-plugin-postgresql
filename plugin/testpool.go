@@ -83,7 +83,6 @@ func createConnection() error {
 		client:         newConn,
 		lastTimeAccess: time.Now(),
 		version:        version,
-		callTimeout:    30,
 	}
 
 	return nil

@@ -64,8 +64,6 @@ type PostgresClient interface {
 // PGConn holds pointer to the Pool of PostgreSQL Instance.
 type PGConn struct {
 	client         *sql.DB
-	callTimeout    time.Duration
-	ctx            context.Context
 	lastTimeAccess time.Time
 	version        int
 	queryStorage   *yarn.Yarn
@@ -156,28 +154,22 @@ func (conn *PGConn) updateAccessTime() {
 
 // ConnManager is a thread-safe structure for manage connections.
 type ConnManager struct {
-	connectionsMu  sync.Mutex
-	connections    map[connID]*PGConn
-	keepAlive      time.Duration
-	connectTimeout time.Duration
-	callTimeout    time.Duration
-	Destroy        context.CancelFunc
-	queryStorage   yarn.Yarn
+	connectionsMu sync.Mutex
+	connections   map[connID]*PGConn
+	keepAlive     time.Duration
+	Destroy       context.CancelFunc
+	queryStorage  yarn.Yarn
 }
 
 // NewConnManager initializes connManager structure and runs Go Routine that watches for unused connections.
-func NewConnManager(keepAlive, connectTimeout, callTimeout,
-	hkInterval time.Duration, queryStorage yarn.Yarn,
-) *ConnManager {
+func NewConnManager(keepAlive, hkInterval time.Duration, queryStorage yarn.Yarn) *ConnManager {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	connMgr := &ConnManager{
-		connections:    make(map[connID]*PGConn),
-		keepAlive:      keepAlive,
-		connectTimeout: connectTimeout,
-		callTimeout:    callTimeout,
-		Destroy:        cancel, // Destroy stops originated goroutines and closes connections.
-		queryStorage:   queryStorage,
+		connections:  make(map[connID]*PGConn),
+		keepAlive:    keepAlive,
+		Destroy:      cancel, // Destroy stops originated goroutines and closes connections.
+		queryStorage: queryStorage,
 	}
 
 	go connMgr.housekeeper(ctx, hkInterval)
@@ -227,9 +219,7 @@ func (c *ConnManager) housekeeper(ctx context.Context, interval time.Duration) {
 }
 
 // create creates a new connection with given credentials.
-func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, error) {
-	ctx := context.Background()
-
+func (c *ConnManager) create(ci connID, details tlsconfig.Details, connectionTimeout int) (*PGConn, error) {
 	host := ci.uri.Host()
 	port := ci.uri.Port()
 
@@ -260,13 +250,13 @@ func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, err
 			ci.cacheMode,
 			details,
 		),
-		c.connectTimeout,
+		connectionTimeout,
 	)
 	if err != nil {
 		return nil, err
 	}
 
-	serverVersion, err := getPostgresVersion(ctx, client)
+	serverVersion, err := getPostgresVersion(context.Background(), client)
 	if err != nil {
 		client.Close()
 		return nil, err
@@ -281,10 +271,8 @@ func (c *ConnManager) create(ci connID, details tlsconfig.Details) (*PGConn, err
 
 	return &PGConn{
 		client:         client,
-		callTimeout:    c.callTimeout,
 		version:        serverVersion,
 		lastTimeAccess: time.Now(),
-		ctx:            ctx,
 		queryStorage:   &c.queryStorage,
 		address:        ci.uri.Addr(),
 	}, nil
@@ -324,7 +312,7 @@ func renameTLS(in string) string {
 	}
 }
 
-func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
+func createClient(dsn string, connectionTimeout int) (*sql.DB, error) {
 	config, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		return nil, errs.Wrap(err, "cannot parse config")
@@ -332,7 +320,7 @@ func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 
 	config.ConnConfig.DialFunc = func(ctx context.Context, network, addr string) (net.Conn, error) {
 		d := net.Dialer{}
-		ctxTimeout, cancel := context.WithTimeout(context.Background(), timeout)
+		ctxTimeout, cancel := context.WithTimeout(context.Background(), time.Duration(connectionTimeout)*time.Second)
 
 		defer cancel()
 
@@ -349,7 +337,7 @@ func createClient(dsn string, timeout time.Duration) (*sql.DB, error) {
 
 // GetConnection returns an existing connection or creates a new one.
 func (c *ConnManager) GetConnection(
-	ci connID, params map[string]string, //nolint:gocritic
+	ci connID, params map[string]string, connectionTimeout int, //nolint:gocritic
 ) (*PGConn, error) {
 	conn := c.getConn(ci)
 	if conn != nil {
@@ -361,7 +349,7 @@ func (c *ConnManager) GetConnection(
 		return nil, err
 	}
 
-	conn, err = c.create(ci, details)
+	conn, err = c.create(ci, details, connectionTimeout)
 	if err != nil {
 		return nil, errs.Wrap(err, "failed to create connection")
 	}
