@@ -53,7 +53,8 @@ type Session struct {
 	CacheMode string `conf:"name=CacheMode,optional"`
 
 	// Timeout for opening a connection to the database.
-	ConnectionTimeout int `conf:"optional,range=1:30" json:"ConnectionTimeout,string"`
+	// json tag is a temporary workaround until metric.SetDefaults() supports integers
+	ConnectionTimeout int `conf:"optional,range=1:30" json:"ConnectionTimeout,string"` //nolint:tagalign,tagliatelle
 }
 
 // PluginOptions are options for PostgreSQL connection.
@@ -91,7 +92,8 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
 	p.options.setCustomQueriesPathDefault()
 
 	if p.options.LegacyConnectionTimeout != 0 {
-		log.Debugf("[PostgreSQL] Config value 'Plugins.PostgreSQL.Timeout' is deprecated. Use 'Plugins.PostgreSQL.Default.ConnectionTimeout' instead.")
+		log.Debugf("[PostgreSQL] Config value 'Plugins.PostgreSQL.Timeout' is deprecated." +
+			"Use 'Plugins.PostgreSQL.Default.ConnectionTimeout' instead.")
 
 		if p.options.Default.ConnectionTimeout == 0 {
 			p.options.Default.ConnectionTimeout = p.options.LegacyConnectionTimeout
