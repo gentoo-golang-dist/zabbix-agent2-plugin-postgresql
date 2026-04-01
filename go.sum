@@ -191,6 +191,8 @@ golang.zabbix.com/sdk v1.2.2-0.20260213090410-71a6e158f066 h1:sXiuTD35IpdaSv1TJB
 golang.zabbix.com/sdk v1.2.2-0.20260213090410-71a6e158f066/go.mod h1:ugXIGbO7PRPVducHITbVWZnPM7bsvjljbWufPPk5ZFA=
 golang.zabbix.com/sdk v1.2.2-0.20260313124139-577196b013c9 h1:sEZt1B9JTuva6KIKVDko24DwTiKMw0I9In0NE60Z6/E=
 golang.zabbix.com/sdk v1.2.2-0.20260313124139-577196b013c9/go.mod h1:ugXIGbO7PRPVducHITbVWZnPM7bsvjljbWufPPk5ZFA=
+golang.zabbix.com/sdk v1.2.2-0.20260401093211-d537e72c2fae h1:sLK36FxTwbL/i3VXszI4aYdyifLnEoMJfykhakXqa7g=
+golang.zabbix.com/sdk v1.2.2-0.20260401093211-d537e72c2fae/go.mod h1:ugXIGbO7PRPVducHITbVWZnPM7bsvjljbWufPPk5ZFA=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
