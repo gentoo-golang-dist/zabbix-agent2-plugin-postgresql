@@ -220,7 +220,7 @@ func (c *ConnManager) housekeeper(ctx context.Context, interval time.Duration) {
 
 // create creates a new connection with given credentials.
 //
-//nolint:gocritic // we'll fix this during refactor.
+//nolint:gocritic,funcorder // we'll fix this during refactor.
 func (c *ConnManager) create(ci connID, details tlsconfig.Details, connectionTimeout int) (*PGConn, error) {
 	host := ci.uri.Host()
 	port := ci.uri.Port()
