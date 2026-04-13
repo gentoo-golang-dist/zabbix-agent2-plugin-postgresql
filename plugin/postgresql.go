@@ -103,7 +103,7 @@ func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvid
 	}
 
 	if ctx.LegacyTimeout() {
-		p.Logger.Debugf("using legacy timeout")
+		p.Debugf("using legacy timeout")
 
 		ctx = plugin.OverrideTimeout(ctx, time.Now(), p.options.LegacyItemTimeout)
 	}
