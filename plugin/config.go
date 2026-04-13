@@ -60,10 +60,15 @@ type Session struct {
 // PluginOptions are options for PostgreSQL connection.
 type PluginOptions struct {
 	System plugin.SystemOptions `conf:"optional"` //nolint:staticcheck
-	// Deprecated old timeout value kept for compatibility.
+
+	// LegacyConnectionTimeout timeout used for connections.
+	//
+	// Deprecated: LegacyConnectionTimeout  old timeout value kept for compatibility.
 	LegacyConnectionTimeout int `conf:"name=Timeout,optional,range=1:30"`
 
-	// Deprecated old timeout value kept for compatibility.
+	// LegacyItemTimeout timeout used for full item execution.
+	//
+	// Deprecated: LegacyItemTimeout old timeout value kept for compatibility.
 	LegacyItemTimeout int `conf:"name=CallTimeout,optional,range=1:30"`
 
 	// KeepAlive is a time to wait before unused connections will be closed.
@@ -92,8 +97,8 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
 	p.options.setCustomQueriesPathDefault()
 
 	if p.options.LegacyConnectionTimeout != 0 {
-		log.Debugf("[PostgreSQL] Config value 'Plugins.PostgreSQL.Timeout' is deprecated." +
-			"Use 'Plugins.PostgreSQL.Default.ConnectionTimeout' instead.")
+		log.Debugf("config value 'Plugins.PostgreSQL.Timeout' is deprecated." +
+			"Use 'Plugins.PostgreSQL.Default.ConnectionTimeout' instead")
 
 		if p.options.Default.ConnectionTimeout == 0 {
 			p.options.Default.ConnectionTimeout = p.options.LegacyConnectionTimeout
@@ -101,7 +106,7 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
 	}
 
 	if p.options.LegacyItemTimeout != 0 {
-		log.Debugf("[PostgreSQL] Config value 'Plugins.PostgreSQL.CallTimeout' is deprecated.")
+		log.Debugf("config value 'Plugins.PostgreSQL.CallTimeout' is deprecated")
 	}
 
 	if p.options.Default.ConnectionTimeout == 0 {
