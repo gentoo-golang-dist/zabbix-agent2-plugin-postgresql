@@ -108,6 +108,8 @@ func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvid
 		ctx = plugin.OverrideTimeout(ctx, time.Now(), p.options.LegacyItemTimeout)
 	}
 
+	p.Tracef("query timeout set to: %d", ctx.Timeout())
+
 	result, err := handleMetric(ctx, conn, key, params, extraParams...)
 	if err != nil {
 		ctxErr := ctx.Err()
