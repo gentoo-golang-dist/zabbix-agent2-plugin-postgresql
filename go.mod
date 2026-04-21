@@ -1,6 +1,6 @@
 module golang.zabbix.com/plugin/postgresql
 
-go 1.24.10
+go 1.25.9
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
