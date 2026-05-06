@@ -56,16 +56,17 @@ const (
 	keyVersion                         = "pgsql.version"
 	keyWal                             = "pgsql.wal.stat"
 
-	uriParam        = "URI"
-	tcpParam        = "tcp"
-	userParam       = "User"
-	databaseParam   = "Database"
-	passwordParam   = "Password"
-	tlsConnectParam = "TLSConnect"
-	tlsCAParam      = "TLSCAFile"
-	tlsCertParam    = "TLSCertFile"
-	tlsKeyParam     = "TLSKeyFile"
-	cacheModeParam  = "CacheMode"
+	uriParam         = "URI"
+	tcpParam         = "tcp"
+	userParam        = "User"
+	databaseParam    = "Database"
+	passwordParam    = "Password"
+	tlsConnectParam  = "TLSConnect"
+	tlsCAParam       = "TLSCAFile"
+	tlsCertParam     = "TLSCertFile"
+	tlsKeyParam      = "TLSKeyFile"
+	cacheModeParam   = "CacheMode"
+	connTimeoutParam = "ConnectionTimeout"
 )
 
 var uriDefaults = &uri.Defaults{Scheme: "tcp", Port: "5432"}
@@ -102,7 +103,8 @@ var (
 	paramQueryName = metric.NewParam(
 		"QueryName", "Name of a custom query (must be equal to a name of an SQL file without an extension).",
 	).SetRequired()
-	paramTimePeriod = metric.NewParam("TimePeriod", "Execution time limit for count of slow queries.").SetRequired()
+	paramTimePeriod  = metric.NewParam("TimePeriod", "Execution time limit for count of slow queries.").SetRequired()
+	paramConnTimeout = metric.NewSessionOnlyParam(connTimeoutParam, "Connection timeout.")
 )
 
 var metrics = metric.MetricSet{
@@ -310,6 +312,7 @@ func getParameters(add *additionalParam) []*metric.Param {
 		paramTLSCertFile,
 		paramTLSKeyFile,
 		paramCacheMode,
+		paramConnTimeout,
 	}
 
 	if add != nil && add.param != nil {
