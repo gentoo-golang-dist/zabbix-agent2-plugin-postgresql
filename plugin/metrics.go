@@ -103,7 +103,9 @@ var (
 	paramQueryName = metric.NewParam(
 		"QueryName", "Name of a custom query (must be equal to a name of an SQL file without an extension).",
 	).SetRequired()
-	paramTimePeriod  = metric.NewParam("TimePeriod", "Execution time limit for count of slow queries.").SetRequired()
+	//nolint:gochecknoglobals // global constants.
+	paramTimePeriod = metric.NewParam("TimePeriod", "Execution time limit for count of slow queries.").SetRequired()
+	//nolint:gochecknoglobals // global constants.
 	paramConnTimeout = metric.NewSessionOnlyParam(connTimeoutParam, "Connection timeout.")
 )
 
