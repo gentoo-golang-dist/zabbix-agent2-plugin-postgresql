@@ -40,10 +40,16 @@ The Zabbix Agent's configuration file is used to configure plugins.
 
 **Plugins.PostgreSQL.CallTimeout** — The maximum time in seconds for waiting when a request has to be done.  
 Global item-type timeout (or individual item timeout) will override this value if it is greater.
+
+The value is now *deprecated*, and used only for requests coming from Zabbix servers old than 7.0 version.
+
 *Default value:* equals the global Timeout configuration parameter defined in Zabbix agent 2 configuration file.
 *Limits:* 1-30
 
 **Plugins.PostgreSQL.Timeout** — The maximum time in seconds for waiting when a connection has to be established.  
+
+The value is now *deprecated*, and used only for requests coming from Zabbix servers old than 7.0 version.
+
 *Default value:* equals the global Timeout configuration parameter defined in Zabbix agent 2 configuration file.
 *Limits:* 1-30
 
@@ -76,6 +82,9 @@ where * is drive name taken from programfiles environment variable)
 **Plugins.PostgreSQL.Sessions.*.CacheMode** — Cache mode for PostgreSQL connection.
 *Default value:* prepare
 *Accepted values:*  prepare, describe
+
+**Plugins.PostgreSQL.Sessions.*.ConnectionTimeout** — Specifies the connection timeout for session.
+*Default value:* equals the global Timeout configuration parameter defined in Zabbix agent 2 configuration file.
 
 ### Configuring connection
 A connection can be configured using either keys' parameters or named sessions.     
@@ -122,6 +131,7 @@ You should add the following options to the agent configuration file:
     Plugins.PostgreSQL.Sessions.Prod.TLSCAFile=/path/to/ca_file
     Plugins.PostgreSQL.Sessions.Prod.TLSCertFile=/path/to/cert_file
     Plugins.PostgreSQL.Sessions.Prod.TLSKeyFile=/path/to/key_file
+    Plugins.PostgreSQL.Sessions.Prod.ConnectionTimeout=10
     
     Plugins.PostgreSQL.Sessions.Test.Uri=tcp://192.168.0.1:5432
     Plugins.PostgreSQL.Sessions.Test.User=<UserForTest>
@@ -131,7 +141,8 @@ You should add the following options to the agent configuration file:
     Plugins.PostgreSQL.Sessions.Test.TLSCAFile=/path/to/test/ca_file
     Plugins.PostgreSQL.Sessions.Test.TLSCertFile=/path/to/test/cert_file
     Plugins.PostgreSQL.Sessions.Test.TLSKeyFile=/path/to/test/key_file
-        
+    Plugins.PostgreSQL.Sessions.Test.ConnectionTimeout=30
+
 Then you will be able to use these names as the 1st parameter (ConnString) in keys instead of URIs, e.g:
 
     pgsql.ping[Prod]
