@@ -19,7 +19,6 @@ import (
 
 	"golang.zabbix.com/sdk/conf"
 	"golang.zabbix.com/sdk/errs"
-	"golang.zabbix.com/sdk/log"
 	"golang.zabbix.com/sdk/plugin"
 )
 
@@ -97,8 +96,7 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
 	p.options.setCustomQueriesPathDefault()
 
 	if p.options.LegacyConnectionTimeout != 0 {
-		log.Debugf("config value 'Plugins.PostgreSQL.Timeout' is deprecated." +
-			"Use 'Plugins.PostgreSQL.Default.ConnectionTimeout' instead")
+		p.Debugf("config value 'Plugins.PostgreSQL.Timeout' is deprecated")
 
 		if p.options.Default.ConnectionTimeout == 0 {
 			p.options.Default.ConnectionTimeout = p.options.LegacyConnectionTimeout
@@ -106,7 +104,7 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
 	}
 
 	if p.options.LegacyItemTimeout != 0 {
-		log.Debugf("config value 'Plugins.PostgreSQL.CallTimeout' is deprecated")
+		p.Debugf("config value 'Plugins.PostgreSQL.CallTimeout' is deprecated")
 	}
 
 	if p.options.Default.ConnectionTimeout == 0 {
