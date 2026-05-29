@@ -41,14 +41,14 @@ The Zabbix Agent's configuration file is used to configure plugins.
 **Plugins.PostgreSQL.CallTimeout** — The maximum time in seconds for waiting when a request has to be done.  
 Global item-type timeout (or individual item timeout) will override this value if it is greater.
 
-The value is now *deprecated*, and used only for requests coming from Zabbix servers old than 7.0 version.
+> The value is now *deprecated*, and used only for requests coming from Zabbix servers older than 7.0 version.
 
 *Default value:* equals the global Timeout configuration parameter defined in Zabbix agent 2 configuration file.
 *Limits:* 1-30
 
 **Plugins.PostgreSQL.Timeout** — The maximum time in seconds for waiting when a connection has to be established.  
 
-The value is now *deprecated*, and used only for requests coming from Zabbix servers old than 7.0 version.
+> The value is now *deprecated*, and used only for requests coming from Zabbix servers older than 7.0 version.
 
 *Default value:* equals the global Timeout configuration parameter defined in Zabbix agent 2 configuration file.
 *Limits:* 1-30
