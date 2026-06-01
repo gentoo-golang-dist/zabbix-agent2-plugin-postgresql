@@ -84,10 +84,12 @@ func (p *Plugin) Export(key string, rawParams []string, ctx plugin.ContextProvid
 		return nil, zbxerr.ErrorUnsupportedMetric
 	}
 
-	connectionTimeout, err := strconv.Atoi(params["ConnectionTimeout"])
+	connectionTimeout, err := p.getConnectionTimeout(params)
 	if err != nil {
-		connectionTimeout = p.options.Default.ConnectionTimeout // shouldn't happen anyway
+		return nil, err
 	}
+
+	p.Tracef("connection timeout set to: %d", connectionTimeout)
 
 	conn, err := p.connMgr.GetConnection(connID, params, connectionTimeout)
 	if err != nil {
@@ -159,4 +161,23 @@ func (p *Plugin) setCustomQuery() yarn.Yarn {
 func (p *Plugin) Stop() {
 	p.connMgr.Destroy()
 	p.connMgr = nil
+}
+
+func (p *Plugin) getConnectionTimeout(params map[string]string) (int, error) {
+	var connectionTimeout int
+	var err error
+
+	connectionTimeout, err = strconv.Atoi(params["ConnectionTimeout"])
+	if err != nil {
+		// shouldn't happen anyway
+		p.Tracef("failed to convert parameter connection timeout %s", err.Error())
+		connectionTimeout, err = strconv.Atoi(p.options.Default.ConnectionTimeout)
+		if err != nil {
+			p.Tracef("failed to convert default connection timeout %s", err.Error())
+		}
+
+		return 0, errs.New("failed to get connection timeout")
+	}
+
+	return connectionTimeout, nil
 }

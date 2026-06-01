@@ -16,6 +16,7 @@ package plugin
 
 import (
 	"path/filepath"
+	"strconv"
 
 	"golang.zabbix.com/sdk/conf"
 	"golang.zabbix.com/sdk/errs"
@@ -53,7 +54,7 @@ type Session struct {
 
 	// Timeout for opening a connection to the database.
 	// json tag is a temporary workaround until metric.SetDefaults() supports integers
-	ConnectionTimeout int `conf:"optional,range=1:30" json:"ConnectionTimeout,string"` //nolint:tagalign,tagliatelle
+	ConnectionTimeout string `conf:"name=ConnectionTimeout,optional,range=1:30"`
 }
 
 // PluginOptions are options for PostgreSQL connection.
@@ -89,7 +90,8 @@ type PluginOptions struct {
 // Configure implements the Configurator interface.
 // Initializes configuration structures.
 func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
-	if err := conf.UnmarshalStrict(options, &p.options); err != nil {
+	err := conf.UnmarshalStrict(options, &p.options)
+	if err != nil {
 		p.Errf("cannot unmarshal configuration options: %s", err)
 	}
 
@@ -98,8 +100,8 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
 	if p.options.LegacyConnectionTimeout != 0 {
 		p.Debugf("config value 'Plugins.PostgreSQL.Timeout' is deprecated")
 
-		if p.options.Default.ConnectionTimeout == 0 {
-			p.options.Default.ConnectionTimeout = p.options.LegacyConnectionTimeout
+		if p.options.Default.ConnectionTimeout == "" {
+			p.options.Default.ConnectionTimeout = strconv.Itoa(p.options.LegacyConnectionTimeout)
 		}
 	}
 
@@ -107,8 +109,8 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options any) {
 		p.Debugf("config value 'Plugins.PostgreSQL.CallTimeout' is deprecated")
 	}
 
-	if p.options.Default.ConnectionTimeout == 0 {
-		p.options.Default.ConnectionTimeout = global.Timeout
+	if p.options.Default.ConnectionTimeout == "" {
+		p.options.Default.ConnectionTimeout = strconv.Itoa(global.Timeout)
 	}
 
 	if p.options.LegacyConnectionTimeout == 0 {
@@ -128,6 +130,29 @@ func (*Plugin) Validate(options any) error {
 	err := conf.UnmarshalStrict(options, &opts)
 	if err != nil {
 		return errs.Wrap(err, "failed to unmarshal configuration options")
+	}
+
+	for k, s := range opts.Sessions {
+		if s.ConnectionTimeout != "" {
+			_, err := strconv.Atoi(s.ConnectionTimeout)
+			if err != nil {
+				return errs.Errorf(
+					"connection timeout '%v' must be an integer for session %s",
+					s.ConnectionTimeout,
+					k,
+				)
+			}
+		}
+	}
+
+	if opts.Default.ConnectionTimeout != "" {
+		_, err = strconv.Atoi(opts.Default.ConnectionTimeout)
+		if err != nil {
+			return errs.Errorf(
+				"default connection timeout '%v' must be an integer",
+				opts.Default.ConnectionTimeout,
+			)
+		}
 	}
 
 	if opts.CustomQueriesEnabled && opts.CustomQueriesPath != "" && !filepath.IsAbs(opts.CustomQueriesPath) {
