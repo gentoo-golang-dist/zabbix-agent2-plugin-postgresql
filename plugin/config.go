@@ -54,7 +54,7 @@ type Session struct {
 
 	// Timeout for opening a connection to the database.
 	// json tag is a temporary workaround until metric.SetDefaults() supports integers
-	ConnectionTimeout string `conf:"name=ConnectionTimeout,optional,range=1:30"`
+	ConnectionTimeout string `conf:"name=ConnectionTimeout,optional"`
 }
 
 // PluginOptions are options for PostgreSQL connection.
@@ -134,10 +134,18 @@ func (*Plugin) Validate(options any) error {
 
 	for k, s := range opts.Sessions {
 		if s.ConnectionTimeout != "" {
-			_, err := strconv.Atoi(s.ConnectionTimeout)
+			ct, err := strconv.Atoi(s.ConnectionTimeout)
 			if err != nil {
 				return errs.Errorf(
 					"connection timeout '%v' must be an integer for session %s",
+					s.ConnectionTimeout,
+					k,
+				)
+			}
+
+			if ct < 1 || ct > 30 {
+				return errs.Errorf(
+					"connection timeout '%v' for session %s must be between 1 and 30",
 					s.ConnectionTimeout,
 					k,
 				)
@@ -146,10 +154,17 @@ func (*Plugin) Validate(options any) error {
 	}
 
 	if opts.Default.ConnectionTimeout != "" {
-		_, err = strconv.Atoi(opts.Default.ConnectionTimeout)
+		ct, err := strconv.Atoi(opts.Default.ConnectionTimeout)
 		if err != nil {
 			return errs.Errorf(
 				"default connection timeout '%v' must be an integer",
+				opts.Default.ConnectionTimeout,
+			)
+		}
+
+		if ct < 1 || ct > 30 {
+			return errs.Errorf(
+				"default connection timeout '%v' must be between 1 and 30",
 				opts.Default.ConnectionTimeout,
 			)
 		}
