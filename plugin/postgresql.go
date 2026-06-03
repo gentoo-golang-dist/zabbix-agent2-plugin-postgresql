@@ -174,9 +174,8 @@ func (p *Plugin) getConnectionTimeout(params map[string]string) (int, error) {
 		connectionTimeout, err = strconv.Atoi(p.options.Default.ConnectionTimeout)
 		if err != nil {
 			p.Tracef("failed to convert default connection timeout %s", err.Error())
+			return 0, errs.New("failed to get connection timeout")
 		}
-
-		return 0, errs.New("failed to get connection timeout")
 	}
 
 	return connectionTimeout, nil
