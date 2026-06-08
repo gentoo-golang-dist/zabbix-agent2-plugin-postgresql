@@ -32,6 +32,7 @@ License AGPLv3: GNU Affero General Public License version 3 <https://www.gnu.org
 This is free software: you are free to change and redistribute it according to
 the license. There is NO WARRANTY, to the extent permitted by law.`
 
+//nolint:revive,nolintlint // release constants in caps
 const (
 	PLUGIN_VERSION_MAJOR = 8
 	PLUGIN_VERSION_MINOR = 0

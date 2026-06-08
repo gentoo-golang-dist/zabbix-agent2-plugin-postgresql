@@ -164,16 +164,20 @@ func (p *Plugin) Stop() {
 }
 
 func (p *Plugin) getConnectionTimeout(params map[string]string) (int, error) {
-	var connectionTimeout int
-	var err error
+	var (
+		connectionTimeout int
+		err               error
+	)
 
 	connectionTimeout, err = strconv.Atoi(params["ConnectionTimeout"])
 	if err != nil {
 		// shouldn't happen anyway
 		p.Tracef("failed to convert parameter connection timeout %s", err.Error())
+
 		connectionTimeout, err = strconv.Atoi(p.options.Default.ConnectionTimeout)
 		if err != nil {
 			p.Tracef("failed to convert default connection timeout %s", err.Error())
+
 			return 0, errs.New("failed to get connection timeout")
 		}
 	}
