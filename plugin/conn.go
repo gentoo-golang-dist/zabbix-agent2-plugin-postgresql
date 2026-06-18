@@ -258,7 +258,11 @@ func (c *ConnManager) create(ci connID, details tlsconfig.Details, connectionTim
 		return nil, err
 	}
 
-	serverVersion, err := getPostgresVersion(context.Background(), client)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(connectionTimeout)*time.Second)
+
+	defer cancel()
+
+	serverVersion, err := getPostgresVersion(ctx, client)
 	if err != nil {
 		client.Close()
 		return nil, err
